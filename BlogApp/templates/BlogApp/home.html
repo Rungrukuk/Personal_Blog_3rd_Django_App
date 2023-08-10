@@ -1,0 +1,168 @@
+{% extends 'BlogApp/base.html' %}
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'BlogApp/javascript/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'BlogApp/style.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+    <div class="main-content">
+    
+
+         <!-- Friends Section -->
+        <section class="friends">
+                <div class="text-header"> 
+                    Friends
+                </div>
+                <a href="#">
+                    <div class="friend">
+                        <div class="texts"> 
+                            Aubrey
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="friend">
+                        <div class="texts"> 
+                            Nihad
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="friend">
+                        <div class="texts"> 
+                            Rasul
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+                <a href="#">
+                    <div class="friend">
+                        <div class="texts"> 
+                            Ilknur
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+        </section>
+
+
+        <!-- Profile section -->
+        <section class="profile">
+            <h2>Home</h2>
+            <div class="throw-container">
+                <div class = "create-throw">
+
+                    <textarea rows="20" cols="50" placeholder="Throw Up"></textarea>
+                    <button class="throw-submit">Submit</button>
+                </div>
+                <div class="throws">
+                    <div class="throw">
+                    
+                        <div class="user-info">
+                            <!-- ... User info ... -->
+                        </div>
+                        <p>Sample throw. #coding #webdev</p>
+                        <div class="throw-image">
+                            <img src="{{Blog.blog_image.url}}" alt="throw Image 2" width="1000" height="1000">
+                        </div>
+
+                        <!-- Like button and Comment button container -->
+                        <div class="button-container">
+                            <button id="commentButton" class="comment-button">
+                                <div class="comment-circle">
+                                    <div class="comment-image"></div>
+                                </div>
+                                <span class="comment-count">0</span>
+                            </button>
+
+                            <button id="likeButton" class="like-button">
+                                <div class="like-circle">
+                                    <div class="like-image"></div>
+                                </div>
+                                <span class="likes-count">0</span>
+                            </button>
+                        </div>
+
+                        <!-- Comment input field -->
+                        <div id="comment-box" class="comment-box">
+                            <div class="text-area-container">
+                                <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                <button class="comment-submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="throw">
+                    
+                        <div class="user-info">
+                            <!-- ... User info ... -->
+                        </div>
+                        <p>Sample throw. #coding #webdev</p>
+                        <div class="throw-image">
+                            <img src="{{Blog.blog_image.url}}" alt="throw Image 2" width="1000" height="1000">
+                        </div>
+
+                        <!-- Like button and Comment button container -->
+                        <div class="button-container">
+                            <button id="commentButton" class="comment-button">
+                                <div class="comment-circle">
+                                    <div class="comment-image"></div>
+                                </div>
+                                <span class="comment-count">0</span>
+                            </button>
+
+                            <button id="likeButton" class="like-button">
+                                <div class="like-circle">
+                                    <div class="like-image"></div>
+                                </div>
+                                <span class="likes-count">0</span>
+                            </button>
+                        </div>
+
+                        <!-- Comment input field -->
+                        <div id="comment-box" class="comment-box">
+                            <div class="text-area-container">
+                                <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                <button class="comment-submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Home section -->
+        <section class="navigation">
+            <div class="text-header"> 
+                    Navigations
+            </div>
+            <a href="#" class="Home-Link">
+                <div class="texts"> 
+                    Home
+                </div>
+            </a>
+            <a href="#" class="Notifiations">
+                <div  class="texts" > 
+                    Notifications   
+                </div>
+            </a>
+            <a href="#">
+                <div  class="texts" > 
+                    Profile   
+                </div>
+            </a>
+            <a href="#">
+                <div  class="texts" > 
+                    Settings   
+                </div>
+            </a>
+        </section>
+
+
+    </div>
+
+{% endblock content %}
