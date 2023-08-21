@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block head %}
-    <script src="{% static 'BlogApp/javascript/script.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'BlogApp/style.css' %}">
+    <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
 {% endblock head %}
 
 {% block content %}
@@ -140,12 +140,12 @@
             <div class="text-header"> 
                     Navigations
             </div>
-            <a href="#" class="Home-Link">
+            <a href="#">
                 <div class="texts"> 
                     Home
                 </div>
             </a>
-            <a href="#" class="Notifiations">
+            <a href="#">
                 <div  class="texts" > 
                     Notifications   
                 </div>
@@ -160,8 +160,14 @@
                     Settings   
                 </div>
             </a>
+
         </section>
 
+        <div class="login-button">
+            <a href="#">
+                Login
+            </a>
+        </div>
 
     </div>
 
