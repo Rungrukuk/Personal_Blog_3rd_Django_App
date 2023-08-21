@@ -1,10 +1,8 @@
 from django.db import models
 from PIL import Image
+from django.contrib.auth.models import AbstractUser
 
-class User(models.Model):
-    username = models.CharField(max_length=20, null=True, blank=True)
-    email = models.EmailField(max_length=255, null=True, blank=True)
-    password = models.CharField(max_length=16, null=True, blank=True)
+class User(AbstractUser):
     profile_picture = models.ImageField(upload_to="profile_images", null=True, blank=True)
 
 class BlogPost(models.Model):
