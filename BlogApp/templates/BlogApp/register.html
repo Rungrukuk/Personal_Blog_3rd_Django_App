@@ -2,21 +2,26 @@
 {% load static %}
 
 {% block head %}
-    <script src="{% static 'BlogApp/javascript/login.js' %}"></script>
     <link rel="stylesheet" href="{% static 'BlogApp/login-style.css' %}">
 {% endblock head %}
 
 {% block content %}
+
     <div class="login-container" id="register-container">
         <h2>Register</h2>
         <form action="#" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            <label for="username">Mail:</label>
+            <input type="mail" id="mail" name="mail" required>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <label for="re-password">Repeat Password:</label>
+            <input type="password" id="re-password" name="re-password" required>
             <label for="password">Profile Image:</label>
             <input type="file" id="image" name="image" required>
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="login-button">Register</button>
         </form>
     </div>
 {% endblock content %}
