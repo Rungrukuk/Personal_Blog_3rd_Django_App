@@ -3,7 +3,11 @@ from PIL import Image
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
+    email = models.EmailField(max_length=255, null=False, blank=False, default="example@default.com")
+    username = models.CharField(max_length=30, unique=True, null=False, blank=False,default="example_username123")
+    password = models.CharField(max_length=128, null=False, blank=False,default="example_password123")
     profile_picture = models.ImageField(upload_to="profile_images", null=True, blank=True)
+
 
 class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
