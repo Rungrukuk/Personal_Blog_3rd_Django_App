@@ -22,6 +22,11 @@
             <label for="password">Profile Image:</label>
             <input type="file" id="image" name="image" required>
             <button type="submit" class="login-button">Register</button>
-        </form>
+        </form> 
+        {% comment %} <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Register</button>
+        </form> {% endcomment %}
     </div>
 {% endblock content %}

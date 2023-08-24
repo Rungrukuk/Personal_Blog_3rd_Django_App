@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, render
-from .models import BlogPost
+from .models import BlogPost,User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError
 
 
 @login_required(login_url="login")
@@ -24,12 +26,24 @@ def Login(request):
 
 def Register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request,user)
-            return redirect('home')
-    else:
-        form = UserCreationForm()
+        email = request.POST['mail']
+        username = request.POST['username']
+        password = request.POST['password']
+        re_password = request.POST['re-password']
+        profile_image = request.FILES.get('image')
+        
+        if password != re_password:
+            raise ValidationError("Passwords do not match")
+        
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Email is already registered")
+        
+        user = User(email=email, username=username, password=make_password(password), profile_picture=profile_image)
+        user.save()
+        
+        # Log the user in
+        login(request, user)
+        return redirect('home')
 
-    return render(request,"BlogApp/register.html")
+    return render(request, "BlogApp/register.html")
+
