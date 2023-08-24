@@ -12,7 +12,7 @@
     
 
          <!-- Friends Section -->
-        <section class="friends">
+        <div class="friends">
                 <div class="text-header"> 
                     Friends
                 </div>
@@ -21,7 +21,7 @@
                         <div class="texts"> 
                             Aubrey
                         </div>
-                        <img src="{{User.profile_picture.url}}" alt="Aubrey's Profile">
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
                     </div>
                 </a>
                 {% comment %} <a href="#">
@@ -48,11 +48,11 @@
                         <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
                     </div>
                 </a> {% endcomment %}
-        </section>
+        </div>
 
 
         <!-- Profile section -->
-        <section class="profile">
+        <div class="profile">
             <h2>Home</h2>
             <div class="throw-container">
                 <div class = "create-throw">
@@ -133,40 +133,39 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Home section -->
-        <section class="navigation">
-            <div class="text-header"> 
-                    Navigations
-            </div>
-            <a href="#">
-                <div class="texts"> 
-                    Home
+        <div class="navigation">
+                <div class="text-header"> 
+                        Navigations
                 </div>
-            </a>
-            <a href="#">
-                <div  class="texts" > 
-                    Notifications   
-                </div>
-            </a>
-            <a href="#">
-                <div  class="texts" > 
-                    Profile   
-                </div>
-            </a>
-            <a href="#">
-                <div  class="texts" > 
-                    Settings   
-                </div>
-            </a>
-            <div class="login-button">
-                <a href="{% url 'login' %}">
-                    Login
+                <a href="#" class = "navigation-link">
+                    <div class="texts"> 
+                        Home
+                    </div>
                 </a>
-            </div>
-        </section>
-
+                <a href="#" class = "navigation-link" >
+                    <div  class="texts" > 
+                        Notifications   
+                    </div>
+                </a>
+                <a href="#" class = "navigation-link" >
+                    <div  class="texts" > 
+                        Profile   
+                    </div>
+                </a>
+                <a href="#" class = "navigation-link" >
+                    <div  class="texts" > 
+                        Settings   
+                    </div>
+                </a>
+                <div class="custom-button">
+                    <a href="#">
+                        <span>{{User.username}}</span>
+                        <img src="{{User.profile_picture.url}}" alt="Friend's Profile">
+                    </a>
+                </div>
+        </div>
 
 
     </div>
