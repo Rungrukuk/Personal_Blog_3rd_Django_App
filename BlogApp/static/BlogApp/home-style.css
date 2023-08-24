@@ -118,6 +118,10 @@ main {
 .texts{
     font-size: 23px;
     margin-left: 30px;
+    margin-right: 10px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .text-header{
@@ -436,10 +440,12 @@ main {
     margin-left: 30px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     z-index: 2;
 }
 
 .custom-button a {
+    position: relative; /* Set position to relative */
     display: flex;
     align-items: center;
     background-color: #1DA1F2;
@@ -449,6 +455,8 @@ main {
     height: 40px;
     text-decoration: none;
     transition: background-color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .custom-button a:hover {
@@ -459,9 +467,19 @@ main {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    margin-left: 40px; /* Adjusted margin */
+    position: absolute; 
+    right: 10px; 
+    top: 5px; 
 }
 
 .custom-button span {
-    margin-left: 10px; /* Adjusted margin */
+    position: absolute; 
+    left: 10px;
+}
+
+.username {
+    margin-right: 10px;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
