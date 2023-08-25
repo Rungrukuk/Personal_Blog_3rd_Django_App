@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import BlogPost,User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
+from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
@@ -47,3 +47,6 @@ def Register(request):
 
     return render(request, "BlogApp/register.html")
 
+def Logout_view(request):
+    logout(request)
+    return redirect('home')
