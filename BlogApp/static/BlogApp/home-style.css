@@ -117,7 +117,7 @@ main {
 
 .texts{
     font-size: 23px;
-    margin-left: 30px;
+    margin-left: 20px;
     margin-right: 10px;
     max-width: 150px;
     overflow: hidden;
@@ -126,7 +126,7 @@ main {
 
 .text-header{
     font-size: 23px;
-    margin-left: 30px;
+    margin-left: 20px;
     margin-bottom: 10px;
     margin-top: 25px;
     color: white;
@@ -167,7 +167,7 @@ main {
 
 .friends{
     overflow-y: scroll;
-    max-height: 400px;
+    height: 650px;
 }
 
 .friend {
@@ -437,11 +437,9 @@ main {
     color: #fff; 
 }
 
-
-
 .profile-button {
-    position: fixed;
-    bottom: 1%;
+    position:relative;
+    margin-top: 1%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -478,12 +476,12 @@ main {
 
 .profile-button span {
     position: absolute; 
-    left: 30px;
-    font-size: 20px;
+    left: 20px;
+    font-size: 23px;
 }
 .username {
     margin-right: 10px;
-    max-width: 110px;
+    max-width: 130px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
