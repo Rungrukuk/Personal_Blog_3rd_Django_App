@@ -78,19 +78,19 @@ main {
     display: block;
 }
 
-/* * Profile Section */
+/* * Middle Section */
 
-.profile {
+.middle-section {
     width: 100%;
     max-width: 1000px;
     padding: 25px;
 }
 
-.profile h2{
+.middle-section h2{
     color: lightgray;
 }
 
-.profile .avatar img {
+.middle-section .avatar img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -133,9 +133,9 @@ main {
     font-weight: bold;
 }
 
-/* * Friends Section */
+/* * left-section */
 
-.friends {
+.left-section {
     position: sticky;
     top: 0;
     z-index: 1;
@@ -147,7 +147,7 @@ main {
     margin-right: 20px;
 }
 
-.friends a{
+.left-section a{
     
     display: block;
     text-decoration: none;
@@ -160,9 +160,14 @@ main {
     background-color: transparent; 
     transition: background-color 0.3s ease; 
 }
-.friends a:hover {
+.left-section a:hover {
     background-color: lightslategray;
     color: #fff; 
+}
+
+.friends{
+    overflow-y: scroll;
+    max-height: 400px;
 }
 
 .friend {
@@ -434,24 +439,23 @@ main {
 
 
 
-.custom-button {
+.profile-button {
     position: fixed;
-    bottom: 20px;
-    margin-left: 30px;
+    bottom: 1%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     z-index: 2;
 }
 
-.custom-button a {
+.profile-button a {
     position: relative; /* Set position to relative */
     display: flex;
     align-items: center;
     background-color: #1DA1F2;
     color: #fff;
     border-radius: 20px;
-    width: 140px;
+    width: 200px;
     height: 40px;
     text-decoration: none;
     transition: background-color 0.3s ease;
@@ -459,11 +463,11 @@ main {
     overflow: hidden;
 }
 
-.custom-button a:hover {
+.profile-button a:hover {
     background-color: #0f81c7;
 }
 
-.custom-button img {
+.profile-button img {
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -472,14 +476,36 @@ main {
     top: 5px; 
 }
 
-.custom-button span {
+.profile-button span {
     position: absolute; 
-    left: 10px;
+    left: 30px;
+    font-size: 20px;
 }
-
 .username {
     margin-right: 10px;
-    max-width: 80px;
+    max-width: 110px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+
+
+
+
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 100px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
 }
