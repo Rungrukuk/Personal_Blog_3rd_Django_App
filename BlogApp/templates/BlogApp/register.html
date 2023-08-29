@@ -11,16 +11,16 @@
         <h2>Register</h2>
         <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-            <label for="username">eMail:</label>
-            <input type="mail" id="mail" name="mail" required>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <label for="re-password">Repeat Password:</label>
-            <input type="password" id="re-password" name="re-password" required>
+            <label for="username">Mail:<span>{{Errors.email}}</span></label>
+            <input type="mail" id="mail" name="mail" value = "{{Inputs.email}}">
+            <label for="username">Username:<span>{{Errors.username}}</span></label>
+            <input type="text" id="username" name="username" value = "{{Inputs.username}}">
+            <label for="password">Password:<span>{{Errors.password}}</span></label>
+            <input type="password" id="password" name="password" value = "{{Inputs.password}}">
+            <label for="re-password">Repeat Password:<span>{{Errors.re_password}}</span></label>
+            <input type="password" id="re-password" name="re-password" value = "{{Inputs.re_password}}">
             <label for="password">Profile Image:</label>
-            <input type="file" id="image" name="image" required>
+            <input type="file" id="image" name="image" >
             <button type="submit" class="login-button">Register</button>
         </form> 
         {% comment %} <form method="post" enctype="multipart/form-data">
