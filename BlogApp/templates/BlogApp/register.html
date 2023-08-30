@@ -11,13 +11,13 @@
         <h2>Register</h2>
         <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-            <label for="username">Mail:<span>{{Errors.email}}</span></label>
+            <label for="username">Mail:<span class="errors">{{Errors.email}}</span></label>
             <input type="mail" id="mail" name="mail" value = "{{Inputs.email}}">
-            <label for="username">Username:<span>{{Errors.username}}</span></label>
+            <label for="username">Username:<span class="errors">{{Errors.username}}</span></label>
             <input type="text" id="username" name="username" value = "{{Inputs.username}}">
-            <label for="password">Password:<span>{{Errors.password}}</span></label>
+            <label for="password">Password:<span class="errors">{{Errors.password}}</span></label>
             <input type="password" id="password" name="password" value = "{{Inputs.password}}">
-            <label for="re-password">Repeat Password:<span>{{Errors.re_password}}</span></label>
+            <label for="re-password">Repeat Password:<span class="errors">{{Errors.re_password}}</span></label>
             <input type="password" id="re-password" name="re-password" value = "{{Inputs.re_password}}">
             <a class = "login-link" href="{% url 'login' %}" > Login </a>
             <button type="submit" class="login-button">Login</button>

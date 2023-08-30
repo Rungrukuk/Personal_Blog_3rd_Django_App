@@ -67,3 +67,9 @@ body {
 .login-link{
     margin-right: auto;
 }
+
+.errors{
+    font-size: small;
+    color: red;
+    float: right;
+}
