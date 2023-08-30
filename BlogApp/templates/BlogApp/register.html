@@ -19,14 +19,8 @@
             <input type="password" id="password" name="password" value = "{{Inputs.password}}">
             <label for="re-password">Repeat Password:<span>{{Errors.re_password}}</span></label>
             <input type="password" id="re-password" name="re-password" value = "{{Inputs.re_password}}">
-            <label for="password">Profile Image:</label>
-            <input type="file" id="image" name="image" >
-            <button type="submit" class="login-button">Register</button>
+            <a class = "login-link" href="{% url 'login' %}" > Login </a>
+            <button type="submit" class="login-button">Login</button>
         </form> 
-        {% comment %} <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Register</button>
-        </form> {% endcomment %}
     </div>
 {% endblock content %}

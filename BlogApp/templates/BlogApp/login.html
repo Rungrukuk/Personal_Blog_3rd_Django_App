@@ -15,7 +15,9 @@
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <a class = "login-link" href="{% url 'register' %}" > Register </a>
             <button type="submit" class="login-button">Login</button>
+
         </form>
     </div>
 {% endblock content %}

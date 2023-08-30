@@ -62,3 +62,8 @@ body {
 .login-button:hover {
     background-color: #0f81c7;
 }
+
+
+.login-link{
+    margin-right: auto;
+}
