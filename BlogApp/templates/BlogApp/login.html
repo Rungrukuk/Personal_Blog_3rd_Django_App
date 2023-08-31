@@ -11,10 +11,13 @@
         <h2>Login</h2>
         <form action="" method="POST">
         {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+            <label for="username">Username:<span class="errors">{{Errors.username| join:", "}}</span></label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password:<span class="errors">{{Errors.password| join:", "}}</span></label>
+            <input type="password" id="password" name="password">
+            {% if Errors.username == None and Errors.password == None and Errors %}
+            <span class="errors">Username or password is incorrect</span>
+            {%endif%}
             <a class = "login-link" href="{% url 'register' %}" > Register </a>
             <button type="submit" class="login-button">Login</button>
 

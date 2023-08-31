@@ -33,6 +33,9 @@ body {
     margin-top: 10px;
     font-size: 18px;
     text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .login-container input {
@@ -63,13 +66,19 @@ body {
     background-color: #0f81c7;
 }
 
-
-.login-link{
+.login-link {
     margin-right: auto;
+    color: #1DA1F2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.login-link:hover {
+    color: #0f81c7;
 }
 
 .errors{
     font-size: small;
     color: red;
-    float: right;
+    text-align: right; 
 }

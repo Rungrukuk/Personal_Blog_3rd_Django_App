@@ -20,8 +20,14 @@ def Login(request):
             user = form.get_user()
             login(request, user)
             return redirect("home")
-
+        else:
+            errors = form.errors
+            context = {"Errors": errors}
+            return render(request,"BlogApp/login.html",context)
     return render(request,"BlogApp/login.html")
+            
+
+
 
 def Register(request):
     if request.method == 'POST':
