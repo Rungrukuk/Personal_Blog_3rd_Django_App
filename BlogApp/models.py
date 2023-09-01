@@ -5,7 +5,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=255, null=False, blank=False, default="example@default.com")
     username = models.CharField(max_length=30, unique=True, null=False, blank=False,default="example_username123")
     password = models.CharField(max_length=128, null=False, blank=False,default="example_password123")
-    profile_picture = models.ImageField(upload_to="profile_images", null=True, blank=True)
+    profile_picture_path = models.CharField(max_length=255, null=True, blank=True, default="/media/profile_images/default.jpg")
 
 
 class BlogPost(models.Model):

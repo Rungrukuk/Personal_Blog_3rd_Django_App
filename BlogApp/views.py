@@ -35,7 +35,6 @@ def Register(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         re_password = request.POST.get('re-password')
-        profile_image = request.FILES.get('image')
 
         errors = {}
         inputs = {}
@@ -72,8 +71,9 @@ def Register(request):
 
 
         if not errors:
-            user = User(email=email, username=username, password=make_password(password), profile_picture=profile_image)
+            user = User(email=email, username=username, password=make_password(password))
             user.save()
+            login(user)
             return redirect('home')
         else:
             context = {
