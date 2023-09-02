@@ -1,7 +1,7 @@
 import os
+import uuid
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-
 from PersonalBlog import settings
 from .models import BlogPost,User
 from django.contrib.auth.decorators import login_required
@@ -21,18 +21,21 @@ def create_vomit(request):
     if request.method == 'POST':
         user = request.user 
         title = request.POST.get('title', '')
-
         blog_image = request.FILES.get('blog_image', None)
 
         if blog_image:
-            # Save the image to the media directory
+            # Generate a unique filename for the image
+            unique_filename = f'{uuid.uuid4().hex}_{blog_image.name}'
+            
+            # Save the image to the media directory with the unique filename
             media_root = settings.MEDIA_ROOT
-            image_path = os.path.join(media_root, 'blog_images', blog_image.name)
+            image_path = os.path.join(media_root, 'blog_images', unique_filename)
             with open(image_path, 'wb') as destination:
                 for chunk in blog_image.chunks():
                     destination.write(chunk)
-            blog_post = BlogPost(user=user, title=title)
-            blog_post.blog_image_url = f'media/blog_images/{blog_image.name}'
+            
+            # Create a new BlogPost instance with the unique filename
+            blog_post = BlogPost(user=user, title=title, blog_image_url=f'media/blog_images/{unique_filename}')
             blog_post.save()
 
             # Return the newly created vomit data as JSON
