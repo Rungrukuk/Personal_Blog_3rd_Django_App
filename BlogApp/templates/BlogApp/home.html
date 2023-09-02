@@ -1,8 +1,11 @@
 {% extends 'BlogApp/base.html' %}
 {% load static %}
-
 {% block head %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
+    
     <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
 {% endblock head %}
 
@@ -182,34 +185,31 @@
             </div>
         </div>
 
-
         <!-- Middle section -->
         <div class="middle-section">
             <h2>Home</h2>
             <div class="vomit-container">
                 <!-- ... Create vomit ... -->
-                <form action="" method="post" enctype="multipart/form-data">    
-                 {% csrf_token %}
-                    <div class = "create-vomit">
-                        <textarea rows="20" cols="50" id="vomit-textarea" placeholder="Throw Up"></textarea>
-                        <div class = "create-vomit-buttons">
-                            <input type="file" id="fileInput" class="hidden-input" accept="image/*">
-                            <label for="fileInput" class="image-label">
-                                <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
-                            </label>
-                            <button class="vomit-submit" id="create-vomit-button" type="button">Submit</button>
-                        </div>
+            <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
+                {% csrf_token %}
+                <div class = "create-vomit">
+                    <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
+                    <div class = "create-vomit-buttons">
+                        <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
+                        <label for="fileInput" class="image-label">
+                            <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
+                        </label>
+                        <button class="vomit-submit" id="create-vomit-button" type="button" data-url="{% url 'create_vomit' %}">Submit</button>
                     </div>
-                </form>
+                </div>
+            </form>
+
                 <div class="vomits">
                     <div class="vomit">
-                    
-                        <div class="user-info">
-
-                        </div>
-                        <p>Sample vomit. #coding #webdev</p>
+                
+                        <p>{{Blog.title}}</p>
                         <div class="vomit-image">
-                            <img src="{{Blog.blog_image.url}}" alt="vomit Image 2" width="1000" height="1000">
+                            <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
                         </div>
 
                         <!-- Like button and Comment button container -->
@@ -237,41 +237,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="vomit">
-                    
-                        <div class="user-info">
-                            <!-- ... User info ... -->
-                        </div>
-                        <p>Sample vomit. #coding #webdev</p>
-                        <div class="vomit-image">
-                            <img src="{{Blog.blog_image.url}}" alt="vomit Image 2" width="1000" height="1000">
-                        </div>
 
-                        <!-- Like button and Comment button container -->
-                        <div class="button-container">
-                            <button id="commentButton" class="comment-button">
-                                <div class="comment-circle">
-                                    <div class="comment-image"></div>
-                                </div>
-                                <span class="comment-count">0</span>
-                            </button>
-
-                            <button id="likeButton" class="like-button">
-                                <div class="like-circle">
-                                    <div class="like-image"></div>
-                                </div>
-                                <span class="likes-count">0</span>
-                            </button>
-                        </div>
-
-                        <!-- Comment input field -->
-                        <div id="comment-box" class="comment-box">
-                            <div class="text-area-container">
-                                <textarea rows="1" placeholder="Write your comment here..."></textarea>
-                                <button class="comment-submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -302,5 +268,7 @@
                 </a>
         </div>
     </div>
-
+<script>
+    var createVomitUrl = "{% url 'create_vomit' %}";
+</script>
 {% endblock content %}

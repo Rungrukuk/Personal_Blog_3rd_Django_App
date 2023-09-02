@@ -1,4 +1,8 @@
+import os
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
+
+from PersonalBlog import settings
 from .models import BlogPost,User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
@@ -13,8 +17,36 @@ def Home(request):
                "User":request.user}
     return render(request,"BlogApp/home.html",context)
 
-def Create_Vomit(request):
-    pass
+def create_vomit(request):
+    if request.method == 'POST':
+        user = request.user 
+        title = request.POST.get('title', '')
+
+        blog_image = request.FILES.get('blog_image', None)
+
+        if blog_image:
+            # Save the image to the media directory
+            media_root = settings.MEDIA_ROOT
+            image_path = os.path.join(media_root, 'blog_images', blog_image.name)
+            with open(image_path, 'wb') as destination:
+                for chunk in blog_image.chunks():
+                    destination.write(chunk)
+            blog_post = BlogPost(user=user, title=title)
+            blog_post.blog_image_url = f'media/blog_images/{blog_image.name}'
+            blog_post.save()
+
+            # Return the newly created vomit data as JSON
+            return JsonResponse({
+                'message': 'Vomit created successfully',
+                'title': blog_post.title,
+                'blog_image_url': blog_post.blog_image_url,
+            })
+        else:
+            return JsonResponse({'error': 'No image file provided'})
+
+    # Handle GET requests or other cases here
+    return JsonResponse({'error': 'Invalid request method'})
+    
 
 def Login(request):
     if request.method == "POST":

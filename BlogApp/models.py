@@ -11,17 +11,17 @@ class User(AbstractUser):
 class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20, blank=True, null=True)
-    description = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    blog_image = models.ImageField(upload_to="blog_images", null=True, blank=True)
+    blog_image_url = models.CharField(max_length=200, blank=True, null=True)
+
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     content = models.TextField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, null=True)
