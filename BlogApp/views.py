@@ -13,6 +13,9 @@ def Home(request):
                "User":request.user}
     return render(request,"BlogApp/home.html",context)
 
+def Create_Vomit(request):
+    pass
+
 def Login(request):
     if request.method == "POST":
         form = AuthenticationForm(request,request.POST)

@@ -28,9 +28,9 @@ main {
     align-items: center;
 }
 
-/* * Create throw section */
+/* * Create vomit section */
 
-.throw-container {
+.vomit-container {
     position: relative; /* Ensure the container establishes a stacking context for z-index */
     display: flex;
     flex-direction: column;
@@ -39,13 +39,12 @@ main {
 }
 
 
-.create-throw {
+.create-vomit {
     position: sticky;
     top: 0;
     z-index: 1;
     background-color: rgba(15, 15, 15, 0.85);
     width: 1020px;
-    display: flex; 
     justify-content: center; 
     align-items: center;
     height: 200px;
@@ -54,21 +53,43 @@ main {
     flex-direction: column;
 }
 
-.create-throw textarea {
+.create-vomit textarea {
+    border: 1px solid lightgray;
+    border-radius: 5px;
     width: 95%;
     height: 65%;
     font-size: 25px;
     background-color: transparent;
     color: lightgray;
-    border: none;
     resize: none;
     display: block; 
     margin-top: 20px;
 }
+.create-vomit-buttons{
+    margin-top: 3px;
+    width: 95%;
+}
 
-.throw-submit{
+.image-label {
     margin-top: 5px;
-    margin-left: 910px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.image-label img {
+    width: 26px; 
+    height: 18px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+
+
+
+.vomit-submit{
+    float: right;
     padding: 10px 15px;
     border: none;
     border-radius: 20px;
@@ -194,9 +215,9 @@ main {
     margin-right: 10px; 
 }
 
-/* * throw Section */
+/* * vomit Section */
 
-.throw {
+.vomit {
     width: 1000px;
     border: 1px solid #ccc;
     padding: 10px;
@@ -210,12 +231,12 @@ main {
 
 
 
-.throw p {
+.vomit p {
     margin: 10px 0;
     color: lightslategray;
 }
 
-.throw-image {
+.vomit-image {
     margin-top: 10px;
     max-width: 100%;
     display: flex; 
@@ -223,7 +244,7 @@ main {
     border-radius: 15px; 
 }
 
-.throw-image img {
+.vomit-image img {
     max-width: 100%;
     height: auto;
     border-radius: 8px; 
@@ -352,7 +373,7 @@ main {
     flex-direction: column;
     max-height: 0;
     transition: max-height 0.3s ease;
-    border: none;
+
     width: 100%;
     background-color: transparent;
 }
@@ -376,6 +397,7 @@ main {
     flex: 1;
     padding: 8px;
     border: none;
+    border: 1px solid lightgray;
     border-radius: 5px;
     font-size: 16px;
     resize: none;

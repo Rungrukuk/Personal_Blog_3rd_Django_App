@@ -186,21 +186,30 @@
         <!-- Middle section -->
         <div class="middle-section">
             <h2>Home</h2>
-            <div class="throw-container">
-                <div class = "create-throw">
-
-                    <textarea rows="20" cols="50" placeholder="Throw Up"></textarea>
-                    <button class="throw-submit">Submit</button>
-                </div>
-                <div class="throws">
-                    <div class="throw">
+            <div class="vomit-container">
+                <!-- ... Create vomit ... -->
+                <form action="" method="post" enctype="multipart/form-data">    
+                 {% csrf_token %}
+                    <div class = "create-vomit">
+                        <textarea rows="20" cols="50" id="vomit-textarea" placeholder="Throw Up"></textarea>
+                        <div class = "create-vomit-buttons">
+                            <input type="file" id="fileInput" class="hidden-input" accept="image/*">
+                            <label for="fileInput" class="image-label">
+                                <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
+                            </label>
+                            <button class="vomit-submit" id="create-vomit-button" type="button">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="vomits">
+                    <div class="vomit">
                     
                         <div class="user-info">
-                            <!-- ... User info ... -->
+
                         </div>
-                        <p>Sample throw. #coding #webdev</p>
-                        <div class="throw-image">
-                            <img src="{{Blog.blog_image.url}}" alt="throw Image 2" width="1000" height="1000">
+                        <p>Sample vomit. #coding #webdev</p>
+                        <div class="vomit-image">
+                            <img src="{{Blog.blog_image.url}}" alt="vomit Image 2" width="1000" height="1000">
                         </div>
 
                         <!-- Like button and Comment button container -->
@@ -228,14 +237,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="throw">
+                    <div class="vomit">
                     
                         <div class="user-info">
                             <!-- ... User info ... -->
                         </div>
-                        <p>Sample throw. #coding #webdev</p>
-                        <div class="throw-image">
-                            <img src="{{Blog.blog_image.url}}" alt="throw Image 2" width="1000" height="1000">
+                        <p>Sample vomit. #coding #webdev</p>
+                        <div class="vomit-image">
+                            <img src="{{Blog.blog_image.url}}" alt="vomit Image 2" width="1000" height="1000">
                         </div>
 
                         <!-- Like button and Comment button container -->

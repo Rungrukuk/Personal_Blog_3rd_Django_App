@@ -28,3 +28,31 @@ document.addEventListener("DOMContentLoaded", function() {
       });
   });
 });
+
+$(document).ready(function() {
+    // Handle Create Vomit form submission
+    $("#create-vomit-button").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'create_vomit' %}",
+            data: $("#create-vomit-form").serialize(),
+            success: function(response) {
+                // Handle the response from the server (e.g., display a success message)
+                console.log(response);
+            }
+        });
+    });
+
+    // // Handle Submit Comment form submission
+    // $("#submit-comment-button").click(function() {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "{% url 'submit_comment' %}",
+    //         data: $("#submit-comment-form").serialize(),
+    //         success: function(response) {
+    //             // Handle the response from the server (e.g., display a success message)
+    //             console.log(response);
+    //         }
+    //     });
+    // });
+});
