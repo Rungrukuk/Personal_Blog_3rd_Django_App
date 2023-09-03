@@ -28,6 +28,13 @@ main {
     align-items: center;
 }
 
+.main-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
 /* * Create vomit section */
 
 .vomit-container {
@@ -118,19 +125,43 @@ main {
     object-fit: cover;
 }
 
-.feed {
-    width: 100%;
-    max-width: 700px;
-    padding: 20px;
-}
-
-
-.main-content {
+/* Search bar styles */
+.search-bar {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(15, 15, 15, 0.85);
+    width: 1020px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
+
+#search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: transparent;
+    color: lightgray;
+    margin-right: 10px;
+}
+
+#search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #1DA1F2;
+    color: #fff;
+}
+
+#search-button:hover {
+    background-color: #0f81c7;
+}
+
+
+
 
 
 /* * Left Section */
