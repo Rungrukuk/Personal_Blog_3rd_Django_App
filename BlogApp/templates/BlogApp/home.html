@@ -187,11 +187,13 @@
 
         <!-- Middle section -->
         <div class="middle-section">
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Search...">
-                <button id="search-button">Search</button>
-            </div>
-            <h2>Vomits</h2>
+            <form action="" method="POST" id="search-bar-form">
+                {%csrf_token%}
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search...">
+                    <button id="search-button">Search</button>
+                </div>
+            </form>
             <div class="vomit-container">
                 <!-- ... Create vomit ... -->
             <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
@@ -207,16 +209,16 @@
                     </div>
                 </div>
             </form>
-
+                <!-- ... Vomits ... -->
                 <div class="vomits">
+                    <h2>Vomits</h2>
                     <div class="vomit">
-                
                         <p>{{Blog.title}}</p>
                         <div class="vomit-image">
                             <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
                         </div>
 
-                        <!-- Like button and Comment button container -->
+
                         <div class="button-container">
                             <button id="commentButton" class="comment-button">
                                 <div class="comment-circle">
@@ -233,7 +235,7 @@
                             </button>
                         </div>
 
-                        <!-- Comment input field -->
+
                         <div id="comment-box" class="comment-box">
                             <div class="text-area-container">
                                 <textarea rows="1" placeholder="Write your comment here..."></textarea>
@@ -241,7 +243,37 @@
                             </div>
                         </div>
                     </div>
+                                        <div class="vomit">
+                        <p>{{Blog.title}}</p>
+                        <div class="vomit-image">
+                            <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                        </div>
 
+
+                        <div class="button-container">
+                            <button id="commentButton" class="comment-button">
+                                <div class="comment-circle">
+                                    <div class="comment-image"></div>
+                                </div>
+                                <span class="comment-count">0</span>
+                            </button>
+
+                            <button id="likeButton" class="like-button">
+                                <div class="like-circle">
+                                    <div class="like-image"></div>
+                                </div>
+                                <span class="likes-count">0</span>
+                            </button>
+                        </div>
+
+
+                        <div id="comment-box" class="comment-box">
+                            <div class="text-area-container">
+                                <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                <button class="comment-submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

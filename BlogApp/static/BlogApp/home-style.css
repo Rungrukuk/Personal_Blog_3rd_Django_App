@@ -38,26 +38,29 @@ main {
 /* * Create vomit section */
 
 .vomit-container {
-    position: relative; /* Ensure the container establishes a stacking context for z-index */
+    position: relative; 
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: flex-start; /* Align content to the top */
+    align-items: center; 
+    justify-content: flex-start; 
 }
 
+#create-vomit-form{
+    position: sticky;
+    top: 40px;
+    z-index: 1;
+}
 
 .create-vomit {
-    position: sticky;
-    top: 0;
-    z-index: 1;
     background-color: rgba(15, 15, 15, 0.85);
     width: 1020px;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     height: 200px;
     border: 1px solid lightgrey;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .create-vomit textarea {
@@ -110,7 +113,7 @@ main {
 
 .middle-section {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1020px;
     padding: 25px;
 }
 
@@ -125,13 +128,19 @@ main {
     object-fit: cover;
 }
 
-/* Search bar styles */
+#search-bar-form{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
 .search-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: rgba(15, 15, 15, 0.85);
-    width: 1020px;
+    width: 100%;
+    max-width: 1020px;
     border-radius: 10px;
     margin-bottom: 20px;
 }
@@ -144,7 +153,6 @@ main {
     font-size: 16px;
     background-color: transparent;
     color: lightgray;
-    margin-right: 10px;
 }
 
 #search-button {
@@ -154,6 +162,7 @@ main {
     cursor: pointer;
     background-color: #1DA1F2;
     color: #fff;
+    margin-left: 10px;
 }
 
 #search-button:hover {
