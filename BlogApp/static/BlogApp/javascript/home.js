@@ -127,10 +127,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         // Now, usersArray is an array that you can work with
                         for (var i = 0; i < usersArray.length; i++) {
                             var user = usersArray[i].fields;
-                            var userHtml = `<div class="search-result-item">
-                            <p>${user.username}</p>
-                            <img src="${user.profile_picture_path}" alt="${user.username}'s Profile">
-                            </div>`;
+                            var userHtml = `
+                            <div class="search-result-item">
+                                <img src="${user.profile_picture_path}" alt="${user.username}" class="profile-picture">
+                                <span class="username">${user.username}</span>
+                            </div>
+                            `;
                             console.log();
                             document.getElementById("search-results").style.display = "block";
                             $("#search-results").append(userHtml);

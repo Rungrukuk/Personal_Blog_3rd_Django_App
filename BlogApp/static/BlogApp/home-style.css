@@ -48,7 +48,7 @@ main {
 #create-vomit-form{
     position: sticky;
     top: 40px;
-    z-index: 1;
+    z-index: 0;
 }
 
 .create-vomit {
@@ -142,7 +142,6 @@ main {
     width: 100%;
     max-width: 1020px;
     border-radius: 10px;
-    margin-bottom: 20px;
 }
 
 #searchKeyword {
@@ -176,13 +175,27 @@ main {
     width: 100%;
     max-width: 1020px;
     background-color: rgba(15, 15, 15, 0.85);
-    border-radius: 10px;
-    margin-top: 10px; 
+    max-height: 200px;
     overflow-y: auto;
-    max-height: 200px; 
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Style for the usernames */
+.username {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .search-result-item {
+    display: flex;
+    align-items: center;
     padding: 10px;
     color: white;
     cursor: pointer;
@@ -192,6 +205,7 @@ main {
 .search-result-item:hover {
     background-color: lightslategray;
 }
+
 
 
 /* * Left Section */
