@@ -190,8 +190,11 @@
             <form action="" method="POST" id="search-bar-form">
                 {%csrf_token%}
                 <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Search...">
-                    <button id="search-button">Search</button>
+                    <input type="text" id="searchKeyword" placeholder="Search...">
+                    <button id="search-button" data-url="{% url 'search' %}" type="button">Search</button>
+                </div>
+                <div id="search-results" class="search-results">
+
                 </div>
             </form>
             <div class="vomit-container">
@@ -304,7 +307,10 @@
                 </a>
         </div>
     </div>
-<script>
-    var createVomitUrl = "{% url 'create_vomit' %}";
-</script>
+
+    <script type="text/javascript">
+        const createVomitUrl = "{% url 'create_vomit' %}";
+        const searchUrl = "{% url 'search' %}";
+
+    </script>
 {% endblock content %}

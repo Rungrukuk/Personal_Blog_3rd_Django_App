@@ -9,6 +9,7 @@ from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 import re
+from django.core import serializers
 
 @login_required(login_url="login")
 def Home(request):
@@ -47,7 +48,6 @@ def create_vomit(request):
         else:
             return JsonResponse({'error': 'No image file provided'})
 
-    # Handle GET requests or other cases here
     return JsonResponse({'error': 'Invalid request method'})
     
 
@@ -65,7 +65,19 @@ def Login(request):
     return render(request,"BlogApp/login.html")
             
 
-
+def Search(request):
+    if request.method == 'POST':
+        search_term = request.POST.get('searchKeyword', '')
+        Users = User.objects.filter(username__icontains=search_term)
+        if Users:
+            users_data = serializers.serialize('json', Users)
+            return JsonResponse({
+                'message': 'Vomit created successfully',
+                'users': users_data,
+            })
+        else:
+            return JsonResponse({'error': 'No Users Found'})
+    return JsonResponse({'error': 'Invalid request method'})
 
 def Register(request):
     if request.method == 'POST':

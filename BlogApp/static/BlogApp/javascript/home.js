@@ -99,4 +99,49 @@ document.addEventListener("DOMContentLoaded", function () {
             },
         });
     });
+
+    const searchButton = document.getElementById("search-button");
+    
+    searchButton.addEventListener("click", function () {
+        const csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        const searchKeyword = $("#searchKeyword").val();
+        const formData = new FormData($("#search-bar-form")[0]);
+        formData.append("searchKeyword", searchKeyword);
+        const headers = {
+            "X-CSRFToken": csrftoken,
+        };
+            $.ajax({
+                type: "POST",
+                url: "/search",
+                headers: headers,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        
+                        var usersArray = JSON.parse(data["users"]);
+            
+                        // Now, usersArray is an array that you can work with
+                        for (var i = 0; i < usersArray.length; i++) {
+                            var user = usersArray[i].fields;
+                            var userHtml = `<div class="search-result-item">
+                            <p>${user.username}</p>
+                            <img src="${user.profile_picture_path}" alt="${user.username}'s Profile">
+                            </div>`;
+                            console.log();
+                            document.getElementById("search-results").style.display = "block";
+                            $("#search-results").append(userHtml);
+                        }
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error(xhr, textStatus, errorThrown);
+                },
+            });
+    });
+    
+
 });
