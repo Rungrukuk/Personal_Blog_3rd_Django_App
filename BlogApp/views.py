@@ -111,7 +111,7 @@ def Register(request):
         if not errors:
             user = User(email=email, username=username, password=make_password(password))
             user.save()
-            login(user)
+            login(request,user)
             return redirect('home')
         else:
             context = {
