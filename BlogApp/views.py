@@ -9,13 +9,15 @@ from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 import re
-from django.core import serializers
 
 @login_required(login_url="login")
 def Home(request):
     blog = BlogPost.objects.first()
-    context = {"Blog":blog,
-               "User":request.user}
+    context = {
+                "Blog":blog,
+                "Username":request.user.username,
+                "Picture_Url": request.user.profile_picture_path
+            }
     return render(request,"BlogApp/home.html",context)
 
 def create_vomit(request):
@@ -64,20 +66,13 @@ def Login(request):
             return render(request,"BlogApp/login.html",context)
     return render(request,"BlogApp/login.html")
             
-
+@login_required(login_url="login")
 def Search(request):
-    if request.method == 'POST':
-        search_term = request.POST.get('searchKeyword', '')
-        Users = User.objects.filter(username__icontains=search_term)
-        if Users:
-            users_data = serializers.serialize('json', Users)
-            return JsonResponse({
-                'message': 'Vomit created successfully',
-                'users': users_data,
-            })
-        else:
-            return JsonResponse({'error': 'No Users Found'})
-    return JsonResponse({'error': 'Invalid request method'})
+    context = {
+                "Username":request.user.username,
+                "Picture_Url": request.user.profile_picture_path
+            }
+    return render(request,"BlogApp/search.html",context)
 
 def Register(request):
     if request.method == 'POST':

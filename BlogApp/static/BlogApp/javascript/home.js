@@ -124,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         
                         var usersArray = JSON.parse(data["users"]);
             
-                        // Now, usersArray is an array that you can work with
                         for (var i = 0; i < usersArray.length; i++) {
                             var user = usersArray[i].fields;
                             var userHtml = `

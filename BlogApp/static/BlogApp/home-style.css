@@ -113,7 +113,7 @@ main {
 
 .middle-section {
     width: 100%;
-    max-width: 1020px;
+    width: 1020px;
     padding: 25px;
 }
 
@@ -135,13 +135,12 @@ main {
 }
 
 .search-bar {
+    background-color: rgba(15, 15, 15, 0.85);
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: rgba(15, 15, 15, 0.85);
-    width: 100%;
-    max-width: 1020px;
-    border-radius: 10px;
+    justify-content: flex-start;
+    margin-bottom: 2%;
 }
 
 #searchKeyword {

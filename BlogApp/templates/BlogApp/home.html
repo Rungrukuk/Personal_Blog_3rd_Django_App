@@ -14,6 +14,7 @@
     <div class="main-content">
 
       <!-- Left section -->
+
         <div class="left-section">
             <div class="text-header"> 
                 Friends
@@ -179,106 +180,109 @@
             </a>
             <div class="profile-button">
                 <a href="#">
-                    <span class="username">{{User.username}}</span>
-                    <img src="{{ User.profile_picture_path }}" alt="Friend's Profile">
+                    <span class="username">{{Username}}</span>
+                    <img src="{{ Picture_Url }}" alt="Friend's Profile">
                 </a>
             </div>
         </div>
 
         <!-- Middle section -->
         <div class="middle-section">
-            <form action="" method="POST" id="search-bar-form">
-                {%csrf_token%}
-                <div class="search-bar">
-                    <input type="text" id="searchKeyword" placeholder="Search...">
-                    <button id="search-button" data-url="{% url 'search' %}" type="button">Search</button>
-                </div>
-                <div id="search-results" class="search-results">
-                </div>
-            </form>
-            <div class="vomit-container">
-                <!-- ... Create vomit ... -->
-            <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
-                {% csrf_token %}
-                <div class = "create-vomit">
-                    <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
-                    <div class = "create-vomit-buttons">
-                        <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
-                        <label for="fileInput" class="image-label">
-                            <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
-                        </label>
-                        <button class="vomit-submit" id="create-vomit-button" type="button" data-url="{% url 'create_vomit' %}">Submit</button>
+            {% block MiddleSection %}
+                <form action="" method="POST" id="search-bar-form">
+                    {%csrf_token%}
+                    <div class="search-bar">
+                        <input type="text" id="searchKeyword" placeholder="Search...">
+                        <button id="search-button" data-url="{% url 'search' %}" type="button">Search</button>
                     </div>
-                </div>
-            </form>
-                <!-- ... Vomits ... -->
-                <div class="vomits">
-                    <h2>Vomits</h2>
-                    <div class="vomit">
-                        <p>{{Blog.title}}</p>
-                        <div class="vomit-image">
-                            <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                    <div id="search-results" class="search-results">
+                    </div>
+                </form>
+                <div class="vomit-container">
+                    <!-- ... Create vomit ... -->
+                <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
+                    {% csrf_token %}
+                    <div class = "create-vomit">
+                        <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
+                        <div class = "create-vomit-buttons">
+                            <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
+                            <label for="fileInput" class="image-label">
+                                <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
+                            </label>
+                            <button class="vomit-submit" id="create-vomit-button" type="button" data-url="{% url 'create_vomit' %}">Submit</button>
                         </div>
+                    </div>
+                </form>
+                    <!-- ... Vomits ... -->
+                    <div class="vomits">
+                        <h2>Vomits</h2>
+                        <div class="vomit">
+                            <p>{{Blog.title}}</p>
+                            <div class="vomit-image">
+                                <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                            </div>
 
 
-                        <div class="button-container">
-                            <button id="commentButton" class="comment-button">
-                                <div class="comment-circle">
-                                    <div class="comment-image"></div>
+                            <div class="button-container">
+                                <button id="commentButton" class="comment-button">
+                                    <div class="comment-circle">
+                                        <div class="comment-image"></div>
+                                    </div>
+                                    <span class="comment-count">0</span>
+                                </button>
+
+                                <button id="likeButton" class="like-button">
+                                    <div class="like-circle">
+                                        <div class="like-image"></div>
+                                    </div>
+                                    <span class="likes-count">0</span>
+                                </button>
+                            </div>
+
+
+                            <div id="comment-box" class="comment-box">
+                                <div class="text-area-container">
+                                    <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                    <button class="comment-submit">Submit</button>
                                 </div>
-                                <span class="comment-count">0</span>
-                            </button>
-
-                            <button id="likeButton" class="like-button">
-                                <div class="like-circle">
-                                    <div class="like-image"></div>
-                                </div>
-                                <span class="likes-count">0</span>
-                            </button>
+                            </div>
                         </div>
+                                            <div class="vomit">
+                            <p>{{Blog.title}}</p>
+                            <div class="vomit-image">
+                                <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                            </div>
 
 
-                        <div id="comment-box" class="comment-box">
-                            <div class="text-area-container">
-                                <textarea rows="1" placeholder="Write your comment here..."></textarea>
-                                <button class="comment-submit">Submit</button>
+                            <div class="button-container">
+                                <button id="commentButton" class="comment-button">
+                                    <div class="comment-circle">
+                                        <div class="comment-image"></div>
+                                    </div>
+                                    <span class="comment-count">0</span>
+                                </button>
+
+                                <button id="likeButton" class="like-button">
+                                    <div class="like-circle">
+                                        <div class="like-image"></div>
+                                    </div>
+                                    <span class="likes-count">0</span>
+                                </button>
+                            </div>
+
+
+                            <div id="comment-box" class="comment-box">
+                                <div class="text-area-container">
+                                    <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                    <button class="comment-submit">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                                        <div class="vomit">
-                        <p>{{Blog.title}}</p>
-                        <div class="vomit-image">
-                            <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
-                        </div>
-
-
-                        <div class="button-container">
-                            <button id="commentButton" class="comment-button">
-                                <div class="comment-circle">
-                                    <div class="comment-image"></div>
-                                </div>
-                                <span class="comment-count">0</span>
-                            </button>
-
-                            <button id="likeButton" class="like-button">
-                                <div class="like-circle">
-                                    <div class="like-image"></div>
-                                </div>
-                                <span class="likes-count">0</span>
-                            </button>
-                        </div>
-
-
-                        <div id="comment-box" class="comment-box">
-                            <div class="text-area-container">
-                                <textarea rows="1" placeholder="Write your comment here..."></textarea>
-                                <button class="comment-submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
+            {% endblock MiddleSection %}
         </div>
+
 
         <div class="navigation">
                 <div class="text-header"> 
