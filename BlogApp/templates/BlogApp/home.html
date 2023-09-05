@@ -16,184 +16,58 @@
       <!-- Left section -->
 
         <div class="left-section">
-            <div class="text-header"> 
-                Friends
-            </div>
+                <div class="text-header"> 
+                    Friends
+                </div>
             <div class="friends">
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
+                {% for friend in Friends_Info %}
+                    <a href="#">
+                        <div class="friend">
+                            <div class="texts">
+                                {{friend.username}}
+                            </div>
+                            <img src="{{friend.profile_picture_path}}" alt="Aubrey's Profile">
                         </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                 <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                 <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="friend">
-                        <div class="texts">
-                            Aubrey
-                        </div>
-                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                    </div>
-                </a>
+                    </a>
+                {% endfor %}
             </div>
-            <div>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <a href="#">
-                <div class="friend">
-                    <div class="texts">
-                        Settings
-                    </div>
-                    <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                <div>
+                    <br>
+                    <hr>
+                    <br>
                 </div>
-            </a>
-            <a href="{% url 'logout' %}">
-                <div class="friend">
-                    <div class="texts">
-                        Logout
-                    </div>
-                    <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                </div>
-            </a>
-            <div class="profile-button">
                 <a href="#">
-                    <span class="username">{{Username}}</span>
-                    <img src="{{ Picture_Url }}" alt="Friend's Profile">
+                    <div class="friend">
+                        <div class="texts">
+                            Settings
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
                 </a>
-            </div>
+                <a href="{% url 'logout' %}">
+                    <div class="friend">
+                        <div class="texts">
+                            Logout
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+                <div class="profile-button">
+                    <a href="#">
+                        <span class="username">{{Username}}</span>
+                        <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
+                    </a>
+                </div>
+
         </div>
 
         <!-- Middle section -->
         <div class="middle-section">
             {% block MiddleSection %}
-                <form action="" method="POST" id="search-bar-form">
-                    {%csrf_token%}
+                <form action="{% url 'search' %}" method="GET" id="search-bar-form">
                     <div class="search-bar">
-                        <input type="text" id="searchKeyword" placeholder="Search...">
-                        <button id="search-button" data-url="{% url 'search' %}" type="button">Search</button>
+                        <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
+                        <button type="submit" class="search-button">Search</button>
                     </div>
                     <div id="search-results" class="search-results">
                     </div>
@@ -253,7 +127,7 @@
                                 <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
                         </div>
                     </div>
-                    
+
                     <div class="vomit">
                         <p>{{Blog.title}}</p>
                         <div class="vomit-image">

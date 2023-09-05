@@ -1,5 +1,4 @@
-import os
-import uuid
+import os, re, uuid
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from PersonalBlog import settings
@@ -8,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
-import re
 
 @login_required(login_url="login")
 def Home(request):
@@ -16,7 +14,8 @@ def Home(request):
     context = {
                 "Blog":blog,
                 "Username":request.user.username,
-                "Picture_Url": request.user.profile_picture_path
+                "User_Picture_Path": request.user.profile_picture_path,
+                "Friends_Info": request.user.friends.all(),
             }
     return render(request,"BlogApp/home.html",context)
 
@@ -68,9 +67,12 @@ def Login(request):
             
 @login_required(login_url="login")
 def Search(request):
+
     context = {
+                "Search_Keyword": request.GET.get('searchKeyword',''),
                 "Username":request.user.username,
-                "Picture_Url": request.user.profile_picture_path
+                "User_Picture_Path": request.user.profile_picture_path,
+                "Friends_Info": request.user.friends.all(),
             }
     return render(request,"BlogApp/search.html",context)
 
