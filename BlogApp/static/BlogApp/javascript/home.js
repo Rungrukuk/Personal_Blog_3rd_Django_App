@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const searchButton = document.getElementById("search-button");
-    
+    const searchURL = searchButton.getAttribute("data-url");
     searchButton.addEventListener("click", function () {
         const csrftoken = $("[name=csrfmiddlewaretoken]").val();
         const searchKeyword = $("#searchKeyword").val();
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
             $.ajax({
                 type: "POST",
-                url: "/search",
+                url: searchURL,
                 headers: headers,
                 data: formData,
                 processData: false,
