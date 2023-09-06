@@ -1,4 +1,40 @@
 {% extends "BlogApp/home.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+{% endblock head %}
 {% block MiddleSection %}
-<div> {{Search_Keyword}} </div>
+
+    <div class="text-header"> 
+        Search Results
+    </div>
+
+    <form action="{% url 'search' %}" method="GET" id="search-bar-form">
+        <div class="search-bar">
+            <input type="text" name="searchKeyword" class="search-keyword" value="{{Search_Keyword}}" placeholder="Search...">
+            <button type="submit" class="search-button">Search</button>
+        </div>
+        <div id="search-results" class="search-results">
+        </div>
+    </form>
+
+    <div class="search-results-container">
+        <div class="search-results">
+            {% if Users %}
+                {% for result in Users %}
+                    <div class="search-result-item">
+                        <div class="user-info">
+                            <img class="profile-picture" src="{{ result.profile_picture_path }}" alt="{{ result.username }} Profile Picture">
+                            <span>{{ result.username }}</span>
+                        </div>
+                        <button class="add-friend-button" data-user-id="{{ result.id }}">Add Friend</button>
+                    </div>
+                {% endfor %}  
+            {% else %}
+                <div class="search-result-item">
+                    <span>No Result Found</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock MiddleSection %}

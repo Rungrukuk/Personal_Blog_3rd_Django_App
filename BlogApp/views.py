@@ -2,20 +2,24 @@ import os, re, uuid
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from PersonalBlog import settings
-from .models import BlogPost,User
+from .models import BlogPost,User, FriendRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
+from django.db.models import Q
 
 @login_required(login_url="login")
 def Home(request):
     blog = BlogPost.objects.first()
+    friend_info = []
+    for friend in request.user.friends.all():
+        friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
     context = {
                 "Blog":blog,
                 "Username":request.user.username,
                 "User_Picture_Path": request.user.profile_picture_path,
-                "Friends_Info": request.user.friends.all(),
+                "Friends_Info": friend_info,
             }
     return render(request,"BlogApp/home.html",context)
 
@@ -50,7 +54,53 @@ def create_vomit(request):
             return JsonResponse({'error': 'No image file provided'})
 
     return JsonResponse({'error': 'Invalid request method'})
-    
+            
+
+def send_friend_request(request, to_user_id):
+    #! Need to send POST REQUEST WITH AJAX
+    to_user = User.objects.get(id=to_user_id)
+    if request.method == 'POST':
+        friend_request = FriendRequest(from_user=request.user, to_user=to_user)
+        friend_request.save()
+        return redirect('profile_page')
+
+
+def accept_friend_request(request, friend_request_id):
+    #! Need to send POST REQUEST WITH AJAX
+    friend_request = FriendRequest.objects.get(id=friend_request_id)
+    friend_request.accept()
+    return redirect('profile_page')
+
+
+
+@login_required(login_url="login")
+def Search(request):
+    search_keyword = request.GET.get('searchKeyword','')
+    friend_info = []
+    for friend in request.user.friends.all():
+        friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
+    if search_keyword:
+        users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
+        #Need to implement groups
+
+        context = {
+                #need to add groups too
+                "Search_Keyword":search_keyword,
+                "Users":users,
+                "Username":request.user.username,
+                "User_Picture_Path": request.user.profile_picture_path,
+                "Friends_Info": friend_info,
+            }
+        return render(request,"BlogApp/search.html",context)
+    context = {
+                "SearchKeyword":search_keyword,
+                "Username":request.user.username,
+                "User_Picture_Path": request.user.profile_picture_path,
+                "Friends_Info": friend_info,
+            }
+    return render(request,"BlogApp/search.html",context)
+
+
 
 def Login(request):
     if request.method == "POST":
@@ -64,17 +114,7 @@ def Login(request):
             context = {"Errors": errors}
             return render(request,"BlogApp/login.html",context)
     return render(request,"BlogApp/login.html")
-            
-@login_required(login_url="login")
-def Search(request):
 
-    context = {
-                "Search_Keyword": request.GET.get('searchKeyword',''),
-                "Username":request.user.username,
-                "User_Picture_Path": request.user.profile_picture_path,
-                "Friends_Info": request.user.friends.all(),
-            }
-    return render(request,"BlogApp/search.html",context)
 
 def Register(request):
     if request.method == 'POST':
