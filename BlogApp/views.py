@@ -23,7 +23,7 @@ def Home(request):
             }
     return render(request,"BlogApp/home.html",context)
 
-def create_vomit(request):
+def Create_vomit(request):
     if request.method == 'POST':
         user = request.user 
         title = request.POST.get('title', '')
@@ -56,13 +56,18 @@ def create_vomit(request):
     return JsonResponse({'error': 'Invalid request method'})
             
 
-def send_friend_request(request, to_user_id):
-    #! Need to send POST REQUEST WITH AJAX
-    to_user = User.objects.get(id=to_user_id)
+def Send_friend_request(request, to_user_username):
     if request.method == 'POST':
-        friend_request = FriendRequest(from_user=request.user, to_user=to_user)
-        friend_request.save()
-        return redirect('profile_page')
+        to_user = User.objects.get(username=to_user_username)
+        
+        if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
+            friend_request = FriendRequest(from_user=request.user, to_user=to_user)
+            friend_request.save()
+            return JsonResponse({'message': 'Friend request sent'})
+        else:
+            return JsonResponse({'error': 'Friend request already sent'})
+    
+    return JsonResponse({'error': 'Invalid request'})
 
 
 def accept_friend_request(request, friend_request_id):
@@ -178,6 +183,6 @@ def Register(request):
         }
         return render(request, 'BlogApp/register.html', context)
 
-def Logout_view(request):
+def Logout(request):
     logout(request)
     return redirect('home')

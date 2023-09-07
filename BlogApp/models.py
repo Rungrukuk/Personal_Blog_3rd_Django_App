@@ -7,6 +7,8 @@ class User(AbstractUser):
     password = models.CharField(max_length=128, null=False, blank=False,default="example_password123")
     profile_picture_path = models.CharField(max_length=255, null=True, blank=True, default="/media/profile_images/default.jpg")
     friends = models.ManyToManyField('self', blank=True, symmetrical=False)
+    def remove_friend(self, friend):
+        self.friends.remove(friend)
 
 
 class FriendRequest(models.Model):
