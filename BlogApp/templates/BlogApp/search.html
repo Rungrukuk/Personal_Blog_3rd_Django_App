@@ -1,0 +1,47 @@
+{% extends "BlogApp/home.html" %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="{% static 'BlogApp/javascript/friend_request.js' %}"></script>
+{% endblock head %}
+{% block MiddleSection %}
+
+    <div class="text-header"> 
+        Search Results
+    </div>
+
+    <form action="{% url 'search' %}" method="GET" id="search-bar-form">
+        <div class="search-bar">
+            <input type="text" name="searchKeyword" class="search-keyword" value="{{Search_Keyword}}" placeholder="Search...">
+            <button type="submit" class="search-button">Search</button>
+        </div>
+        <div id="search-results" class="search-results">
+        </div>
+    </form>
+
+    <div class="search-results-container">
+        <div class="search-results">
+            {% if Users %}
+                {% for result in Users %}
+                {% comment %} ! NEED to change the logic {% endcomment %}
+                    <form action="{% url 'search' %}" method="POST">
+                        <div class="search-result-item">
+                            {% csrf_token %}
+                            <div class="user-info">
+                                <img class="profile-picture" src="{{ result.profile_picture_path }}" alt="{{ result.username }} Profile Picture">
+                                <span>{{ result.username }}</span>
+                            </div>
+                            <button class="friend-request-button" data-username="{{ result.username }}">Add Friend</button>
+                        </div>
+                    </form>
+
+                {% endfor %}  
+            {% else %}
+                <div class="search-result-item">
+                    <span>No Result Found</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock MiddleSection %}

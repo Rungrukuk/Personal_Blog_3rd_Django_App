@@ -5,6 +5,7 @@ urlpatterns = [
     path('',views.Home,name="home"),
     path('login',views.Login,name="login"),
     path('register',views.Register,name="register"),
-    path('logout',views.Logout_view,name="logout"),
-    path('create_vomit',views.create_vomit,name="create_vomit"),
+    path('logout',views.Logout,name="logout"),
+    path('create_vomit',views.Create_vomit,name="create_vomit"),
+    path('search', views.Search, name='search'),
 ]
