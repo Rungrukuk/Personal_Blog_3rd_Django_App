@@ -48,7 +48,7 @@ main {
 #create-vomit-form{
     position: sticky;
     top: 40px;
-    z-index: 1;
+    z-index: 0;
 }
 
 .create-vomit {
@@ -112,9 +112,8 @@ main {
 /* * Middle Section */
 
 .middle-section {
-    width: 100%;
-    max-width: 1020px;
-    padding: 25px;
+    width: 1020px;
+    padding: 0px 25px 25px 25px;
 }
 
 .middle-section h2{
@@ -135,17 +134,15 @@ main {
 }
 
 .search-bar {
+    background-color: rgba(15, 15, 15, 0.85);
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: rgba(15, 15, 15, 0.85);
-    width: 100%;
-    max-width: 1020px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+    justify-content: flex-start;
+    margin-bottom: 2%;
 }
 
-#search-input {
+.search-keyword {
     flex: 1;
     padding: 10px;
     border: 1px solid lightgray;
@@ -155,7 +152,8 @@ main {
     color: lightgray;
 }
 
-#search-button {
+.search-button {
+    text-decoration: none;
     padding: 10px 15px;
     border: none;
     border-radius: 20px;
@@ -165,10 +163,24 @@ main {
     margin-left: 10px;
 }
 
-#search-button:hover {
+.search-button:hover {
     background-color: #0f81c7;
 }
 
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Style for the usernames */
+.username {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 
 
@@ -509,7 +521,7 @@ main {
 }
 
 .profile-button a {
-    position: relative; /* Set position to relative */
+    position: relative; 
     display: flex;
     align-items: center;
     background-color: #1DA1F2;
@@ -541,12 +553,77 @@ main {
     left: 20px;
     font-size: 23px;
 }
-.username {
-    margin-right: 10px;
-    max-width: 130px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+
+
+
+
+
+
+/*  Search */
+
+.search-results-container {
+    background-color: rgba(15, 15, 15, 0.85);
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgba(40, 40, 40, 0.85);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.search-result-item:hover {
+    background-color: rgba(50, 50, 50, 0.9);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.search-result-item span {
+    font-size: 18px;
+    color: #fff;
+}
+
+.friend-request-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #1DA1F2;
+    color: #fff;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.friend-request-button:hover {
+    background-color: #0f81c7;
+}
+
+
+
+
 
 
 
