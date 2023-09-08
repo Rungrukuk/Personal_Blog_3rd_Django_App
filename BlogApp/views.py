@@ -56,18 +56,18 @@ def Create_vomit(request):
     return JsonResponse({'error': 'Invalid request method'})
             
 
-def Send_friend_request(request, to_user_username):
-    if request.method == 'POST':
-        to_user = User.objects.get(username=to_user_username)
+# def Send_friend_request(request, to_user_username):
+#     if request.method == 'POST':
+#         to_user = User.objects.get(username=to_user_username)
         
-        if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
-            friend_request = FriendRequest(from_user=request.user, to_user=to_user)
-            friend_request.save()
-            return JsonResponse({'message': 'Friend request sent'})
-        else:
-            return JsonResponse({'error': 'Friend request already sent'})
+#         if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
+#             friend_request = FriendRequest(from_user=request.user, to_user=to_user)
+#             friend_request.save()
+#             return JsonResponse({'message': 'Friend request sent'})
+#         else:
+#             return JsonResponse({'error': 'Friend request already sent'})
     
-    return JsonResponse({'error': 'Invalid request'})
+#     return JsonResponse({'error': 'Invalid request'})
 
 
 def accept_friend_request(request, friend_request_id):
@@ -80,30 +80,44 @@ def accept_friend_request(request, friend_request_id):
 
 @login_required(login_url="login")
 def Search(request):
-    search_keyword = request.GET.get('searchKeyword','')
-    friend_info = []
-    for friend in request.user.friends.all():
-        friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
-    if search_keyword:
-        users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
-        #Need to implement groups
+    if request.method ==  "GET":  
+        search_keyword = request.GET.get('searchKeyword','')
+        friend_info = []
+        for friend in request.user.friends.all():
+            friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
+        if search_keyword:
+            users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
+            #Need to implement groups
 
+            context = {
+                    #need to add groups too
+                    "Search_Keyword":search_keyword,
+                    "Users":users,
+                    "Username":request.user.username,
+                    "User_Picture_Path": request.user.profile_picture_path,
+                    "Friends_Info": friend_info,
+                }
+            return render(request,"BlogApp/search.html",context)
         context = {
-                #need to add groups too
-                "Search_Keyword":search_keyword,
-                "Users":users,
-                "Username":request.user.username,
-                "User_Picture_Path": request.user.profile_picture_path,
-                "Friends_Info": friend_info,
-            }
+                    "SearchKeyword":search_keyword,
+                    "Username":request.user.username,
+                    "User_Picture_Path": request.user.profile_picture_path,
+                    "Friends_Info": friend_info,
+                }
         return render(request,"BlogApp/search.html",context)
-    context = {
-                "SearchKeyword":search_keyword,
-                "Username":request.user.username,
-                "User_Picture_Path": request.user.profile_picture_path,
-                "Friends_Info": friend_info,
-            }
-    return render(request,"BlogApp/search.html",context)
+    elif request.method == "POST":
+        to_user_username = request.POST.get("username", '')
+        to_user = User.objects.get(username=to_user_username)
+        
+        if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
+            friend_request = FriendRequest(from_user=request.user, to_user=to_user)
+            friend_request.save()
+            return JsonResponse({'message': 'Friend request sent'})
+        else:
+            return JsonResponse({'error': 'Friend request already sent'})
+
+    return JsonResponse({'error': 'Invalid request'})
+
 
 
 
