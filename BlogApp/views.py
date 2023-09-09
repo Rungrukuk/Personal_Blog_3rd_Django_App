@@ -30,21 +30,17 @@ def Create_vomit(request):
         blog_image = request.FILES.get('blog_image', None)
 
         if blog_image:
-            # Generate a unique filename for the image
             unique_filename = f'{uuid.uuid4().hex}_{blog_image.name}'
             
-            # Save the image to the media directory with the unique filename
             media_root = settings.MEDIA_ROOT
             image_path = os.path.join(media_root, 'blog_images', unique_filename)
             with open(image_path, 'wb') as destination:
                 for chunk in blog_image.chunks():
                     destination.write(chunk)
             
-            # Create a new BlogPost instance with the unique filename
             blog_post = BlogPost(user=user, title=title, blog_image_url=f'media/blog_images/{unique_filename}')
             blog_post.save()
 
-            # Return the newly created vomit data as JSON
             return JsonResponse({
                 'message': 'Vomit created successfully',
                 'title': blog_post.title,
@@ -55,19 +51,6 @@ def Create_vomit(request):
 
     return JsonResponse({'error': 'Invalid request method'})
             
-
-# def Send_friend_request(request, to_user_username):
-#     if request.method == 'POST':
-#         to_user = User.objects.get(username=to_user_username)
-        
-#         if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
-#             friend_request = FriendRequest(from_user=request.user, to_user=to_user)
-#             friend_request.save()
-#             return JsonResponse({'message': 'Friend request sent'})
-#         else:
-#             return JsonResponse({'error': 'Friend request already sent'})
-    
-#     return JsonResponse({'error': 'Invalid request'})
 
 
 def accept_friend_request(request, friend_request_id):
@@ -87,10 +70,10 @@ def Search(request):
             friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
         if search_keyword:
             users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
-            #Need to implement groups
+            #! Need to implement groups
 
             context = {
-                    #need to add groups too
+                    #! Need to add groups too
                     "Search_Keyword":search_keyword,
                     "Users":users,
                     "Username":request.user.username,
