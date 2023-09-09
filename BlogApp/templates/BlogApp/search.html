@@ -22,14 +22,18 @@
         <div id="search-results" class="search-results">
         </div>
     </form>
-
-    <div class="search-results-container">
-        <div class="search-results">
+    <div>
+        <br/>
+        <hr>
+        <br>
+    </div>
+        <div class="shared-container">
+        <div class="shared-items">
             {% if Users %}
                 {% for result in Users %}
                 {% comment %} ! NEED to change the logic {% endcomment %}
                     <form action="{% url 'search' %}" method="POST">
-                        <div class="search-result-item">
+                        <div class="shared-item">
                             {% csrf_token %}
                             <div class="user-info">
                                 <img class="profile-picture" src="{{ result.profile_picture_path }}" alt="{{ result.username }} Profile Picture">
@@ -41,8 +45,8 @@
 
                 {% endfor %}  
             {% else %}
-                <div class="search-result-item">
-                    <span>No Result Found</span>
+                <div class="shared-item">
+                    <span>You have not any notifications</span>
                 </div>
             {% endif %}
         </div>

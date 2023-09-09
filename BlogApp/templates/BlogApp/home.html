@@ -24,9 +24,9 @@
                     <a href="#">
                         <div class="friend">
                             <div class="texts">
-                                {{friend.Username}}
+                                {{friend.username}}
                             </div>
-                            <img src="{{friend.Picture_Path}}" alt="Aubrey's Profile">
+                            <img src="{{friend.picture_path}}" alt="Aubrey's Profile">
                         </div>
                     </a>
                 {% endfor %}
@@ -72,21 +72,22 @@
                     <div id="search-results" class="search-results">
                     </div>
                 </form>
+                <br>
                 <div class="vomit-container">
                     <!-- ... Create vomit ... -->
-                <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
-                    {% csrf_token %}
-                    <div class = "create-vomit">
-                        <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
-                        <div class = "create-vomit-buttons">
-                            <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
-                            <label for="fileInput" class="image-label">
-                                <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
-                            </label>
-                            <button class="vomit-submit" id="create-vomit-button" type="button" data-url="{% url 'create_vomit' %}">Submit</button>
+                    <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
+                        {% csrf_token %}
+                        <div class = "create-vomit">
+                            <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
+                            <div class = "create-vomit-buttons">
+                                <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
+                                <label for="fileInput" class="image-label">
+                                    <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
+                                </label>
+                                <button class="vomit-submit" id="create-vomit-button" type="button" data-url="{% url 'create_vomit' %}">Submit</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
                     <!-- ... Vomits ... -->
                     <div class="vomits">
                         <h2>Vomits</h2>

@@ -99,6 +99,7 @@ def Search(request):
     if request.method ==  "GET":  
         search_keyword = request.GET.get('searchKeyword','')
         if search_keyword:
+            #! need to send only the necessary info not all users
             users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
             if users:
                 users_info = []

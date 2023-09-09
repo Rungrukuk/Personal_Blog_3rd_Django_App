@@ -1,5 +1,35 @@
 {% extends "BlogApp/home.html" %}
 
 {% block MiddleSection %}
-<h1>Notifications</h1>
+    <div class="text-header"> 
+        Notifications
+    </div>
+    <div>
+        <hr>
+        <br>
+    </div>
+    <div class="shared-container">
+        <div class="shared-items">
+            {% if Friend_Requests_Info %}
+                {% for result in Friend_Requests_Info %}
+                {% comment %} ! NEED to change the logic {% endcomment %}
+                    <form action="{% url 'search' %}" method="POST">
+                        <div class="shared-item">
+                            {% csrf_token %}
+                            <div class="user-info">
+                                <img class="profile-picture" src="{{ result.picture_path }}" alt="{{ result.username }} Profile Picture">
+                                <span>{{ result.username }}</span>
+                            </div>
+                            <button class="friend-request-button" data-username="{{ result.username }}">Add Friend</button>
+                        </div>
+                    </form>
+
+                {% endfor %}  
+            {% else %}
+                <div class="shared-item">
+                    <span>You have not any notifications</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock MiddleSection %}
