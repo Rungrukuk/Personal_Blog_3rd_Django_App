@@ -112,11 +112,11 @@ def Search(request):
         if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
             friend_request = FriendRequest(from_user=request.user, to_user=to_user)
             friend_request.save()
-            return JsonResponse({'message': 'Friend request sent'})
+            return JsonResponse({'message': 'Friend request sent succesfully.'})
         else:
-            return JsonResponse({'error': 'Friend request already sent'})
+            return JsonResponse({'error': 'Friend request already sent.'})
 
-    return JsonResponse({'error': 'Invalid request'})
+    return JsonResponse({'error': 'Invalid request.'})
 
 
 
