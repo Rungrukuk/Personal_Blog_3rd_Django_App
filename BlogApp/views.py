@@ -110,8 +110,13 @@ def Search(request):
         to_user = User.objects.get(username=to_user_username)
         
         if not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists():
-            friend_request = FriendRequest(from_user=request.user, to_user=to_user)
-            friend_request.save()
+            if  FriendRequest.objects.filter(from_user=to_user, to_user= request.user).exists():
+                friend_request = FriendRequest(from_user=to_user, to_user= request.user)
+                friend_request.accept()
+                friend_request.save()
+            else:
+                friend_request = FriendRequest(from_user=request.user, to_user=to_user)
+                friend_request.save()
             return JsonResponse({'message': 'Friend request sent succesfully.'})
         else:
             return JsonResponse({'error': 'Friend request already sent.'})
