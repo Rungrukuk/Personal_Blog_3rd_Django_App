@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout',views.Logout,name="logout"),
     path('create_vomit',views.Create_vomit,name="create_vomit"),
     path('search', views.Search, name='search'),
+    path('notifications', views.Notifications, name='notifications'),
 ]

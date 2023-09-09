@@ -124,6 +124,13 @@ def Search(request):
     return JsonResponse({'error': 'Invalid request.'})
 
 
+def Notifications(request):
+    # TODO: Implement notifications
+    context = {
+            "Username":request.user.username,
+            "User_Picture_Path": request.user.profile_picture_path,
+        }
+    return render(request,"BlogApp/notifications.html",context)
 
 
 def Login(request):
