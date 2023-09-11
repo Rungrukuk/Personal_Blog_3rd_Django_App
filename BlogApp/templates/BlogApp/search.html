@@ -3,7 +3,7 @@
 {% block head %}
     <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="{% static 'BlogApp/javascript/friend_request.js' %}"></script>
+      <script src="{% static 'BlogApp/javascript/send_friend_request.js' %}"></script>
 {% endblock head %}
 {% block MiddleSection %}
     <div id="message-box" class="hidden-message">
@@ -31,12 +31,11 @@
         <div class="shared-items">
             {% if Users %}
                 {% for result in Users %}
-                {% comment %} ! NEED to change the logic {% endcomment %}
                     <form action="{% url 'search' %}" method="POST">
                         <div class="shared-item">
                             {% csrf_token %}
                             <div class="user-info">
-                                <img class="profile-picture" src="{{ result.profile_picture_path }}" alt="{{ result.username }} Profile Picture">
+                                <img class="profile-picture" src="{{ result.picture_path }}" alt="{{ result.username }} Profile Picture">
                                 <span>{{ result.username }}</span>
                             </div>
                             <button class="friend-request-button" data-username="{{ result.username }}">Add Friend</button>

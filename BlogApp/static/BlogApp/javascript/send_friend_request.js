@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.message) {
-                        button.textContent = "Sent";
+                        button.textContent = "Accepted";
                         button.style.backgroundColor = "green";
                         showMessage(data.message);
                     } else if (data.error) {
