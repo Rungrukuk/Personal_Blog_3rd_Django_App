@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             $.ajax({
                 type: 'POST',
-                url: 'search',
+                url: 'send_friend_request',
                 headers: headers,
                 data: { username: username },
                 dataType: 'json',
                 success: function (data) {
                     if (data.message) {
-                        button.textContent = "Accepted";
+                        button.textContent = "Sent";
                         button.style.backgroundColor = "green";
                         showMessage(data.message);
                     } else if (data.error) {

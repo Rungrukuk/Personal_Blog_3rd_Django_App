@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const createVomitButton = document.getElementById("create-vomit-button");
-    const createVomitUrl = createVomitButton.getAttribute("data-url");
 
     createVomitButton.addEventListener("click", function () {
         const csrftoken = $("[name=csrfmiddlewaretoken]").val();
@@ -47,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         $.ajax({
             type: "POST",
-            url: createVomitUrl,
+            url: 'create_vomit',
             headers: headers,
             data: formData,
             processData: false,
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(response);
                 $("#create-vomit-form")[0].reset();
             
-                // Append the new vomit to the list of vomits
                 const vomitContainer = document.querySelector(".vomits");
                 const newVomit = `
                     <div class="vomit">

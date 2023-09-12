@@ -15,20 +15,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
             $.ajax({
                 type: 'POST',
-                url: 'notifications',
+                url: 'accept_friend_request',
                 headers: headers,
                 data: { username: username },
                 dataType: 'json',
                 success: function (data) {
                     if (data.message) {
-                        button.textContent = "Sent";
+                        button.textContent = "Accepted";
                         button.style.backgroundColor = "green";
                         showMessage(data.message);
-                    } else if (data.error) {
+                    }  
+                    if (data.error) {
                         button.textContent = "Error";
                         button.style.backgroundColor = "red";
                         messageBox.style.backgroundColor = "red";
                         showMessage(data.error);
+                    }
+                    if (data.FriendInfo) {
+                        const friendsContainer = document.querySelector(".friends");
+                        const newFriend = `
+                        <a href="#">
+                            <div class="friend">
+                                <div class="texts">
+                                    ${data.FriendInfo.username}
+                                </div>
+                                <img src="${data.FriendInfo.picture_path}" alt="${data.FriendInfo.username} profile">
+                            </div>
+                        </a>
+                        `;
+                    
+                        friendsContainer.insertAdjacentHTML("afterbegin", newFriend);
                     }
                 },
                 error: function () {
