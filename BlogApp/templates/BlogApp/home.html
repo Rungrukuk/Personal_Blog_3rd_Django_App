@@ -30,163 +30,50 @@
                         </div>
                     </a>
                 {% endfor %}
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
             </div>
-                <div class="left-buttons">
+                <div>
                     <br>
                     <hr>
                     <br>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Settings
-                            </div>
-                            <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                        </div>
-                    </a>
-                    <a href="{% url 'logout' %}">
-                        <div class="friend">
-                            <div class="texts">
-                                Logout
-                            </div>
-                            <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                        </div>
-                    </a>
-                    <div class="profile-button">
-                        <a href="#">
-                            <span class="username">{{Username}}</span>
-                            <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
-                        </a>
-                    </div>
                 </div>
-
+                <a href="#">
+                    <div class="friend">
+                        <div class="texts">
+                            Settings
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <div class="friend">
+                        <div class="texts">
+                            Logout
+                        </div>
+                        <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                    </div>
+                </a>
+                <div class="profile-button">
+                    <a href="#">
+                        <span class="username">{{Username}}</span>
+                        <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
+                    </a>
+                </div>
 
         </div>
 
         <!-- Middle section -->
         <div class="middle-section">
             {% block MiddleSection %}
-                <div class="main-container">
-                    <form action="{% url 'search' %}" method="GET" id="search-bar-form">
-                        <div class="search-bar">
-                            <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
-                            <button type="submit" class="search-button">Search</button>
-                        </div>
-                        <div id="search-results" class="search-results">
-                        </div>
-                    </form>
-                    <br>
+                <form action="{% url 'search' %}" method="GET" id="search-bar-form">
+                    <div class="search-bar">
+                        <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
+                        <button type="submit" class="search-button">Search</button>
+                    </div>
+                    <div id="search-results" class="search-results">
+                    </div>
+                </form>
+                <br>
+                <div class="vomit-container">
                     <!-- ... Create vomit ... -->
                     <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
                         {% csrf_token %}
@@ -204,14 +91,43 @@
                     <!-- ... Vomits ... -->
                     <div class="vomits">
                         <h2>Vomits</h2>
-                        {% for blog in Blog %}
-                            <div class="vomit">
-                                <p>{{blog.title}}</p>
-                                <div class="vomit-image">
-                                    <img src="{{blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                        <div class="vomit">
+                            <p>{{Blog.title}}</p>
+                            <div class="vomit-image">
+                                <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                            </div>
+
+
+                            <div class="button-container">
+                                <button id="commentButton" class="comment-button">
+                                    <div class="comment-circle">
+                                        <div class="comment-image"></div>
+                                    </div>
+                                    <span class="comment-count">0</span>
+                                </button>
+
+                                <button id="likeButton" class="like-button">
+                                    <div class="like-circle">
+                                        <div class="like-image"></div>
+                                    </div>
+                                    <span class="likes-count">0</span>
+                                </button>
+                            </div>
+
+
+                            <div id="comment-box" class="comment-box">
+                                <div class="text-area-container">
+                                    <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                    <button class="comment-submit">Submit</button>
                                 </div>
+                            </div>
+                        </div>
 
-
+                        <div class="vomit">
+                            <p>{{Blog.title}}</p>
+                            <div class="vomit-image">
+                                <img src="{{Blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                            </div>
                                 <div class="button-container">
                                     <button id="commentButton" class="comment-button">
                                         <div class="comment-circle">
@@ -227,17 +143,17 @@
                                         <span class="likes-count">0</span>
                                     </button>
                                 </div>
-
-
                                 <div id="comment-box" class="comment-box">
                                     <div class="text-area-container">
                                         <textarea rows="1" placeholder="Write your comment here..."></textarea>
                                         <button class="comment-submit">Submit</button>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                        </div>
+                    
                     </div>
+
+                    
                 </div>
             {% endblock MiddleSection %}
         </div>
