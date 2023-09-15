@@ -2,13 +2,13 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    email = models.EmailField(max_length=255, null=False, blank=False, default="example@default.com")
-    username = models.CharField(max_length=30, unique=True, null=False, blank=False,default="example_username123")
-    password = models.CharField(max_length=128, null=False, blank=False,default="example_password123")
+    email = models.EmailField(max_length=255, null=False, blank=False, default="")
+    username = models.CharField(max_length=30, unique=True, null=False, blank=False,default="")
+    password = models.CharField(max_length=128, null=False, blank=False,default="")
     profile_picture_path = models.CharField(max_length=255, null=True, blank=True, default="/media/profile_images/default.jpg")
     friends = models.ManyToManyField('self', blank=True, symmetrical=False)
     def remove_friend(self, friend):
-        friend.friends.remove(self) #! fix this bug
+        friend.friends.remove(self) #! fix this 
         self.friends.remove(friend)
 
 

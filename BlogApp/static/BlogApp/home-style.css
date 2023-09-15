@@ -37,7 +37,7 @@ main {
 
 /* * Create vomit section */
 
-.vomit-container {
+.middle-container {
     position: relative; 
     display: flex;
     flex-direction: column;
@@ -128,6 +128,7 @@ main {
 }
 
 #search-bar-form{
+    width: 100%;
     position: sticky;
     top: 0;
     z-index: 1;
@@ -208,11 +209,12 @@ main {
 /* * left-section */
 
 .left-section {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 100% of the viewport height */
     position: sticky;
     top: 0;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
     width: 200px;
     padding-left: 25px;
     border-radius: 10px;
@@ -237,9 +239,13 @@ main {
     color: #fff; 
 }
 
-.friends{
+.left-buttons {
+    flex-shrink: 0; /* Doesn't shrink */
+}
+
+.friends {
+    flex-grow: 1; /* Takes up all available space */
     overflow-y: scroll;
-    height: 650px;
 }
 
 .friend {
