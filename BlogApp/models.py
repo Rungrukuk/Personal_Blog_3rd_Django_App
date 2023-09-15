@@ -8,7 +8,7 @@ class User(AbstractUser):
     profile_picture_path = models.CharField(max_length=255, null=True, blank=True, default="/media/profile_images/default.jpg")
     friends = models.ManyToManyField('self', blank=True, symmetrical=False)
     def remove_friend(self, friend):
-        friend.friends.remove(self) #! fix this bug
+        friend.friends.remove(self)
         self.friends.remove(friend)
 
 
