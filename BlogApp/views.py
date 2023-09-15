@@ -11,10 +11,10 @@ from django.db.models import Q
 
 @login_required(login_url="login")
 def Home(request):
-    blog = BlogPost.objects.first()
+    blog = BlogPost.objects.all().order_by('-id')
     friend_info = []
     for friend in request.user.friends.all():
-        friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
+        friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
     context = {
                 "Blog":blog,
                 "Username":request.user.username,
@@ -53,66 +53,79 @@ def Create_vomit(request):
             
 
 
-def accept_friend_request(request, friend_request_id):
-    #! Need to send POST REQUEST WITH AJAX
-    friend_request = FriendRequest.objects.get(id=friend_request_id)
-    friend_request.accept()
-    return redirect('profile_page')
+def send_friend_request(request):
+    if request.method == "POST":
+        to_user_username = request.POST.get("username", '')
+        to_user = User.objects.get(username=to_user_username)
+        reverse_friend_request = FriendRequest.objects.filter(from_user__exact=to_user, to_user__exact=request.user)
+        friend_request = FriendRequest.objects.filter(from_user__exact=request.user, to_user__exact=to_user)
+        #! Need to add groups too
+        if  len(reverse_friend_request)>0:
+            if not reverse_friend_request[0].is_accepted:
+                reverse_friend_request[0].accept()
+                return JsonResponse({'message': 'Friend request sent succesfully.'})
+            else:
+                return JsonResponse({'error': 'Friend request already sent.'})
+        else:
+            if  len(friend_request)>0:
+                return JsonResponse({'error': 'Friend request already sent.'})
+            else:
+                FriendRequest(from_user=request.user, to_user=to_user).save()
+                return JsonResponse({'message': 'Friend request sent succesfully.'})
+        
 
+    return JsonResponse({'error': 'Invalid request.'}) # TODO change this to 404 Not found
+
+def accept_friend_request(request):
+    if request.method == "POST":
+        #! Need to implement groups
+        from_username = request.POST.get("username", '')
+        from_user = User.objects.get(username=from_username)
+        friend_request = FriendRequest.objects.get(from_user=from_user, to_user = request.user)
+        if friend_request and friend_request.is_accepted == False:
+            friend_request.accept()
+            return JsonResponse({
+                'message': 'Friend request accepted',
+                'FriendInfo': {'username': from_username, 'picture_path': from_user.profile_picture_path}
+                })
+        else:
+            return JsonResponse({'error': 'Friend request expired'})
+
+    return JsonResponse({'error': 'Invalid request.'})# TODO change this to 404 Not found
 
 
 @login_required(login_url="login")
 def Search(request):
     if request.method ==  "GET":  
         search_keyword = request.GET.get('searchKeyword','')
-        friend_info = []
-        for friend in request.user.friends.all():
-            friend_info.append({'Username':friend.username, 'Picture_Path':friend.profile_picture_path})
         if search_keyword:
             users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
-            #! Need to implement groups
-
-            context = {
-                    #! Need to add groups too
-                    "Search_Keyword":search_keyword,
-                    "Users":users,
-                    "Username":request.user.username,
-                    "User_Picture_Path": request.user.profile_picture_path,
-                    "Friends_Info": friend_info,
-                }
-            return render(request,"BlogApp/search.html",context)
-        context = {
-                    "SearchKeyword":search_keyword,
-                    "Username":request.user.username,
-                    "User_Picture_Path": request.user.profile_picture_path,
-                    "Friends_Info": friend_info,
-                }
-        return render(request,"BlogApp/search.html",context)
-    elif request.method == "POST":
-        to_user_username = request.POST.get("username", '')
-        to_user = User.objects.get(username=to_user_username)
-
-        if  FriendRequest.objects.filter(from_user=to_user, to_user= request.user).exists() and not FriendRequest.objects.get(from_user=to_user, to_user= request.user).is_accepted:
-            friend_request = FriendRequest(from_user=to_user, to_user= request.user)
-            friend_request.accept()
-            return JsonResponse({'message': 'Friend request sent succesfully.'})
-        elif not FriendRequest.objects.filter(from_user=request.user, to_user=to_user).exists() and not FriendRequest.objects.filter(from_user=to_user, to_user= request.user).exists():
-            friend_request = FriendRequest(from_user=request.user, to_user=to_user)
-            friend_request.save()
-            return JsonResponse({'message': 'Friend request sent succesfully.'})
+            if users:
+                users_info = []
+                for user in users:
+                    users_info.append({'username':user.username, 'picture_path':user.profile_picture_path})
+                context = {"Search_Keyword":search_keyword,"Users":users_info,} | CreateContext(request)
+                return render(request,"BlogApp/search.html",context)
+            context = {"SearchKeyword":search_keyword} | CreateContext(request)
         else:
-            return JsonResponse({'error': 'Friend request already sent.'})
-
-    return JsonResponse({'error': 'Invalid request.'})
+            context = CreateContext(request)
+        return render(request,"BlogApp/search.html",context)
 
 
 def Notifications(request):
-    # TODO: Implement notifications
-    context = {
-            "Username":request.user.username,
-            "User_Picture_Path": request.user.profile_picture_path,
-        }
-    return render(request,"BlogApp/notifications.html",context)
+    if request.method == 'GET':
+        friend_requests = FriendRequest.objects.filter(to_user=request.user, is_accepted=False)
+        friend_requests_info = []
+        for friend in friend_requests:
+            friend_requests_info.append({'username':friend.from_user.username, 'picture_path':friend.from_user.profile_picture_path})
+
+        if friend_requests_info:
+            context = {"Friend_Requests_Info": friend_requests_info} | CreateContext(request)
+        else:
+            
+            context = CreateContext
+    
+        return render(request,"BlogApp/notifications.html",context)
 
 
 def Login(request):
@@ -194,3 +207,20 @@ def Register(request):
 def Logout(request):
     logout(request)
     return redirect('home')
+
+
+
+
+
+
+
+def CreateContext(request):
+    friend_info = []
+    for friend in request.user.friends.all():
+        friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
+    context = {
+            "Username":request.user.username,
+            "User_Picture_Path": request.user.profile_picture_path,
+            "Friends_Info": friend_info,
+        }
+    return context

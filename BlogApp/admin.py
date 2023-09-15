@@ -1,9 +1,21 @@
 from django.contrib import admin
-
 from .models import User, Comment, Like, BlogPost, FriendRequest
+from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
-my_models = [User,Comment,Like,BlogPost, FriendRequest]
+admin.site.register(Comment)
+admin.site.register(Like)
+admin.site.register(BlogPost)
+admin.site.register(FriendRequest)
+class FriendsInline(admin.TabularInline):  
+    model = User.friends.through  
+    fk_name = 'from_user'  
+    extra = 0 
 
-for my_model in my_models:
-    admin.site.register(my_model)
+class UserAdmin(DefaultUserAdmin):
+    inlines = [FriendsInline]
+    exclude = ('friends',)  
+
+admin.site.register(User, UserAdmin)
+
+
 
