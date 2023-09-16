@@ -1,5 +1,5 @@
 import os, re, uuid
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from PersonalBlog import settings
 from .models import BlogPost,User, FriendRequest
@@ -10,20 +10,15 @@ from django.contrib.auth.hashers import make_password
 from django.db.models import Q
 
 @login_required(login_url="login")
-def Home(request):
+def Home(request) -> HttpResponse:
     blog = BlogPost.objects.all().order_by('-id')
     friend_info = []
     for friend in request.user.friends.all():
         friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
-    context = {
-                "Blog":blog,
-                "Username":request.user.username,
-                "User_Picture_Path": request.user.profile_picture_path,
-                "Friends_Info": friend_info,
-            }
+    context = {"Blog":blog} | CreateContext(request)
     return render(request,"BlogApp/home.html",context)
 
-def Create_vomit(request):
+def Create_vomit(request) -> JsonResponse:
     if request.method == 'POST':
         user = request.user 
         title = request.POST.get('title', '')
@@ -52,8 +47,7 @@ def Create_vomit(request):
     return JsonResponse({'error': 'Invalid request method'})
             
 
-
-def send_friend_request(request):
+def send_friend_request(request) -> JsonResponse:
     if request.method == "POST":
         to_user_username = request.POST.get("username", '')
         to_user = User.objects.get(username=to_user_username)
@@ -76,7 +70,7 @@ def send_friend_request(request):
 
     return JsonResponse({'error': 'Invalid request.'}) # TODO change this to 404 Not found
 
-def accept_friend_request(request):
+def accept_friend_request(request) -> JsonResponse:
     if request.method == "POST":
         #! Need to implement groups
         from_username = request.POST.get("username", '')
@@ -94,8 +88,8 @@ def accept_friend_request(request):
     return JsonResponse({'error': 'Invalid request.'})# TODO change this to 404 Not found
 
 
-@login_required(login_url="login")
-def Search(request):
+def Search(request) -> HttpResponse:
+    context={}
     if request.method ==  "GET":  
         search_keyword = request.GET.get('searchKeyword','')
         if search_keyword:
@@ -105,14 +99,16 @@ def Search(request):
                 for user in users:
                     users_info.append({'username':user.username, 'picture_path':user.profile_picture_path})
                 context = {"Search_Keyword":search_keyword,"Users":users_info,} | CreateContext(request)
-                return render(request,"BlogApp/search.html",context)
+
             context = {"SearchKeyword":search_keyword} | CreateContext(request)
         else:
             context = CreateContext(request)
-        return render(request,"BlogApp/search.html",context)
+
+    return render(request,"BlogApp/search.html",context)
 
 
-def Notifications(request):
+def Notifications(request) -> HttpResponse:
+    context = {}
     if request.method == 'GET':
         friend_requests = FriendRequest.objects.filter(to_user=request.user, is_accepted=False)
         friend_requests_info = []
@@ -122,13 +118,12 @@ def Notifications(request):
         if friend_requests_info:
             context = {"Friend_Requests_Info": friend_requests_info} | CreateContext(request)
         else:
-            
             context = CreateContext
     
-        return render(request,"BlogApp/notifications.html",context)
+    return render(request,"BlogApp/notifications.html",context)
 
 
-def Login(request):
+def Login(request) -> HttpResponse:
     if request.method == "POST":
         form = AuthenticationForm(request,request.POST)
         if form.is_valid():
@@ -141,8 +136,8 @@ def Login(request):
             return render(request,"BlogApp/login.html",context)
     return render(request,"BlogApp/login.html")
 
-
-def Register(request):
+def Register(request) -> HttpResponse:
+    context = {}
     if request.method == 'POST':
         email = request.POST.get('mail')
         username = request.POST.get('username')
@@ -182,7 +177,6 @@ def Register(request):
             inputs['re_password'] = re_password
 
 
-
         if not errors:
             user = User(email=email, username=username, password=make_password(password))
             user.save()
@@ -193,24 +187,35 @@ def Register(request):
                 'Errors': errors,
                 'Inputs': inputs
             }
-            return render(request, 'BlogApp/register.html', context)
-            
-
     else:
         errors = {}
         errors['login'] = "Unknown error occured. Please try gain later"
         context = {
             'Errors': errors
         }
-        return render(request, 'BlogApp/register.html', context)
+    return render(request, 'BlogApp/register.html', context)
 
-def Logout(request):
+def Logout(request) -> HttpResponse:
     logout(request)
     return redirect('home')
 
 
+def User_Profile(request, username: str) -> HttpResponse:
+    context = {}
+    if request.method == 'GET' and username:
+        user = User.objects.get(username=username)
 
-def CreateContext(request):
+
+
+        context = CreateContext | {
+                    "Username": user.username,
+                    "User_Picture_Path": user.profile_picture_path
+                    }
+        
+    return render(request, 'BlogApp/user_profile.html',context)
+
+
+def CreateContext(request)-> dict[str,any]:
     friend_info = []
     for friend in request.user.friends.all():
         friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})

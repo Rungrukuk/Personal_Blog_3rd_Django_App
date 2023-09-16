@@ -11,5 +11,5 @@ urlpatterns = [
     path('notifications', views.Notifications, name='notifications'),
     path('send_friend_request', views.send_friend_request, name='send_friend_request'),
     path('accept_friend_request', views.accept_friend_request, name='accept_friend_request'),
-
+    path('user_profile/<str:username>', views.User_Profile, name='user_profile'),
 ]

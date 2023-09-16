@@ -1,12 +1,9 @@
 {% extends 'BlogApp/base.html' %}
 {% load static %}
 {% block head %}
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
     <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
-    
 {% endblock head %}
 
 {% block content %}
@@ -30,14 +27,6 @@
                         </div>
                     </a>
                 {% endfor %}
-                    {% comment %} <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
                     <a href="#">
                         <div class="friend">
                             <div class="texts">
@@ -141,7 +130,15 @@
                             </div>
                             <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
                         </div>
-                    </a> {% endcomment %}
+                    </a>
+                    <a href="#">
+                        <div class="friend">
+                            <div class="texts">
+                                Rungrukuk
+                            </div>
+                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
+                        </div>
+                    </a>
             </div>
                 <div class="left-buttons">
                     <br>
@@ -178,29 +175,31 @@
         <div class="middle-section">
             {% block MiddleSection %}
                 <div class="main-container">
-                    <form action="{% url 'search' %}" method="GET" id="search-bar-form">
-                        <div class="search-bar">
-                            <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
-                            <button type="submit" class="search-button">Search</button>
-                        </div>
-                        <div id="search-results" class="search-results">
-                        </div>
-                    </form>
-                    <br>
-                    <!-- ... Create vomit ... -->
-                    <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
-                        {% csrf_token %}
-                        <div class = "create-vomit">
-                            <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
-                            <div class = "create-vomit-buttons">
-                                <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
-                                <label for="fileInput" class="image-label">
-                                    <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
-                                </label>
-                                <button class="vomit-submit" id="create-vomit-button" type="button">Submit</button>
+                    <div class="vomit-container">
+                        <form action="{% url 'search' %}" method="GET" id="search-bar-form">
+                            <div class="search-bar">
+                                <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
+                                <button type="submit" class="search-button">Search</button>
                             </div>
-                        </div>
-                    </form>
+                            <div id="search-results" class="search-results">
+                            </div>
+                        </form>
+                        <br>
+                        <!-- ... Create vomit ... -->
+                        <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
+                            {% csrf_token %}
+                            <div class = "create-vomit">
+                                <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
+                                <div class = "create-vomit-buttons">
+                                    <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
+                                    <label for="fileInput" class="image-label">
+                                        <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
+                                    </label>
+                                    <button class="vomit-submit" id="create-vomit-button" type="button">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <!-- ... Vomits ... -->
                     <div class="vomits">
                         <h2>Vomits</h2>
