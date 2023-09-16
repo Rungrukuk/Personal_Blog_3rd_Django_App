@@ -99,8 +99,9 @@ def Search(request) -> HttpResponse:
                 for user in users:
                     users_info.append({'username':user.username, 'picture_path':user.profile_picture_path})
                 context = {"Search_Keyword":search_keyword,"Users":users_info,} | CreateContext(request)
-
-            context = {"SearchKeyword":search_keyword} | CreateContext(request)
+                print(context)
+            else:
+                context = {"SearchKeyword":search_keyword} | CreateContext(request)
         else:
             context = CreateContext(request)
 
@@ -118,8 +119,8 @@ def Notifications(request) -> HttpResponse:
         if friend_requests_info:
             context = {"Friend_Requests_Info": friend_requests_info} | CreateContext(request)
         else:
-            context = CreateContext
-    
+            context = CreateContext(request)
+
     return render(request,"BlogApp/notifications.html",context)
 
 
@@ -215,7 +216,7 @@ def User_Profile(request, username: str) -> HttpResponse:
     return render(request, 'BlogApp/user_profile.html',context)
 
 
-def CreateContext(request)-> dict[str,any]:
+def CreateContext(request) -> dict[str,any]:
     friend_info = []
     for friend in request.user.friends.all():
         friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
