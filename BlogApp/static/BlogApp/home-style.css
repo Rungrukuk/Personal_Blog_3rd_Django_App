@@ -38,12 +38,15 @@ main {
 
 
 .vomit-container {
-    background-color: rgba(15, 15, 15, 0.85);
+    /* background-color: rgba(15, 15, 15, 0.85);
     position: sticky;
     top: 0;
     width: 100%;
     display: flex;
     align-items: center; 
+    flex-direction: column; */
+    position: relative; 
+    display: flex;
     flex-direction: column;
 }
 
@@ -210,19 +213,19 @@ main {
 /* * left-section */
 
 .left-section {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     position: sticky;
     top: 0;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    width: 13%;
+    width: 200px;
     padding-left: 25px;
     border-radius: 10px;
-    margin-right: 20px;
+    color: #fff; 
 }
 
 .left-section a{
-    
     display: block;
     text-decoration: none;
     margin-bottom: 10px;
@@ -238,10 +241,13 @@ main {
     background-color: lightslategray;
     color: #fff; 
 }
+.left-buttons {
+    flex-shrink: 0;
+}
 
 .friends{
     overflow-y: scroll;
-    height: 650px;
+    flex-grow: 1;
 }
 
 .friend {
