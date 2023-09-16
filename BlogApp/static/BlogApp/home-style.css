@@ -37,16 +37,13 @@ main {
 
 
 
-.vomit-container {
-    /* background-color: rgba(15, 15, 15, 0.85);
+.forms-container {
+    background-color: rgba(15, 15, 15, 0.85);
     position: sticky;
     top: 0;
     width: 100%;
     display: flex;
     align-items: center; 
-    flex-direction: column; */
-    position: relative; 
-    display: flex;
     flex-direction: column;
 }
 
@@ -219,8 +216,8 @@ main {
     position: sticky;
     top: 0;
     z-index: 1;
-    width: 200px;
-    padding-left: 25px;
+    width: 13%;
+    padding-right: 25px;
     border-radius: 10px;
     color: #fff; 
 }
@@ -490,14 +487,16 @@ main {
 }
 
 .navigation {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     position: sticky;
     top: 0;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    width: 200px;
+    width: 13%;
+    padding-left: 25px;
     border-radius: 10px;
-    margin-right: 20px;
+    color: #fff; 
 }
 
 .navigation-link {
