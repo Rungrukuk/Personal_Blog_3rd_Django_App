@@ -33,7 +33,7 @@ def Create_vomit(request) -> JsonResponse:
                 for chunk in blog_image.chunks():
                     destination.write(chunk)
             
-            blog_post = BlogPost(user=user, title=title, blog_image_url=f'media/blog_images/{unique_filename}')
+            blog_post = BlogPost(user=user, title=title, blog_image_url=f'/media/blog_images/{unique_filename}')
             blog_post.save()
 
             return JsonResponse({
@@ -204,14 +204,16 @@ def Logout(request) -> HttpResponse:
 def User_Profile(request, username: str) -> HttpResponse:
     context = {}
     if request.method == 'GET' and username:
-        user = User.objects.get(username=username)
-
-
-
-        context = CreateContext | {
-                    "Username": user.username,
-                    "User_Picture_Path": user.profile_picture_path
-                    }
+        profile = User.objects.get(username=username)
+        profile_posts = BlogPost.objects.filter(user=profile)
+        context = CreateContext(request) | {
+            "Profile_Username": profile.username,
+            "Profile_Email": profile.email,
+            "Profile_Picture_Path": profile.profile_picture_path,
+            "Thumbnail_Picture_Path": profile.thumbnail_picture_path,
+            "Member_Since": profile.date_joined.strftime('%B %e, %Y'),
+            "Profile_Posts": profile_posts
+        }
         
     return render(request, 'BlogApp/user_profile.html',context)
 

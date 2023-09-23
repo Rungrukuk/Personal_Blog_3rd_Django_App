@@ -1,2 +1,32 @@
-{% extends 'BlogApp/base.html' %}
+{% extends 'BlogApp/home.html' %}
 {% load static %}
+{% block MiddleSection %}
+
+<div class="profile-section">
+    <div class="profile-thumbnail" style="background-image: url('{{ Thumbnail_Picture_Path }}') ;"></div>
+    <div class="profile-info">
+        <img class="profile-image" src="{{ Profile_Picture_Path }}" alt="Profile Image">
+        <div class="profile-texts">
+            <div class="profile-username">{{ Profile_Username }}</div>
+            <div class="profile-member-since">Member Since: {{ Member_Since }}</div>
+        </div>
+        
+    </div>
+    <!-- Profile Posts -->
+    <div class="profile-posts">
+        <h3>Posts</h3>
+        {% for blog in Profile_Posts %}
+        <div class="vomit">
+            <p>{{blog.title}}</p>
+            <div class="vomit-image">
+                <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+{% endblock MiddleSection %}

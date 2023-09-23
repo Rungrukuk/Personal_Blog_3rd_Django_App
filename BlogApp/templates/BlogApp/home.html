@@ -18,7 +18,7 @@
                 </div>
             <div class="friends">
                 {% for friend in Friends_Info %}
-                    <a href="#">
+                    <a href="{% url 'user_profile' friend.username%}">
                         <div class="friend">
                             <div class="texts">
                                 {{friend.username}}
@@ -27,118 +27,6 @@
                         </div>
                     </a>
                 {% endfor %}
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Rungrukuk
-                            </div>
-                            <img src="/media/profile_images/default.jpg" alt="Rungrukuk profile">
-                        </div>
-                    </a>
             </div>
                 <div class="left-buttons">
                     <br>
@@ -149,7 +37,7 @@
                             <div class="texts">
                                 Settings
                             </div>
-                            <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                            <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
                         </div>
                     </a>
                     <a href="{% url 'logout' %}">
@@ -157,7 +45,7 @@
                             <div class="texts">
                                 Logout
                             </div>
-                            <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                            <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
                         </div>
                     </a>
                     <div class="profile-button">
@@ -209,7 +97,7 @@
                             <div class="vomit">
                                 <p>{{blog.title}}</p>
                                 <div class="vomit-image">
-                                    <img src="{{blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                                    <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
                                 </div>
 
 
@@ -258,7 +146,7 @@
                         Notifications   
                     </div>
                 </a>
-                <a href="#" class = "navigation-link" >
+                <a href="{% url 'user_profile' Username %}" class = "navigation-link" >
                     <div  class="texts" > 
                         Profile   
                     </div>
