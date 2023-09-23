@@ -46,6 +46,7 @@ main {
     display: flex;
     align-items: center; 
     flex-direction: column;
+    z-index: 1;
 }
 
 #search-bar-form{
@@ -68,7 +69,7 @@ main {
     width: 100%;
     position: sticky;
     top: 40px;
-    z-index: 1;
+    z-index: 2;
 }
 
 .create-vomit {
@@ -176,8 +177,49 @@ main {
     border-radius: 50%;
     margin-right: 10px;
 }
+.profile-button {
+    position:relative;
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 2;
+}
 
-/* Style for the usernames */
+.profile-button a {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    background-color: #1DA1F2;
+    color: #fff;
+    border-radius: 20px;
+    width: 100%;
+    height: 40px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.profile-button a:hover {
+    background-color: #0f81c7;
+}
+
+.profile-button img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute; 
+    right: 10px; 
+    top: 5px; 
+}
+
+.profile-button span {
+    position: absolute; 
+    left: 20px;
+    font-size: 23px;
+}
+
 .username {
     max-width: 130px;
     overflow: hidden;
@@ -208,7 +250,6 @@ main {
     font-weight: bold;
 }
 
-/* * left-section */
 
 .left-section {
     display: flex;
@@ -476,16 +517,134 @@ main {
     background-color: #0f81c7;
 }
 
-.sidebar {
-    position: fixed;
-    bottom: 0;
-    right: 20px;
+/* ----------------------------------------------------------------*/
+.comments {
+    overflow-y: scroll;
+    width: 100%;
+    margin-top: 10px;
+    height: 130px;
+}
+
+.comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+
+}
+
+.user-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-content {
+    z-index: 0;
+    height: 120px;
+    width: 90%;
+    background-color: rgb(26, 26, 26);
+    padding: 10px 0px 0px 10px;
+    border-radius: 8px;
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    z-index: 2;
-    height: 100vh;
+    align-items: flex-start;
 }
+
+.comment-username {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: lightslategray;
+}
+.comment-span{
+    display: flex;
+    align-items: center;
+}
+.reply-to {
+    margin-left: 10px;
+    font-size: 0.6em;
+    color: white;
+}
+
+.replied-username {
+    margin-left: 7px;
+    font-size: 1.3em;
+    color: lightslategray;
+    font-weight: bold;
+}
+
+.comment-text {
+    text-align: left;
+    font-size: smaller;
+    color: #777777;
+    overflow-y: scroll;
+}
+
+
+.like-button-comment {
+    padding: 0px;
+    margin-bottom: 4px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+}
+.like-button-comment:hover .like-circle{
+    background-color: rgba(255, 20, 134, 0.158);
+}
+
+.like-button-comment:hover .likes-count{
+    color: rgb(255, 20, 135);
+}
+
+.like-button-comment.liked .likes-count{
+    color: rgb(255, 20, 135);
+}
+
+.like-button-comment:hover {
+    background-color: transparent
+}
+
+.like-button-comment:hover .like-image{
+    background-image: url('images/unlike-hover.png');
+}
+
+.like-button-comment .like-circle {
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+}
+
+.like-button-comment .like-image {
+    background-image: url('images/unlike.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.like-button-comment .likes-count {
+    font-weight: bold;
+    color: rgb(116, 116, 116);
+}
+
+.like-button-comment.liked .like-image {
+    background-image: url('images/like.png');
+}
+
+
+/* ----------------------------------------------------------------*/
+/* * Navigation */
 
 .navigation {
     display: flex;
@@ -518,48 +677,6 @@ main {
     color: #fff; 
 }
 
-.profile-button {
-    position:relative;
-    margin-top: 1%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    z-index: 2;
-}
-
-.profile-button a {
-    position: relative; 
-    display: flex;
-    align-items: center;
-    background-color: #1DA1F2;
-    color: #fff;
-    border-radius: 20px;
-    width: 100%;
-    height: 40px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.profile-button a:hover {
-    background-color: #0f81c7;
-}
-
-.profile-button img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    position: absolute; 
-    right: 10px; 
-    top: 5px; 
-}
-
-.profile-button span {
-    position: absolute; 
-    left: 20px;
-    font-size: 23px;
-}
 
 
 
@@ -779,16 +896,31 @@ main {
     .left-section{
         height: 94vh;
         width: 20%;
+        padding-left: 5%;
+    }
+    .navigation{
+        height: 94vh;
+        padding-right: 10%;
+    }
+
+  }
+  @media (min-width: 768px) and (orientation: landscape) {
+    body {
+      font-size: 18px;
+
+    }
+    .left-section{
+        height: 94vh;
+        width: 20%;
         padding-left: 0%;
     }
     .navigation{
         height: 94vh;
-        width: 20%;
+
         padding-right: 0%;
     }
 
   }
-  
   
   /* Media Query for Small Laptops */
   @media (min-width: 1024px) and (orientation: landscape) {
@@ -796,11 +928,15 @@ main {
         font-size: 22px; 
       }
       .left-section{
-          height: 100vh;
-      }
-      .navigation{
-          height: 100vh;
-      }
+        height: 94vh;
+        width: 20%;
+        padding-left: 10%;
+    }
+    .navigation{
+        height: 94vh;
+        width: 20%;
+        padding-right: 10%;
+    }
   
 
   }
@@ -811,10 +947,56 @@ main {
       font-size: 22px; 
     }
     .left-section{
-        height: 100vh;
+        height: 94vh;
+        width: 20%;
+        padding-left: 10%;
     }
     .navigation{
-        height: 100vh;
+        height: 94vh;
+        width: 20%;
+        padding-right: 10%;
     }
 
   }
+
+    /* !Media Query for Desktops (Landscape) */
+    @media (min-width: 1280px) and (orientation: landscape) {
+        .left-section{
+            height: 94vh;
+            width: 20%;
+            padding-left: 10%;
+        }
+        .navigation{
+            height: 94vh;
+            width: 20%;
+            padding-right: 10%;
+        }
+    
+      }
+          /* !Media Query for Desktops (Landscape) */
+    @media (min-width: 1500px) and (orientation: landscape) {
+        .left-section{
+            height: 100vh;
+            width: 20%;
+            padding-left: 15%;
+        }
+        .navigation{
+            height: 100vh;
+            width: 20%;
+            padding-right: 15%;
+        }
+    
+      }
+      @media (min-width: 1700px) and (orientation: landscape) {
+        .left-section{
+            height: 100vh;
+            width: 10%;
+            padding-left: 15%;
+        }
+        .navigation{
+            height: 100vh;
+            width: 10%;
+            padding-right: 15%;
+        }
+    
+      }

@@ -1,5 +1,11 @@
 {% extends 'BlogApp/home.html' %}
 {% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'BlogApp/javascript/accept_friend_request.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
+{% endblock head %}
 {% block MiddleSection %}
 
 <div class="profile-section">
@@ -10,17 +16,59 @@
             <div class="profile-username">{{ Profile_Username }}</div>
             <div class="profile-member-since">Member Since: {{ Member_Since }}</div>
         </div>
-        
     </div>
     <!-- Profile Posts -->
     <div class="profile-posts">
-        <h3>Posts</h3>
+        <h2>Vomits</h2>
         {% for blog in Profile_Posts %}
         <div class="vomit">
             <p>{{blog.title}}</p>
             <div class="vomit-image">
                 <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
             </div>
+            <div class="comments">
+                <div class="comment">
+                    <img class="user-profile" src="path_to_user_image.jpg" alt="User Name">
+                    <div class="comment-content">
+                        <span class="username">User Name</span>
+                        <span class="reply-to">replies to <span class="replied-username">Another User</span></span>
+                        <p class="comment-text">This is the comment text...</p>
+                        <div class="comment-actions">
+                            <button class="like-button-comment">
+                                <div class="like-circle-comment">
+                                    <div class="like-image-comment"></div>
+                                </div>
+                                <span class="likes-count-comment">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button id="commentButton" class="comment-button">
+                    <div class="comment-circle">
+                        <div class="comment-image"></div>
+                    </div>
+                    <span class="comment-count">0</span>
+                </button>
+
+                <button id="likeButton" class="like-button">
+                    <div class="like-circle">
+                        <div class="like-image"></div>
+                    </div>
+                    <span class="likes-count">0</span>
+                </button>
+            </div>
+
+
+            <div id="comment-box" class="comment-box">
+                <div class="text-area-container">
+                    <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                    <button class="comment-submit">Submit</button>
+                </div>
+            </div>
+
         </div>
         {% endfor %}
     </div>

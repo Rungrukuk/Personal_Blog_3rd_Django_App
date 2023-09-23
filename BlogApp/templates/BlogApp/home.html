@@ -90,9 +90,8 @@
                     </div>
                     <br>
                     <!-- ... Vomits ... -->
+                    <h2>Vomits</h2>
                     <div class="vomits">
-
-                        <h2>Vomits</h2>
                         {% for blog in Blog %}
                             <div class="vomit">
                                 <p>{{blog.title}}</p>
@@ -100,6 +99,43 @@
                                     <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
                                 </div>
 
+                                <div class="comments">
+                                    <div class="comment">
+                                        <img class="user-profile" src="{{ User_Picture_Path }}" alt="User Name">
+                                        <div class="comment-content">
+                                            <div class="comment-span">
+                                                <span class="comment-username">User Name</span>
+                                                <span class="reply-to"> replies to <span class="replied-username">Another User</span></span>
+                                            </div>
+                                            
+                                            <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
+                                                <button class="like-button-comment">
+                                                    <div class="like-circle">
+                                                        <div class="like-image"></div>
+                                                    </div>
+                                                    <span class="likes-count">0</span>
+                                                </button>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <img class="user-profile" src="{{ User_Picture_Path }}" alt="User Name">
+                                        <div class="comment-content">
+                                            <div class="comment-span">
+                                                <span class="comment-username">User Name   </span>
+                                                <span class="reply-to">replies to   <span class="replied-username">Another User</span></span>
+                                            </div>
+                                            
+                                            <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
+                                                <button class="like-button-comment">
+                                                    <div class="like-circle">
+                                                        <div class="like-image"></div>
+                                                    </div>
+                                                    <span class="likes-count">0</span>
+                                                </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
 
                                 <div class="button-container">
                                     <button id="commentButton" class="comment-button">

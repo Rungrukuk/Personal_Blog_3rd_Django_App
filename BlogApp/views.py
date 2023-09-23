@@ -205,7 +205,7 @@ def User_Profile(request, username: str) -> HttpResponse:
     context = {}
     if request.method == 'GET' and username:
         profile = User.objects.get(username=username)
-        profile_posts = BlogPost.objects.filter(user=profile)
+        profile_posts = BlogPost.objects.filter(user=profile).order_by('-id')
         context = CreateContext(request) | {
             "Profile_Username": profile.username,
             "Profile_Email": profile.email,
