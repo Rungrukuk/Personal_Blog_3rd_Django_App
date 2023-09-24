@@ -33,6 +33,7 @@ MEDIA_URL = '/media/'
 
 ASGI_APPLICATION = 'PersonalBlog.asgi.application'
 
+
 # Application definition
 
 
@@ -47,7 +48,16 @@ INSTALLED_APPS = [
     "channels",
     'BlogApp',
 ]
-STATIC_URL = 'static/'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'BlogApp', 'static')]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,6 +136,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

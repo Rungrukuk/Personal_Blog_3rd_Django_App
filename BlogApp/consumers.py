@@ -1,7 +1,7 @@
-import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+import json
 
-class NotificationConsumer(AsyncWebsocketConsumer):
+class MyConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         await self.accept()
 
@@ -9,5 +9,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         pass
 
     async def receive(self, text_data):
-        # Handle received data
-        pass
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+        await self.send(text_data=json.dumps({'message': message}))
