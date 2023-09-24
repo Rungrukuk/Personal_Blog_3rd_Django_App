@@ -1,11 +1,15 @@
 {% extends 'BlogApp/home.html' %}
 {% load static %}
-{% block head %}
-    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+{% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'BlogApp/javascript/accept_friend_request.js' %}"></script>
-    <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
-{% endblock head %}
+    <script src="{% static 'BlogApp/javascript/home/home.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_requests.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
+{% endblock javascripts %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+{% endblock styles %}
 {% block MiddleSection %}
 
 <div class="profile-section">
@@ -28,19 +32,37 @@
             </div>
             <div class="comments">
                 <div class="comment">
-                    <img class="user-profile" src="path_to_user_image.jpg" alt="User Name">
+                    <img class="user-profile" src="{{ User_Picture_Path }}" alt="User Name">
                     <div class="comment-content">
-                        <span class="username">User Name</span>
-                        <span class="reply-to">replies to <span class="replied-username">Another User</span></span>
-                        <p class="comment-text">This is the comment text...</p>
-                        <div class="comment-actions">
-                            <button class="like-button-comment">
-                                <div class="like-circle-comment">
-                                    <div class="like-image-comment"></div>
-                                </div>
-                                <span class="likes-count-comment">0</span>
-                            </button>
+                        <div class="comment-span">
+                            <span class="comment-username">User Name</span>
+                            <span class="reply-to"> replies to <span class="replied-username">Another User</span></span>
                         </div>
+                        
+                        <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
+                            <button class="like-button-comment">
+                                <div class="like-circle">
+                                    <div class="like-image"></div>
+                                </div>
+                                <span class="likes-count">0</span>
+                            </button>
+                    </div>
+                </div>
+                <div class="comment">
+                    <img class="user-profile" src="{{ User_Picture_Path }}" alt="User Name">
+                    <div class="comment-content">
+                        <div class="comment-span">
+                            <span class="comment-username">User Name</span>
+                            <span class="reply-to"> replies to <span class="replied-username">Another User</span></span>
+                        </div>
+                        
+                        <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
+                            <button class="like-button-comment">
+                                <div class="like-circle">
+                                    <div class="like-image"></div>
+                                </div>
+                                <span class="likes-count">0</span>
+                            </button>
                     </div>
                 </div>
             </div>

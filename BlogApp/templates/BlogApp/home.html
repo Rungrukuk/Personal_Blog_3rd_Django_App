@@ -1,10 +1,15 @@
 {% extends 'BlogApp/base.html' %}
 {% load static %}
-{% block head %}
+{% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/home.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_requests.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
+{% endblock javascripts %}
+
+{% block styles %}
     <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
-{% endblock head %}
+{% endblock styles %}
 
 {% block content %}
 

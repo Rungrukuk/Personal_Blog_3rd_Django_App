@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 MEDIA_ROOT = 'C:/Users/Rungrukuk/DjangoProjects/MediaFolderForPersonalBlog/'
 MEDIA_URL = '/media/'
 
-
+ASGI_APPLICATION = 'PersonalBlog.asgi.application'
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    "channels",
     'BlogApp',
 ]
 STATIC_URL = 'static/'

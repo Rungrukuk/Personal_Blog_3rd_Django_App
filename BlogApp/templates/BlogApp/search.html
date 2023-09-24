@@ -1,10 +1,14 @@
 {% extends "BlogApp/home.html" %}
 {% load static %}
-{% block head %}
-    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+{% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="{% static 'BlogApp/javascript/send_friend_request.js' %}"></script>
-{% endblock head %}
+    <script src="{% static 'BlogApp/javascript/search/handle_ajax_requests.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
+{% endblock javascripts %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+{% endblock styles %}
 {% block MiddleSection %}
     <div id="message-box" class="hidden-message">
         <div id="message-content"></div>
