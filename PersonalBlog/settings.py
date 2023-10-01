@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-MEDIA_ROOT = 'C:/Users/Rungrukuk/DjangoProjects/MediaFolderForPersonalBlog/'
+MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
 
 ASGI_APPLICATION = 'PersonalBlog.asgi.application'
