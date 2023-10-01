@@ -29,13 +29,12 @@
                             <img src="{{friend.picture_path}}" alt="{{friend.username}} profile">
                         </div>
                         <div class="friend-actions">
-                            <button>Button 1</button>
-                            <button>Button 2</button>
+                            <a href="{% url 'user_profile' friend.username %}" class="friend-buttons" >Profile</a>
+                            <button class="friend-buttons" >Chat</button>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-            
             
             <div class="left-buttons">
                 <br>

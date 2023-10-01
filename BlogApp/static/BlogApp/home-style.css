@@ -334,7 +334,7 @@ main {
     display: none;
     position: absolute;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    padding: 10px 10px 0 10px;
+    padding: 10px 10px 10px 0px;
     border-radius: 10px;
     z-index: 5;
     font-size: 18px;
@@ -342,19 +342,22 @@ main {
 
 }
 
-.friend-actions button {
-    display: block;
+.friend-buttons {
+    display: flex;
+    justify-content: center;
     background-color: #1DA1F2;
     color: #ffffff; 
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-left: 10px;
+    padding: 4px;
     cursor: pointer;
     border: none;
     border-radius: 5px; 
     transition: background-color 0.3s ease;
+    text-decoration: none;
+    font-size: smaller;
 }
 
-.friend-actions button:hover {
+.friend-buttons:hover {
     background-color: #0f81c7;
 }
 
@@ -536,8 +539,8 @@ main {
 
 .text-area-container {
     display: flex;
-    flex-direction: row; /* Set the container to display its children in a row */
-    align-items: center; /* Center the items vertically */
+    flex-direction: row;
+    align-items: center; 
 }
 
 .comment-box textarea {
