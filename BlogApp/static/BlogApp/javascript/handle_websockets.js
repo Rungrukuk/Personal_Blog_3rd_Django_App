@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const socket = new WebSocket('ws://localhost:8001/ws/notifications/');
-
+    const socket = new WebSocket('ws://localhost:8000/ws/notifications/');
 
     socket.onopen = function (event) {
         console.log('WebSocket is connected.');
