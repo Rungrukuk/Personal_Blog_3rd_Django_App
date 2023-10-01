@@ -155,6 +155,7 @@ main {
 .middle-section {
     width: 50%;
     padding: 0px 25px 25px 25px;
+    z-index: 0;
 }
 
 .middle-section h2{
@@ -210,32 +211,15 @@ main {
     padding-left: 10%;
 }
 
-.left-section a{
-    display: block;
-    text-decoration: none;
-    margin-bottom: 10px;
-    height: 40px;
-    line-height: 40px; 
-    border-radius: 40px;
-    color: lightslategray;
-    position: relative;
-    background-color: transparent; 
-    transition: background-color 0.3s ease; 
-}
-.left-section a:hover {
-    background-color: lightslategray;
-    color: #fff; 
-}
-.left-buttons {
-    flex-shrink: 0;
-}
 
 .friends{
     overflow-y: scroll;
     flex-grow: 1;
+    overflow-x: hidden;
 }
 
 .friend {
+    position: relative;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
@@ -244,6 +228,7 @@ main {
     color: lightslategray;
     transition: background-color 0.3s ease;
     background-color: transparent;
+    cursor: pointer;
 }
 
 .friend:hover {
@@ -260,6 +245,36 @@ main {
     object-fit: cover;
 }
 
+
+.left-buttons {
+    flex-shrink: 0;
+}
+
+.left-buttons a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 40px;
+    border-radius: 40px;
+    color: lightslategray;
+    transition: background-color 0.3s ease;
+    background-color: transparent;
+}
+
+.left-buttons img{
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%;
+    margin-left: auto; 
+    margin-right: 10px; 
+    object-fit: cover;
+}
+
+.left-buttons a:hover{
+    background-color: lightslategray;
+    color: #fff;
+}
 
 .profile-picture {
     width: 40px;
@@ -299,9 +314,7 @@ main {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    position: absolute; 
-    right: 10px; 
-    top: 5px; 
+    position: relative; 
     object-fit: cover;
 }
 
@@ -316,6 +329,36 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.friend-actions {
+    display: none;
+    position: absolute;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 10px 10px 0 10px;
+    border-radius: 10px;
+    z-index: 5;
+    font-size: 18px;
+    background-color: lightslategray; 
+
+}
+
+.friend-actions button {
+    display: block;
+    background-color: #1DA1F2;
+    color: #ffffff; 
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px; 
+    transition: background-color 0.3s ease;
+}
+
+.friend-actions button:hover {
+    background-color: #0f81c7;
+}
+
+
 
 
 

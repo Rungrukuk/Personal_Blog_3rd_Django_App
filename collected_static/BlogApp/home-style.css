@@ -171,6 +171,84 @@ main {
 
 
 
+
+
+
+
+/* * Left Section */
+
+
+.texts{
+    font-size: 23px;
+    margin-left: 20px;
+    margin-right: 10px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-header{
+    font-size: 23px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 25px;
+    color: white;
+    font-weight: bold;
+}
+
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 11%;
+    border-radius: 10px;
+    color: #fff;
+    padding-left: 10%;
+}
+
+.left-buttons {
+    flex-shrink: 0;
+}
+
+.left-buttons a{
+    text-decoration: none;
+}
+.friends{
+    overflow-y: scroll;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.friend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 40px;
+    border-radius: 40px;
+    color: lightslategray;
+    transition: background-color 0.3s ease;
+    background-color: transparent;
+}
+
+.friend:hover {
+    background-color: lightslategray;
+    color: #fff;
+}
+
+.friend img {
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%;
+    margin-left: auto; 
+    margin-right: 10px; 
+    object-fit: cover;
+}
+
+
 .profile-picture {
     width: 40px;
     height: 40px;
@@ -212,6 +290,7 @@ main {
     position: absolute; 
     right: 10px; 
     top: 5px; 
+    object-fit: cover;
 }
 
 .profile-button span {
@@ -227,91 +306,29 @@ main {
 }
 
 
-
-
-/* * Left Section */
-
-
-.texts{
-    font-size: 23px;
-    margin-left: 20px;
-    margin-right: 10px;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.text-header{
-    font-size: 23px;
-    margin-left: 20px;
-    margin-bottom: 10px;
-    margin-top: 25px;
-    color: white;
-    font-weight: bold;
-}
-
-
-.left-section {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    width: 11%;
-    border-radius: 10px;
-    color: #fff;
-    padding-left: 10%;
-}
-
-.left-section a{
+.box {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .box button {
     display: block;
-    text-decoration: none;
-    margin-bottom: 10px;
-    height: 40px;
-    line-height: 40px; 
-    border-radius: 40px;
-    color: lightslategray;
-    position: relative;
-    background-color: transparent; 
-    transition: background-color 0.3s ease; 
-}
-.left-section a:hover {
-    background-color: lightslategray;
-    color: #fff; 
-}
-.left-buttons {
-    flex-shrink: 0;
-}
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .box button:hover {
+    background-color: #45a049;
+  }
+  
 
-.friends{
-    overflow-y: scroll;
-    flex-grow: 1;
-}
-
-.friend {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    height: 40px;
-    border-radius: 40px;
-    color: lightslategray;
-    transition: background-color 0.3s ease;
-    background-color: transparent;
-}
-
-.friend:hover {
-    background-color: lightslategray;
-    color: #fff;
-}
-
-.friend img {
-    width: 30px; 
-    height: 30px; 
-    border-radius: 50%;
-    margin-left: auto; 
-    margin-right: 10px; 
-}
 
 /* * vomit Section */
 
@@ -344,7 +361,7 @@ main {
 
 .vomit-image img {
     max-width: 100%;
-    height: auto;
+    height: 420px;
     border-radius: 8px; 
 }
 
@@ -532,11 +549,12 @@ main {
 
 }
 
-.user-profile {
+.comment img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 .comment-content {
@@ -816,6 +834,7 @@ main {
     height: 90px;
     border-radius: 50%;
     margin-bottom: 10px;
+    object-fit: cover;
 }
 
 .profile-username {

@@ -5,6 +5,7 @@
     <script src="{% static 'BlogApp/javascript/home/home.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/home/handle_ajax_requests.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/general_functions.js' %}"></script>
 {% endblock javascripts %}
 
 {% block styles %}
@@ -15,56 +16,53 @@
 
     <div class="main-content">
 
-      <!-- Left section -->
-
+      <!--* Left Section section -->
         <div class="left-section">
-                <div class="text-header"> 
-                    Friends
-                </div>
+            <div class="text-header"> 
+                Friends
+            </div>
             <div class="friends">
                 {% for friend in Friends_Info %}
-                    <a href="{% url 'user_profile' friend.username%}">
+                    <div class="friend-container">
                         <div class="friend">
-                            <div class="texts">
-                                {{friend.username}}
-                            </div>
+                            <div class="texts">{{friend.username}}</div>
                             <img src="{{friend.picture_path}}" alt="{{friend.username}} profile">
                         </div>
-                    </a>
+                        <div class="friend-actions">
+                            <button>Button 1</button>
+                            <button>Button 2</button>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
-                <div class="left-buttons">
-                    <br>
-                    <hr>
-                    <br>
+            
+            
+            <div class="left-buttons">
+                <br>
+                <hr>
+                <br>
+                <a href="#">
+                        <div class="texts">
+                            Settings
+                        </div>
+                        <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                </a>
+                <a href="{% url 'logout' %}">
+                        <div class="texts">
+                            Logout
+                        </div>
+                        <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                </a>
+                <div class="profile-button">
                     <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Settings
-                            </div>
-                            <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                        </div>
+                        <span class="username">{{Username}}</span>
+                        <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
                     </a>
-                    <a href="{% url 'logout' %}">
-                        <div class="friend">
-                            <div class="texts">
-                                Logout
-                            </div>
-                            <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
-                        </div>
-                    </a>
-                    <div class="profile-button">
-                        <a href="#">
-                            <span class="username">{{Username}}</span>
-                            <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
-                        </a>
-                    </div>
                 </div>
-
-
+            </div>
         </div>
 
-        <!-- Middle section -->
+        <!--* Middle section -->
         <div class="middle-section">
             {% block MiddleSection %}
                 <div class="main-container">
@@ -172,7 +170,7 @@
             {% endblock MiddleSection %}
         </div>
 
-
+        <!--* Navigation section -->
         <div class="navigation">
                 <div class="text-header"> 
                         Navigations
