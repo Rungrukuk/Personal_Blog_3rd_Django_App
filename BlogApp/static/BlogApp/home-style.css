@@ -171,60 +171,6 @@ main {
 
 
 
-.profile-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-.profile-button {
-    position:relative;
-    margin-top: 1%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    z-index: 2;
-}
-
-.profile-button a {
-    position: relative; 
-    display: flex;
-    align-items: center;
-    background-color: #1DA1F2;
-    color: #fff;
-    border-radius: 20px;
-    width: 100%;
-    height: 40px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.profile-button a:hover {
-    background-color: #0f81c7;
-}
-
-.profile-button img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    position: absolute; 
-    right: 10px; 
-    top: 5px; 
-}
-
-.profile-button span {
-    position: absolute; 
-    left: 20px;
-    font-size: 23px;
-}
-
-.username {
-    max-width: 130px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 
 
@@ -311,7 +257,67 @@ main {
     border-radius: 50%;
     margin-left: auto; 
     margin-right: 10px; 
+    object-fit: cover;
 }
+
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.profile-button {
+    position:relative;
+    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 2;
+}
+
+.profile-button a {
+    position: relative; 
+    display: flex;
+    align-items: center;
+    background-color: #1DA1F2;
+    color: #fff;
+    border-radius: 20px;
+    width: 100%;
+    height: 40px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.profile-button a:hover {
+    background-color: #0f81c7;
+}
+
+.profile-button img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute; 
+    right: 10px; 
+    top: 5px; 
+    object-fit: cover;
+}
+
+.profile-button span {
+    position: absolute; 
+    left: 20px;
+    font-size: 23px;
+}
+
+.username {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 
 /* * vomit Section */
 
@@ -532,11 +538,12 @@ main {
 
 }
 
-.user-profile {
+.comment img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 .comment-content {
@@ -816,6 +823,7 @@ main {
     height: 90px;
     border-radius: 50%;
     margin-bottom: 10px;
+    object-fit: cover;
 }
 
 .profile-username {
