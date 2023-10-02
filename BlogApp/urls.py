@@ -1,5 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter
+from BlogApp.views import BlogPostViewSet
+
+router = DefaultRouter()
+router.register(r'Blogposts', BlogPostViewSet)
 
 urlpatterns = [
     path('',views.Home,name="home"),
@@ -12,4 +17,5 @@ urlpatterns = [
     path('send_friend_request', views.send_friend_request, name='send_friend_request'),
     path('accept_friend_request', views.accept_friend_request, name='accept_friend_request'),
     path('user_profile/<str:username>', views.User_Profile, name='user_profile'),
+    path('api/', include(router.urls)),
 ]

@@ -1,4 +1,6 @@
 import os, re, uuid
+from rest_framework import viewsets, permissions
+from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from PersonalBlog import settings
@@ -228,3 +230,18 @@ def CreateContext(request) -> dict[str,any]:
             "Friends_Info": friend_info,
         }
     return context
+
+
+#! -------------------------------------------------------------REST API Serializers---------------------------------------------------------
+
+class BlogPostViewSet(viewsets.ModelViewSet):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:  # If it's a read operation
+            permission_classes = [permissions.AllowAny]  # Allow any user to read, even if not authenticated
+        else:
+            permission_classes = [permissions.IsAdminUser]  # For any other action, allow only admin users
+        return [permission() for permission in permission_classes]
+
