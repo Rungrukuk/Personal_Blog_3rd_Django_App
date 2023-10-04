@@ -1,7 +1,7 @@
 This projects is a django project <br>
 You can find requirements from requirements.txt file
 
-Here is screenshots of the project:
+Here is screenshots of the project:<br>
 **Home page**
 <img width="1276" alt="image" src="https://github.com/Rungrukuk/Social-Media/assets/70916892/9416c2e3-1169-4655-91fe-6be2742bb546">
 
