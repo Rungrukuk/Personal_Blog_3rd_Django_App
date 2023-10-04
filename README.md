@@ -1,4 +1,4 @@
-This projects is a django project
+This projects is a django project <br>
 You can find requirements from requirements.txt file
 
 Here is screenshots of the project:
