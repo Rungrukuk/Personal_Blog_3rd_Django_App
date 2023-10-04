@@ -1,4 +1,3 @@
-<img width="1280" alt="image" src="https://github.com/Rungrukuk/Social-Media/assets/70916892/4b5abd87-94d5-4503-8619-fb93f2a35ec7"># Social-Media
 This projects is a django project
 You can find requirements from requirements.txt file
 
