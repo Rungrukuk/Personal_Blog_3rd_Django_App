@@ -225,6 +225,7 @@ def CreateContext(request) -> dict[str,any]:
     for friend in request.user.friends.all():
         friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
     context = {
+            "User_Id": request.user.id,
             "Username":request.user.username,
             "User_Picture_Path": request.user.profile_picture_path,
             "Friends_Info": friend_info,
