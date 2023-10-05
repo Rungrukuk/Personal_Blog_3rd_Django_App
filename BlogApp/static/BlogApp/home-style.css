@@ -38,145 +38,6 @@ main {
 
 
 
-.forms-container {
-    background-color: rgba(15, 15, 15, 0.85);
-    position: sticky;
-    top: 0;
-    width: 100%;
-    display: flex;
-    align-items: center; 
-    flex-direction: column;
-    z-index: 1;
-}
-
-#search-bar-form{
-    width: 100%;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-}
-
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-
-
-#create-vomit-form{
-    width: 100%;
-    position: sticky;
-    top: 40px;
-    z-index: 2;
-}
-
-.create-vomit {
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    border: 1px solid lightgrey;
-    display: flex;
-    flex-direction: column;
-}
-
-.create-vomit textarea {
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    width: 95%;
-    height: 65%;
-    font-size: 25px;
-    background-color: transparent;
-    color: lightgray;
-    resize: none;
-    display: block; 
-    margin-top: 20px;
-}
-.create-vomit-buttons{
-    margin-top: 3px;
-    width: 95%;
-}
-
-.image-label {
-    margin-top: 5px;
-    cursor: pointer;
-    display: inline-block;
-}
-
-.image-label img {
-    width: 26px; 
-    height: 18px;
-}
-
-.hidden-input {
-    display: none;
-}
-
-.search-keyword {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: transparent;
-    color: lightgray;
-}
-
-.search-button {
-    text-decoration: none;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: #1DA1F2;
-    color: #fff;
-    margin-left: 10px;
-}
-
-.search-button:hover {
-    background-color: #0f81c7;
-}
-
-
-.vomit-submit{
-    float: right;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: #1DA1F2;
-    color: #fff;
-    display: block;
-}
-
-/* * Middle Section */
-
-.middle-section {
-    width: 50%;
-    padding: 0px 25px 25px 25px;
-    z-index: 0;
-}
-
-.middle-section h2{
-    color: lightgray;
-}
-
-.middle-section .avatar img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-
-
-
-
-
-
-
-/* * Left Section */
 
 
 .texts{
@@ -196,6 +57,19 @@ main {
     color: white;
     font-weight: bold;
 }
+
+
+
+
+
+
+
+
+
+/** ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  Left Section  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+
 
 
 .left-section {
@@ -360,12 +234,140 @@ main {
 .friend-buttons:hover {
     background-color: #0f81c7;
 }
+/** ----------------------------------------------------------------------  Left Section  -------------------------------------------------------------------------------*/
+
+
+/** ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  Middle Section  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
+
+.middle-section {
+    width: 50%;
+    padding: 0px 25px 25px 25px;
+    z-index: 0;
+}
+
+.middle-section h2{
+    color: lightgray;
+}
+
+
+
+.forms-container {
+    background-color: rgba(15, 15, 15, 0.85);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center; 
+    flex-direction: column;
+    z-index: 1;
+}
+
+#search-bar-form{
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+
+
+#create-vomit-form{
+    width: 100%;
+    position: sticky;
+    top: 40px;
+    z-index: 2;
+}
+
+.create-vomit {
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 1px solid lightgrey;
+    display: flex;
+    flex-direction: column;
+}
+
+.create-vomit textarea {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    width: 95%;
+    height: 65%;
+    font-size: 25px;
+    background-color: transparent;
+    color: lightgray;
+    resize: none;
+    display: block; 
+    margin-top: 20px;
+}
+.create-vomit-buttons{
+    margin-top: 3px;
+    width: 95%;
+}
+
+.image-label {
+    margin-top: 5px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.image-label img {
+    width: 26px; 
+    height: 18px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.search-keyword {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: transparent;
+    color: lightgray;
+}
+
+.search-button {
+    text-decoration: none;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #1DA1F2;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.search-button:hover {
+    background-color: #0f81c7;
+}
+
+
+.vomit-submit{
+    float: right;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #1DA1F2;
+    color: #fff;
+    display: block;
+}
 
 
 
 
-
-/* * vomit Section */
+/** +++++++++  Vomit  +++++++*/
 
 .vomit {
     width: 99.8%;
@@ -562,14 +564,14 @@ main {
     cursor: pointer;
     background-color: #1DA1F2;
     color: #fff;
-    margin-left: 10px; /* Add some space between textarea and button */
+    margin-left: 10px;
 }
 
 .comment-submit:hover {
     background-color: #0f81c7;
 }
 
-/* ----------------------------------------------------------------*/
+/**  Comment texts  */
 .comments {
     overflow-y: scroll;
     width: 100%;
@@ -695,9 +697,10 @@ main {
     background-image: url('images/like.png');
 }
 
+/** ----------------------------------------------------------------------  Middle Section  -------------------------------------------------------------------------------*/
 
-/* ----------------------------------------------------------------*/
-/* * Navigation */
+
+/** ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  Navigation  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 .navigation {
     display: flex;
@@ -730,13 +733,15 @@ main {
     color: #fff; 
 }
 
+/** ----------------------------------------------------------------------  Navigation  --------------------------------------------------------------------------*/
 
 
 
 
 
 
-/*  Search */
+/** ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  Search  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 
 .shared-container {
     background-color: rgba(15, 15, 15, 0.85);
@@ -826,9 +831,11 @@ main {
     opacity: 1;
 }
 
+/** ----------------------------------------------------------------------  Search  ------------------------------------------------------------------------------*/
 
 
-/* Profile Section */
+
+/** ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  Profile  +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
 .profile-section {
     display: flex;
@@ -912,7 +919,7 @@ main {
 }
 
 
-
+/** ----------------------------------------------------------------------  Profile  ------------------------------------------------------------------------------*/
 
 
 
@@ -941,7 +948,7 @@ main {
 
 
 
-/* Media Query for Tablets */
+/** Media Query for Tablets */
 @media (min-width: 768px) and (orientation: portrait) {
     body {
       font-size: 18px;
@@ -976,7 +983,7 @@ main {
 
   }
   
-  /* Media Query for Small Laptops */
+  /** Media Query for Small Laptops */
   @media (min-width: 1024px) and (orientation: landscape) {
     body {
         font-size: 22px; 

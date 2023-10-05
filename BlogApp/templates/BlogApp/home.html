@@ -54,7 +54,7 @@
                 </a>
                 <div class="profile-button">
                     <a href="#">
-                        <span class="username">{{Username}}</span>
+                        <span id="current_username" class="username">{{Username}}</span>
                         <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
                     </a>
                 </div>
@@ -147,7 +147,7 @@
                                         <span class="comment-count">0</span>
                                     </button>
 
-                                    <button id="likeButton" class="like-button">
+                                    <button id="likeButton" class="like-button" data-post-id="{{ blog.id }}">
                                         <div class="like-circle">
                                             <div class="like-image"></div>
                                         </div>

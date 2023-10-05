@@ -1,5 +1,5 @@
+//Friend Actions
 document.addEventListener("DOMContentLoaded", function () {
-    // Hide all friend-actions when clicking outside any friend and show the friend-actions of the clicked friend
     document.addEventListener("click", function (e) {
         
         let clickedFriend = e.target.closest('.friend');
@@ -7,10 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const allFriendActions = document.querySelectorAll(".friend-actions");
         
         allFriendActions.forEach(fa => {
-            // If the clicked friend's actions are already visible, hide them
             if(clickedFriend && fa === clickedFriend.nextElementSibling && fa.style.display === 'flex') {
                 fa.style.display = 'none';
-                clickedFriend = null; // Set to null so it doesn’t show the friend-actions in the next steps
+                clickedFriend = null; 
             } else {
                 fa.style.display = 'none';
             }

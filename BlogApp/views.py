@@ -239,9 +239,9 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     serializer_class = BlogPostSerializer
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve']:  # If it's a read operation
-            permission_classes = [permissions.AllowAny]  # Allow any user to read, even if not authenticated
+        if self.action in ['list', 'retrieve']: 
+            permission_classes = [permissions.AllowAny] 
         else:
-            permission_classes = [permissions.IsAdminUser]  # For any other action, allow only admin users
+            permission_classes = [permissions.IsAdminUser] 
         return [permission() for permission in permission_classes]
 

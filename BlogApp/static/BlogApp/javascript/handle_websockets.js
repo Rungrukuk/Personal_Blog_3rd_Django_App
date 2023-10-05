@@ -1,22 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-    const socket = new WebSocket('ws://localhost:8000/ws/notifications/');
+    const socket = new WebSocket('ws://your_domain/ws/infos/');
 
     socket.onopen = function (event) {
         console.log('WebSocket is connected.');
-
-        socket.send(JSON.stringify({ message: 'Hello from client!' }));
     };
 
-    socket.onmessage = function (event) {
-        console.log('WebSocket message received:', event.data);
-    };
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function () {
+            const post_id = this.dataset.postId;
+            const username = document.getElementById("current_username").innerHTML;
 
-    socket.onclose = function (event) {
-        console.log('WebSocket is closed.');
-    };
+            const message = {
+                post_id: post_id,
+                username: username
+            };
 
-    socket.onerror = function (error) {
-        console.error('WebSocket Error:', error);
-    };
+            socket.send(JSON.stringify(message));
+        });
+    });
 });
