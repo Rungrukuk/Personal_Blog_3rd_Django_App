@@ -1,7 +1,8 @@
 {% extends "BlogApp/home.html" %}
 {% load static %}
 {% block javascripts %}
-    <script src="{% static 'BlogApp/javascript/search/handle_ajax_requests.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/common.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/search/handle_ajax_send_requests.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/general_functions.js' %}"></script>
 {% endblock javascripts %}

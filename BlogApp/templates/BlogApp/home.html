@@ -1,8 +1,9 @@
 {% extends 'BlogApp/base.html' %}
 {% load static %}
 {% block javascripts %}
-    <script src="{% static 'BlogApp/javascript/home/home.js' %}"></script>
-    <script src="{% static 'BlogApp/javascript/home/handle_ajax_requests.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/common.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_vomit.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_comment_like.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/general_functions.js' %}"></script>
 {% endblock javascripts %}
@@ -62,6 +63,9 @@
 
         <!--* Middle section -->
         <div class="middle-section">
+            <div id="message-box" class="hidden-message">
+                <div id="message-content"></div>
+            </div>
             {% block MiddleSection %}
                 <div class="main-container">
                     <div class="forms-container">
@@ -110,12 +114,12 @@
                                             </div>
                                             
                                             <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
-                                                <button class="like-button-comment">
-                                                    <div class="like-circle">
-                                                        <div class="like-image"></div>
-                                                    </div>
-                                                    <span class="likes-count">0</span>
-                                                </button>
+                                            <button class="like-button-comment">
+                                                <div class="like-circle">
+                                                    <div class="like-image"></div>
+                                                </div>
+                                                <span class="likes-count">0</span>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="comment">
@@ -127,12 +131,12 @@
                                             </div>
                                             
                                             <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
-                                                <button class="like-button-comment">
-                                                    <div class="like-circle">
-                                                        <div class="like-image"></div>
-                                                    </div>
-                                                    <span class="likes-count">0</span>
-                                                </button>
+                                            <button class="like-button-comment">
+                                                <div class="like-circle">
+                                                    <div class="like-image"></div>
+                                                </div>
+                                                <span class="likes-count">0</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -146,11 +150,11 @@
                                         <span class="comment-count">0</span>
                                     </button>
 
-                                    <button id="likeButton" class="like-button" >
+                                    <button id="likeButton" class="like-button {% if blog.is_liked %}liked{% endif %}" >
                                         <div class="like-circle">
                                             <div class="like-image"></div>
                                         </div>
-                                        <span class="likes-count">0</span>
+                                        <span class="likes-count">{{blog.like_count}}</span>
                                     </button>
                                 </div>
 

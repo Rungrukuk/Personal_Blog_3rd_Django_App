@@ -1,7 +1,8 @@
 {% extends 'BlogApp/home.html' %}
 {% load static %}
 {% block javascripts %}
-    <script src="{% static 'BlogApp/javascript/home/home.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/common.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_comment_like.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/general_functions.js' %}"></script>
 {% endblock javascripts %}
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
 {% endblock styles %}
 {% block MiddleSection %}
-
+{% csrf_token %}
 <div class="profile-section">
     <div class="profile-thumbnail" style="background-image: url('{{ Thumbnail_Picture_Path }}') ;"></div>
     <div class="profile-info">
@@ -24,73 +25,74 @@
     <div class="profile-posts">
         <h2>Vomits</h2>
         {% for blog in Profile_Posts %}
-        <div class="vomit">
-            <p>{{blog.title}}</p>
-            <div class="vomit-image">
-                <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
-            </div>
-            <div class="comments">
-                <div class="comment">
-                    <img src="{{ User_Picture_Path }}" alt="User Name">
-                    <div class="comment-content">
-                        <div class="comment-span">
-                            <span class="comment-username">User Name</span>
-                            <span class="reply-to"> replies to <span class="replied-username">Another User</span></span>
+            <div class="vomit">
+                <p>{{blog.title}}</p>
+                <div class="vomit-image">
+                    <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
+                </div>
+
+                <div class="comments">
+                    <div class="comment">
+                        <img src="{{ User_Picture_Path }}" alt="User Name">
+                        <div class="comment-content">
+                            <div class="comment-span">
+                                <span class="comment-username">User Name</span>
+                                <span class="reply-to"> replies to <span class="replied-username">Another User</span></span>
+                            </div>
+                            
+                            <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
+                                <button class="like-button-comment">
+                                    <div class="like-circle">
+                                        <div class="like-image"></div>
+                                    </div>
+                                    <span class="likes-count">0</span>
+                                </button>
                         </div>
-                        
-                        <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
-                            <button class="like-button-comment">
-                                <div class="like-circle">
-                                    <div class="like-image"></div>
-                                </div>
-                                <span class="likes-count">0</span>
-                            </button>
                     </div>
-                </div>
-                <div class="comment">
-                    <img src="{{ User_Picture_Path }}" alt="User Name">
-                    <div class="comment-content">
-                        <div class="comment-span">
-                            <span class="comment-username">User Name</span>
-                            <span class="reply-to"> replies to <span class="replied-username">Another User</span></span>
+                    <div class="comment">
+                        <img class="user-profile" src="{{ User_Picture_Path }}" alt="User Name">
+                        <div class="comment-content">
+                            <div class="comment-span">
+                                <span class="comment-username">User Name   </span>
+                                <span class="reply-to">replies to   <span class="replied-username">Another User</span></span>
+                            </div>
+                            
+                            <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
+                                <button class="like-button-comment">
+                                    <div class="like-circle">
+                                        <div class="like-image"></div>
+                                    </div>
+                                    <span class="likes-count">0</span>
+                                </button>
                         </div>
-                        
-                        <div class="comment-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem placeat, nisi, ipsam facilis quam maiores laboriosam magni amet beatae sed quia sint, dignissimos rem. Dolore animi accusamus nemo velit soluta. </div>
-                            <button class="like-button-comment">
-                                <div class="like-circle">
-                                    <div class="like-image"></div>
-                                </div>
-                                <span class="likes-count">0</span>
-                            </button>
+                    </div>
+                </div>
+                
+
+                <div class="button-container" data-blog-id="{{ blog.id }}">
+                    <button id="commentButton" class="comment-button">
+                        <div class="comment-circle">
+                            <div class="comment-image"></div>
+                        </div>
+                        <span class="comment-count">0</span>
+                    </button>
+
+                    <button id="likeButton" class="like-button {% if blog.is_liked %}liked{% endif %}" >
+                        <div class="like-circle">
+                            <div class="like-image"></div>
+                        </div>
+                        <span class="likes-count"> {{blog.like_count}} </span>
+                    </button>
+                </div>
+
+
+                <div id="comment-box" class="comment-box">
+                    <div class="text-area-container">
+                        <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                        <button class="comment-submit">Submit</button>
                     </div>
                 </div>
             </div>
-            
-            <div class="button-container">
-                <button id="commentButton" class="comment-button">
-                    <div class="comment-circle">
-                        <div class="comment-image"></div>
-                    </div>
-                    <span class="comment-count">0</span>
-                </button>
-
-                <button id="likeButton" class="like-button">
-                    <div class="like-circle">
-                        <div class="like-image"></div>
-                    </div>
-                    <span class="likes-count">0</span>
-                </button>
-            </div>
-
-
-            <div id="comment-box" class="comment-box">
-                <div class="text-area-container">
-                    <textarea rows="1" placeholder="Write your comment here..."></textarea>
-                    <button class="comment-submit">Submit</button>
-                </div>
-            </div>
-
-        </div>
         {% endfor %}
     </div>
 </div>

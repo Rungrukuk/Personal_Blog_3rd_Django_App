@@ -39,10 +39,10 @@ class BlogPost(models.Model):
 
     @property
     def like_count(self):
-        return self.like_set.count()
+        return self.bloglike_set.count()
 
 
-class Like(models.Model):
+class BlogLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, null=True)

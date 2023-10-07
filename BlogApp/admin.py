@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import User, Comment, Like, BlogPost, FriendRequest
+from .models import User, Comment, BlogLike, BlogPost, FriendRequest
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
 admin.site.register(Comment)
-admin.site.register(Like)
+admin.site.register(BlogLike)
 admin.site.register(BlogPost)
 admin.site.register(FriendRequest)
 class FriendsInline(admin.TabularInline):  

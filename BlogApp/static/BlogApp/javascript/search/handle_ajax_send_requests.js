@@ -1,7 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const friendRequestButtons = document.querySelectorAll(".friend-request-button");
-    const messageBox = document.getElementById("message-box");
-    const messageContent = document.getElementById("message-content");
 
     friendRequestButtons.forEach(function (button) {
         button.addEventListener("click", function (event) {
@@ -25,35 +23,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
-                if (data.message) {
+                if (data.success) {
                     button.textContent = "Sent";
                     button.style.backgroundColor = "green";
-                    showMessage(data.message);
+                    showMessage(data.success,"green");
+                    refresh_button_style(button,"Add Friend","#1DA1F2")
                 } else if (data.error) {
                     button.textContent = "Error";
                     button.style.backgroundColor = "red";
-                    messageBox.style.backgroundColor = "red";
-                    showMessage(data.error);
+                    showMessage(data.error,"red");
+                    refresh_button_style(button,"Add Friend","#1DA1F2")
                 }
             })
-            .catch((error) => {
-                console.error('Fetch Error:', error);
+            .catch(error => {
+                showMessage(`There has been a problem with connection`, "red");
+                console.log(error);
                 button.textContent = "Error";
                 button.style.backgroundColor = "red";
+                refresh_button_style(button,"Add Friend","#1DA1F2")
             });
         });
     });
 
-    function showMessage(message) {
-        messageContent.innerText = message;
-        messageBox.classList.remove("hidden-message");
-        messageBox.classList.add("show-message");
-        setTimeout(function () {
-            messageBox.style.opacity = 0;
-        }, 3000);
-        setTimeout(function () {
-            messageBox.classList.remove("show-message");
-            messageBox.classList.add("hidden-message");
-        }, 3300);
-    }
 });
+
+

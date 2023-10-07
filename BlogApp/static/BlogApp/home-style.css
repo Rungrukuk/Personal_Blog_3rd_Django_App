@@ -827,8 +827,12 @@ main {
 
 #message-box.show-message {
     height: auto;
-    transition: opacity 0.3s ease;
     opacity: 1;
+}
+
+#message-box.hidden-message{
+    height: 0;
+    opacity: 0;
 }
 
 /** ----------------------------------------------------------------------  Search  ------------------------------------------------------------------------------*/
