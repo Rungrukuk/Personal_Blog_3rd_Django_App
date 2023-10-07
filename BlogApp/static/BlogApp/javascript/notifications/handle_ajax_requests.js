@@ -8,49 +8,59 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             const username = button.getAttribute("data-username");
-            const csrftoken = $("[name=csrfmiddlewaretoken]").val();
-            const headers = {
-                "X-CSRFToken": csrftoken,
-            };
+            const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
 
-            $.ajax({
-                type: 'POST',
-                url: 'accept_friend_request',
-                headers: headers,
-                data: { username: username },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.message) {
-                        button.textContent = "Accepted";
-                        button.style.backgroundColor = "green";
-                        showMessage(data.message);
-                    }  
-                    if (data.error) {
-                        button.textContent = "Error";
-                        button.style.backgroundColor = "red";
-                        messageBox.style.backgroundColor = "red";
-                        showMessage(data.error);
-                    }
-                    if (data.FriendInfo) {
-                        const friendsContainer = document.querySelector(".friends");
-                        const newFriend = `
-                        <a href="#">
-                            <div class="friend">
-                                <div class="texts">
-                                    ${data.FriendInfo.username}
-                                </div>
-                                <img src="${data.FriendInfo.picture_path}" alt="${data.FriendInfo.username} profile">
-                            </div>
-                        </a>
-                        `;
-                    
-                        friendsContainer.insertAdjacentHTML("afterbegin", newFriend);
-                    }
+            fetch('accept_friend_request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken,
                 },
-                error: function () {
+                body: `username=${username}`,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                
+                if (data.message) {
+                    button.textContent = "Accepted";
+                    button.style.backgroundColor = "green";
+                    showMessage(data.message);
+                }  
+                if (data.error) {
                     button.textContent = "Error";
                     button.style.backgroundColor = "red";
+                    messageBox.style.backgroundColor = "red";
+                    showMessage(data.error);
                 }
+                if (data.FriendInfo) {
+                    const friendsContainer = document.querySelector(".friends");
+                    const newFriend = `
+                    <div class="friend-container">
+                        <div class="friend">
+                            <div class="texts">
+                                ${data.FriendInfo.username}
+                            </div>
+                            <img src="${data.FriendInfo.picture_path}" alt="${data.FriendInfo.username} profile">
+                        </div>
+                        <div class="friend-actions">
+                            <a href="user_profile/${data.FriendInfo.username}" class="friend-buttons" >Profile</a>
+                            <button class="friend-buttons" >Chat</button>
+                        </div>
+                    </div>
+                    `;
+                
+                    friendsContainer.insertAdjacentHTML("afterbegin", newFriend);
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+                button.textContent = "Error";
+                button.style.backgroundColor = "red";
             });
         });
     });

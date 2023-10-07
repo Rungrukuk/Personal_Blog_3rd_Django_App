@@ -8,33 +8,38 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             const username = button.getAttribute("data-username");
-            const csrftoken = $("[name=csrfmiddlewaretoken]").val();
-            const headers = {
-                "X-CSRFToken": csrftoken,
-            };
+            const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
 
-            $.ajax({
-                type: 'POST',
-                url: 'send_friend_request',
-                headers: headers,
-                data: { username: username },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.message) {
-                        button.textContent = "Sent";
-                        button.style.backgroundColor = "green";
-                        showMessage(data.message);
-                    } else if (data.error) {
-                        button.textContent = "Error";
-                        button.style.backgroundColor = "red";
-                        messageBox.style.backgroundColor = "red";
-                        showMessage(data.error);
-                    }
+            fetch('send_friend_request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrftoken,
                 },
-                error: function () {
+                body: `username=${username}`,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message) {
+                    button.textContent = "Sent";
+                    button.style.backgroundColor = "green";
+                    showMessage(data.message);
+                } else if (data.error) {
                     button.textContent = "Error";
                     button.style.backgroundColor = "red";
+                    messageBox.style.backgroundColor = "red";
+                    showMessage(data.error);
                 }
+            })
+            .catch((error) => {
+                console.error('Fetch Error:', error);
+                button.textContent = "Error";
+                button.style.backgroundColor = "red";
             });
         });
     });
@@ -51,5 +56,4 @@ document.addEventListener("DOMContentLoaded", function () {
             messageBox.classList.add("hidden-message");
         }, 3300);
     }
-
 });

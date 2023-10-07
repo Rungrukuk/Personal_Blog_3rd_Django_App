@@ -4,7 +4,7 @@ from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from PersonalBlog import settings
-from .models import BlogPost,User, FriendRequest
+from .models import BlogPost, User, FriendRequest, Like
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -76,6 +76,7 @@ def accept_friend_request(request) -> JsonResponse:
     if request.method == "POST":
         #! Need to implement groups
         from_username = request.POST.get("username", '')
+        print(from_username)
         from_user = User.objects.get(username=from_username)
         friend_request = FriendRequest.objects.get(from_user=from_user, to_user = request.user)
         if friend_request and friend_request.is_accepted == False:
@@ -232,7 +233,8 @@ def CreateContext(request) -> dict[str,any]:
         }
     return context
 
-
+def LikeBlog(request) -> JsonResponse:
+    new_like = Like()
 #! -------------------------------------------------------------REST API Serializers---------------------------------------------------------
 
 class BlogPostViewSet(viewsets.ModelViewSet):

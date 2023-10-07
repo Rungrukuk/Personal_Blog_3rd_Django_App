@@ -1,7 +1,6 @@
 {% extends 'BlogApp/base.html' %}
 {% load static %}
 {% block javascripts %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'BlogApp/javascript/home/home.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/home/handle_ajax_requests.js' %}"></script>
     <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
@@ -139,7 +138,7 @@
                                 </div>
                                 
 
-                                <div class="button-container">
+                                <div class="button-container" data-blog-id="{{ blog.id }}">
                                     <button id="commentButton" class="comment-button">
                                         <div class="comment-circle">
                                             <div class="comment-image"></div>
@@ -147,7 +146,7 @@
                                         <span class="comment-count">0</span>
                                     </button>
 
-                                    <button id="likeButton" class="like-button" data-post-id="{{ blog.id }}">
+                                    <button id="likeButton" class="like-button" >
                                         <div class="like-circle">
                                             <div class="like-image"></div>
                                         </div>
