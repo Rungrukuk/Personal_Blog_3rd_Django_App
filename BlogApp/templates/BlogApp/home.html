@@ -1,104 +1,130 @@
 {% extends 'BlogApp/base.html' %}
 {% load static %}
-{% block head %}
+{% block javascripts %}
+    <script src="{% static 'BlogApp/javascript/common.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_vomit.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/home/handle_ajax_comment_like.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/general_functions.js' %}"></script>
+{% endblock javascripts %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script src="{% static 'BlogApp/javascript/home.js' %}"></script>
+{% block styles %}
     <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
-    
-{% endblock head %}
+{% endblock styles %}
 
 {% block content %}
 
     <div class="main-content">
 
-      <!-- Left section -->
-
+      <!--* Left Section section -->
         <div class="left-section">
-                <div class="text-header"> 
-                    Friends
-                </div>
+            <div class="text-header"> 
+                Friends
+            </div>
             <div class="friends">
                 {% for friend in Friends_Info %}
-                    <a href="#">
+                    <div class="friend-container">
                         <div class="friend">
-                            <div class="texts">
-                                {{friend.username}}
-                            </div>
+                            <div class="texts">{{friend.username}}</div>
                             <img src="{{friend.picture_path}}" alt="{{friend.username}} profile">
                         </div>
-                    </a>
+                        <div class="friend-actions">
+                            <a href="{% url 'user_profile' friend.username %}" class="friend-buttons" >Profile</a>
+                            <button class="friend-buttons" >Chat</button>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
-                <div class="left-buttons">
-                    <br>
-                    <hr>
-                    <br>
-                    <a href="#">
-                        <div class="friend">
-                            <div class="texts">
-                                Settings
-                            </div>
-                            <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+            
+            <div class="left-buttons">
+                <br>
+                <hr>
+                <br>
+                <a href="#">
+                        <div class="texts">
+                            Settings
                         </div>
-                    </a>
-                    <a href="{% url 'logout' %}">
-                        <div class="friend">
-                            <div class="texts">
-                                Logout
-                            </div>
-                            <img src="static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                        <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                </a>
+                <a href="{% url 'logout' %}">
+                        <div class="texts">
+                            Logout
                         </div>
+                        <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                </a>
+                <div id="current_user" class="profile-button">
+                    <a href="{% url 'user_profile' Username %}">
+                        <span id="current_user_username" class="username" data-user-id="{{User_Id}}" >{{Username}}</span>
+                        <img id="current_user_picture" src="{{ User_Picture_Path }}" alt="Friend's Profile">
                     </a>
-                    <div class="profile-button">
-                        <a href="#">
-                            <span class="username">{{Username}}</span>
-                            <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
-                        </a>
-                    </div>
                 </div>
-
-
+            </div>
         </div>
 
-        <!-- Middle section -->
+        <!--* Middle section -->
         <div class="middle-section">
+            <div id="message-box" class="hidden-message">
+                <div id="message-content"></div>
+            </div>
             {% block MiddleSection %}
                 <div class="main-container">
-                    <form action="{% url 'search' %}" method="GET" id="search-bar-form">
-                        <div class="search-bar">
-                            <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
-                            <button type="submit" class="search-button">Search</button>
-                        </div>
-                        <div id="search-results" class="search-results">
-                        </div>
-                    </form>
-                    <br>
-                    <!-- ... Create vomit ... -->
-                    <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
-                        {% csrf_token %}
-                        <div class = "create-vomit">
-                            <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
-                            <div class = "create-vomit-buttons">
-                                <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
-                                <label for="fileInput" class="image-label">
-                                    <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
-                                </label>
-                                <button class="vomit-submit" id="create-vomit-button" type="button">Submit</button>
+                    <div class="forms-container">
+                        <form action="{% url 'search' %}" method="GET" id="search-bar-form">
+                            <div class="search-bar">
+                                <input type="text" name="searchKeyword" class="search-keyword" placeholder="Search...">
+                                <button type="submit" class="search-button">Search</button>
                             </div>
-                        </div>
-                    </form>
-                    <!-- ... Vomits ... -->
-                    <div class="vomits">
-                        <h2>Vomits</h2>
-                        {% for blog in Blog %}
-                            <div class="vomit">
-                                <p>{{blog.title}}</p>
-                                <div class="vomit-image">
-                                    <img src="{{blog.blog_image_url}}" alt="vomit Image 2" width="1000" height="1000">
+                            <div id="search-results" class="search-results">
+                            </div>
+                        </form>
+                        <br>
+                        <!-- ... Create vomit ... -->
+                        <form action="" id="create-vomit-form" method="post" enctype="multipart/form-data">    
+                            {% csrf_token %}
+                            <div class = "create-vomit">
+                                <textarea rows="20" cols="50" id="vomit-textarea" name="title" placeholder="Throw Up"></textarea>
+                                <div class = "create-vomit-buttons">
+                                    <input type="file" id="fileInput" name="blog_image" class="hidden-input" accept="image/*">
+                                    <label for="fileInput" class="image-label">
+                                        <img src="static/BlogApp/images/image_icon.png" alt="Choose Image">
+                                    </label>
+                                    <button class="vomit-submit" id="create-vomit-button" type="button">Submit</button>
                                 </div>
-
+                            </div>
+                        </form>
+                    </div>
+                    <br>
+                    <!-- ... Vomits ... -->
+                    <h2>Vomits</h2>
+                    <div class="vomits">
+                        {% for blog in Blog %}
+                            <div class="vomit" data-blog-id="{{ blog.id }}">
+                                <p>{{blog.title}}</p>
+                                
+                                <div class="vomit-image">
+                                    <img src="{{blog.blog_image_url}}" alt="vomit Image 2">
+                                </div>
+                                <div class="comments" {% if not blog.related_comments %}style="display:none;"{% endif %}>
+                                    {% for comment in blog.related_comments %}
+                                        <div class="comment" data-comment-id="{{comment.id}}">
+                                            <img src="{{ comment.user.profile_picture_path }}" alt="{{comment.user.username}}">
+                                            <div class="comment-content">
+                                                <div class="comment-span">
+                                                    <span class="comment-username">{{comment.user.username}}</span>
+                                                    <!--<span class="reply-to"> replies to <span class="replied-username">Another User</span></span>-->
+                                                </div>
+                                                
+                                                <div class="comment-text">{{comment.content}}</div>
+                                                <button class="like-button-comment">
+                                                    <div class="like-circle">
+                                                        <div class="like-image"></div>
+                                                    </div>
+                                                    <span class="likes-count">0</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
 
                                 <div class="button-container">
                                     <button id="commentButton" class="comment-button">
@@ -108,21 +134,21 @@
                                         <span class="comment-count">0</span>
                                     </button>
 
-                                    <button id="likeButton" class="like-button">
+                                    <button id="likeButton" class="like-button {% if blog.is_liked %}liked{% endif %}" >
                                         <div class="like-circle">
                                             <div class="like-image"></div>
                                         </div>
-                                        <span class="likes-count">0</span>
+                                        <span class="likes-count">{{blog.like_count}}</span>
                                     </button>
                                 </div>
 
-
                                 <div id="comment-box" class="comment-box">
-                                    <div class="text-area-container">
-                                        <textarea rows="1" placeholder="Write your comment here..."></textarea>
+                                    <div class="comment-submit-container">
+                                        <textarea class="comment-submit-content" rows="1" placeholder="Write your comment here..."></textarea>
                                         <button class="comment-submit">Submit</button>
                                     </div>
                                 </div>
+
                             </div>
                         {% endfor %}
                     </div>
@@ -130,7 +156,7 @@
             {% endblock MiddleSection %}
         </div>
 
-
+        <!--* Navigation section -->
         <div class="navigation">
                 <div class="text-header"> 
                         Navigations
@@ -145,7 +171,7 @@
                         Notifications   
                     </div>
                 </a>
-                <a href="#" class = "navigation-link" >
+                <a href="{% url 'user_profile' Username %}" class = "navigation-link" >
                     <div  class="texts" > 
                         Profile   
                     </div>

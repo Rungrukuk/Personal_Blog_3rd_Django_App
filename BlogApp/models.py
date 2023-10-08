@@ -6,6 +6,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=30, unique=True, null=False, blank=False,default="example_username123")
     password = models.CharField(max_length=128, null=False, blank=False,default="example_password123")
     profile_picture_path = models.CharField(max_length=255, null=True, blank=True, default="/media/profile_images/default.jpg")
+    thumbnail_picture_path = models.CharField(max_length=255, null=True, blank=True, default="/media/thumbnail_images/default.jpg")
     friends = models.ManyToManyField('self', blank=True, symmetrical=False)
     def remove_friend(self, friend):
         friend.friends.remove(self)
@@ -32,14 +33,43 @@ class BlogPost(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     blog_image_url = models.CharField(max_length=200, blank=True, null=True)
 
+    @property
+    def comment_count(self):
+        return self.comment_set.count()
+
+    @property
+    def like_count(self):
+        return self.bloglike_set.count()
+
+
+class BlogLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, null=True)
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     content = models.TextField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    parent_comment = models.ForeignKey('self', null=True, blank=True, related_name='replied_comments', on_delete=models.CASCADE)
 
-class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    @property
+    def reply_count(self):
+        return self.replied_comments.count()
+
+    @property
+    def like_count(self):
+        return self.commentlike_set.count()
+
+class CommentLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, null=True)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+
+class Reply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    parent_comment = models.ForeignKey(Comment, related_name='replies', on_delete=models.CASCADE)
