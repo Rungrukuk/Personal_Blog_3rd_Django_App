@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
     
-        fetch('create_vomit', {
+        fetch('/add_blog', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

@@ -4,30 +4,48 @@ from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from PersonalBlog import settings
-from .models import BlogPost, User, FriendRequest, BlogLike
+from .models import BlogPost, User, FriendRequest, BlogLike, Comment
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
-from django.db.models import Q,Exists, OuterRef
+from django.db.models import Q, Exists, OuterRef, Prefetch
 
 @login_required(login_url="login")
 def home(request) -> HttpResponse:
-    blog = BlogPost.objects.annotate(
+    current_user = request.user
+    blog = (
+        BlogPost.objects.annotate(
             is_liked=Exists(
                 BlogLike.objects.filter(
-                    user=request.user,
+                    user=current_user,
                     blog_post=OuterRef('pk')
                 )
             )
-        ).order_by('-id')
+        )
+        .prefetch_related(
+            Prefetch(
+                'comment_set',
+                queryset=Comment.objects.annotate(
+                    is_commented=Exists(
+                        Comment.objects.filter(
+                            user=current_user,
+                            pk=OuterRef('pk')
+                        )
+                    )
+                ).select_related('user').order_by('-created_at'),
+                to_attr='related_comments'
+            )
+        )
+        .order_by('-id')
+    )
     friend_info = []
     for friend in request.user.friends.all():
         friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
     context = {"Blog":blog} | create_context(request)
     return render(request,"BlogApp/home.html",context)
 
-def create_vomit(request) -> JsonResponse:
+def add_blog(request) -> JsonResponse:
     if request.method == 'POST':
         user = request.user 
         title = request.POST.get('title', '')
@@ -135,6 +153,48 @@ def notifications(request) -> HttpResponse:
     return render(request,"BlogApp/notifications.html",context)
 
 
+def user_profile(request, username: str) -> HttpResponse:
+    context = {}
+    if request.method == 'GET' and username:
+        profile = User.objects.get(username=username)
+        current_user = request.user
+        profile_posts = (
+            BlogPost.objects.filter(user__exact=profile).annotate(
+                is_liked=Exists(
+                    BlogLike.objects.filter(
+                        user=current_user,
+                        blog_post=OuterRef('pk')
+                    )
+                )
+            )
+            .prefetch_related(
+                Prefetch(
+                    'comment_set',
+                    queryset=Comment.objects.annotate(
+                        is_commented=Exists(
+                            Comment.objects.filter(
+                                user=current_user,
+                                pk=OuterRef('pk')
+                            )
+                        )
+                    ).select_related('user').order_by('-created_at'),
+                    to_attr='related_comments'
+                )
+            )
+            .order_by('-id')
+        )
+        context = create_context(request) | {
+            "Profile_Username": profile.username,
+            "Profile_Email": profile.email,
+            "Profile_Picture_Path": profile.profile_picture_path,
+            "Thumbnail_Picture_Path": profile.thumbnail_picture_path,
+            "Member_Since": profile.date_joined.strftime('%B %e, %Y'),
+            "Profile_Posts": profile_posts
+        }
+        
+    return render(request, 'BlogApp/user_profile.html',context)
+
+
 def login_user(request) -> HttpResponse:
     if request.method == "POST":
         form = AuthenticationForm(request,request.POST)
@@ -212,28 +272,48 @@ def logout_user(request) -> HttpResponse:
     return redirect('login')
 
 
-def user_profile(request, username: str) -> HttpResponse:
-    context = {}
-    if request.method == 'GET' and username:
-        profile = User.objects.get(username=username)
-        profile_posts = BlogPost.objects.filter(user=profile).annotate(
-            is_liked=Exists(
-                BlogLike.objects.filter(
-                    user=request.user,
-                    blog_post=OuterRef('pk')
-                )
-            )
-        ).order_by('-id')
-        context = create_context(request) | {
-            "Profile_Username": profile.username,
-            "Profile_Email": profile.email,
-            "Profile_Picture_Path": profile.profile_picture_path,
-            "Thumbnail_Picture_Path": profile.thumbnail_picture_path,
-            "Member_Since": profile.date_joined.strftime('%B %e, %Y'),
-            "Profile_Posts": profile_posts
-        }
-        
-    return render(request, 'BlogApp/user_profile.html',context)
+def add_blog_like(request) -> JsonResponse:
+    if request.method == "POST":
+        blog_id = request.POST.get('blog_id',None)
+        blog=BlogPost.objects.get(id=blog_id)
+        if blog:
+            new_like = BlogLike(user=request.user, blog_post=blog)
+            new_like.save()
+            return JsonResponse({'success': 'Liked'})
+        return JsonResponse({'error': 'Blog does not exist'})
+    return JsonResponse({'error': 'Invalid request method'})
+
+def remove_blog_like(request) -> JsonResponse:
+    if request.method == "POST":
+        blog_id = request.POST.get('blog_id',None)
+        blog=BlogPost.objects.get(id=blog_id)
+        if blog:
+            deleting_like = BlogLike.objects.get(user=request.user, blog_post=blog)
+            deleting_like.delete()
+            return JsonResponse({'success': 'Unliked'})
+        return JsonResponse({'error': 'Blog does not exist'})
+    return JsonResponse({'error': 'Invalid request method'})
+
+
+def add_comment(request) -> JsonResponse:
+    if request.method == "POST":
+        comment_content = request.POST.get('comment_content','')
+        if not comment_content:
+            return JsonResponse({"error":"Can't send empty comment"})
+        blog_id = request.POST.get('blog_id',None)
+        blog = BlogPost.objects.get(id=blog_id)
+        if blog:
+            new_comment = Comment(user=request.user, blog_post=blog, content=comment_content)
+            new_comment.save()
+            return JsonResponse({
+                'success': 'New Comment Added', 
+                'comment_content': new_comment.content,
+                'comment_username': new_comment.user.username,
+                'comment_user_picture_path': new_comment.user.profile_picture_path
+                })
+        return JsonResponse({'error': 'Blog does not exist'})
+    return JsonResponse({'error': 'Invalid request method'})
+    
 
 
 def create_context(request) -> dict[str,any]:
@@ -248,29 +328,6 @@ def create_context(request) -> dict[str,any]:
         }
     return context
 
-def add_blog_like(request) -> JsonResponse:
-    if request.method == "POST":
-        blog_id = request.POST.get('blog_id',None)
-        blog = BlogPost.objects.get(id=blog_id)
-        
-        if blog:
-            new_like = BlogLike(user=request.user ,blog_post = blog)
-            new_like.save()
-            return JsonResponse({'success': 'Liked'})
-        return JsonResponse({'error': 'Blog does not exist'})
-    return JsonResponse({'error': 'Invalid request method'})
-
-def remove_blog_like(request) -> JsonResponse:
-    if request.method == "POST":
-        blog_id = request.POST.get('blog_id',None)
-        blog = BlogPost.objects.get(id=blog_id)
-           
-        if blog:
-            deleting_like = BlogLike.objects.get(user=request.user ,blog_post = blog)
-            deleting_like.delete()
-            return JsonResponse({'success': 'Unliked'})
-        return JsonResponse({'error': 'Blog does not exist'})
-    return JsonResponse({'error': 'Invalid request method'})
 #! -------------------------------------------------------------REST API Serializers---------------------------------------------------------
 
 class BlogPostViewSet(viewsets.ModelViewSet):

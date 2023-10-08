@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     const friendRequestButtons = document.querySelectorAll(".friend-request-button");
-
     friendRequestButtons.forEach(function (button) {
         button.addEventListener("click", function (event) {
             event.preventDefault();

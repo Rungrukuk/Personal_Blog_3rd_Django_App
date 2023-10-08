@@ -539,13 +539,13 @@ main {
     max-height: 200px; 
 }
 
-.text-area-container {
+.comment-submit-container {
     display: flex;
     flex-direction: row;
     align-items: center; 
 }
 
-.comment-box textarea {
+.comment-submit-content {
     flex: 1;
     padding: 8px;
     border: none;
@@ -576,7 +576,8 @@ main {
     overflow-y: scroll;
     width: 100%;
     margin-top: 10px;
-    height: 130px;
+    height: auto;
+    max-height: 130px;
 }
 
 .comment {
@@ -596,7 +597,8 @@ main {
 
 .comment-content {
     z-index: 0;
-    height: 120px;
+    height: auto;
+    max-height: 120px;
     width: 90%;
     background-color: rgb(26, 26, 26);
     padding: 10px 0px 0px 10px;

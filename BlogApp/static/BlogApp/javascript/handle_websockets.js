@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.querySelectorAll('.like-button').forEach(button => {
     //     button.addEventListener('click', function () {
     //         const post_id = this.dataset.postId;
-    //         const user_id = document.getElementById("current_username").dataset.userId;
+    //         const user_id = document.getElementById("current_user_username").dataset.userId;
 
     //         const message = {
     //             action_type: 'like',
