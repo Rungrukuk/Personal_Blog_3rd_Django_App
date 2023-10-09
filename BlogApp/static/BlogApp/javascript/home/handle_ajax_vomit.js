@@ -10,13 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
     
         const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
     
-        fetch('/add_blog', {
+        fetch('add_blog', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRFToken': csrftoken,
             },
-            body: formData,
+            body: formData
         })
         .then(response => {
             if (!response.ok) {
@@ -72,6 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => {
             console.error('Fetch Error:', error);
+            createVomitButton.textContent = "Error";
+            createVomitButton.style.backgroundColor = "red";
+            refresh_button_style(createVomitButton,"Submit","#1DA1F2");
         });
     });
 });
