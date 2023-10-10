@@ -520,6 +520,7 @@ main {
     background-image: url('images/like.png');
 }
 
+
 .comment-box {
     display: none;
     flex-direction: column;
