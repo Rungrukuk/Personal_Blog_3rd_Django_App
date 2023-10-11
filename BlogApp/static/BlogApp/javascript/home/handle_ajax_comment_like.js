@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.closest(".like-button")) {
             const button = event.target.closest(".like-button");
             const blogId = button.closest('.vomit').dataset.blogId;
-            console.log(blogId);
             let liked = button.classList.contains("liked");
             liked = !liked;
             button.classList.toggle("liked", liked);
@@ -130,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     `
                     commentsContainer.insertAdjacentHTML('beforeend', newComment);
+                    //! Need to add the commented class list 
                 } else if (data.error) {
                     showMessage(data.error,"red");
                 }

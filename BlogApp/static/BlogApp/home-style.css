@@ -320,7 +320,7 @@ main {
 
 .image-label img {
     width: 26px; 
-    height: 18px;
+    height: 26px;
 }
 
 .hidden-input {
@@ -429,12 +429,20 @@ main {
     color: rgb(56, 130, 250);
 }
 
+.comment-button.commented .comment-count{
+    color: rgb(56, 130, 250);
+}
+
 .comment-button:hover {
     background-color: transparent
 }
 
 .comment-button:hover .comment-image{
     background-image: url('images/comment-hover.png');
+}
+
+.comment-button.commented .comment-image{
+    background-image: url('images/commented.png');
 }
 
 .comment-button .comment-circle {
@@ -466,6 +474,8 @@ main {
 .comment-button:hover {
     background-color: transparent;
 }
+
+
 
 
 

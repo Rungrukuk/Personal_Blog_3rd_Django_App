@@ -127,11 +127,11 @@
                                 </div>
 
                                 <div class="button-container">
-                                    <button id="commentButton" class="comment-button">
+                                    <button id="commentButton" class="comment-button {% if blog.is_liked %}commented{% endif %}">
                                         <div class="comment-circle">
                                             <div class="comment-image"></div>
                                         </div>
-                                        <span class="comment-count">0</span>
+                                        <span class="comment-count">{{blog.comment_count}}</span>
                                     </button>
 
                                     <button id="likeButton" class="like-button {% if blog.is_liked %}liked{% endif %}" >
