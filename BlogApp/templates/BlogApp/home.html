@@ -115,12 +115,21 @@
                                                 </div>
                                                 
                                                 <div class="comment-text">{{comment.content}}</div>
-                                                <button class="like-button-comment">
-                                                    <div class="like-circle">
-                                                        <div class="like-image"></div>
-                                                    </div>
-                                                    <span class="likes-count">0</span>
-                                                </button>
+                                                <div class="comment-button-container"> 
+                                                    <button class="like-button-comment">
+                                                        <div class="like-circle">
+                                                            <div class="like-image"></div>
+                                                        </div>
+                                                        <span class="likes-count">0</span>
+                                                    </button>
+                                                    <button class="reply-button">
+                                                        <div class="reply-circle">
+                                                            <div class="reply-image"></div>
+                                                        </div>
+                                                        <span class="reply-count">0</span>
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </div>
                                     {% endfor %}

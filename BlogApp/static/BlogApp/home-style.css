@@ -509,7 +509,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
+    margin-right: 7px;
 }
 
 .like-button .like-image {
@@ -649,6 +649,12 @@ main {
     overflow-y: scroll;
 }
 
+.comment-button-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70px;
+}
 
 .like-button-comment {
     padding: 0px;
@@ -689,7 +695,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
+    margin-right: 1px;
 }
 
 .like-button-comment .like-image {
@@ -708,6 +714,70 @@ main {
 
 .like-button-comment.liked .like-image {
     background-image: url('images/like.png');
+}
+
+
+
+
+
+.reply-button {
+    padding: 0px;
+    margin-bottom: 4px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+}
+.reply-button:hover .reply-circle{
+    background-color: rgba(20, 114, 255, 0.158);
+}
+
+.reply-button:hover .reply-count{
+    color: #0f81c7;;
+}
+
+.reply-button.replied .reply-count{
+    color: #0f81c7;;
+}
+
+.reply-button:hover {
+    background-color: transparent
+}
+
+.reply-button:hover .reply-image{
+    background-image: url('images/replied.png');
+}
+
+.reply-button .reply-circle {
+    background-color: transparent;
+    border: none;
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1px;
+}
+
+.reply-button .reply-image {
+    background-image: url('images/reply.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+}
+
+.reply-button .reply-count {
+    font-weight: bold;
+    color: rgb(116, 116, 116);
+}
+
+.reply-button.replied .reply-image {
+    background-image: url('images/replied.png');
 }
 
 /** ----------------------------------------------------------------------  Middle Section  -------------------------------------------------------------------------------*/

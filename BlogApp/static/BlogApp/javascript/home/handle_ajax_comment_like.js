@@ -69,10 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
         }
-    });
-    
-
-    document.body.addEventListener("click", function(event) {
         if (event.target.closest(".comment-button")) {
             const button = event.target.closest(".comment-button");
             const commentBox = button.closest(".vomit").querySelector(".comment-box");
@@ -81,9 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
             commentBox.style.maxHeight = isCommentBoxVisible ? "200px" : "0";
             commentBox.style.display = isCommentBoxVisible ? "block" : "none";
         }
-    });
-
-    document.body.addEventListener("click",function(event){
         if(event.target.closest(".comment-submit")){
             button = event.target.closest(".comment-submit")
             const commentContent = button.parentElement.querySelector(".comment-submit-content");
@@ -139,8 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(error);
             });
         }
-
     });
-
-
+    
 });

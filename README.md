@@ -26,7 +26,7 @@ If you have any questions please do not hesitate to contact me: Rungrukuk@gmail.
 Icons credits:
 <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-animated-icons/settings" title="settings animated icons">Settings animated icons created by Freepik - Flaticon</a>
-<a href="https://www.flaticon.com/free-animated-icons/reply" title="reply animated icons">Reply animated icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/reply" title="reply icons">Reply icons created by Bharat Icons - Flaticon</a>
 <a href="https://www.flaticon.com/free-animated-icons/add-image" title="add image animated icons">Add image animated icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-animated-icons/message" title="message animated icons">Message animated icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Muhammad Ali - Flaticon</a>
