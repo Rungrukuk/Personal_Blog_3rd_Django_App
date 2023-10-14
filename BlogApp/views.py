@@ -2,7 +2,7 @@ import os, re, uuid
 from rest_framework import viewsets, permissions
 from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from PersonalBlog import settings
 from .models import BlogPost, User, FriendRequest, BlogLike, Comment
 from django.contrib.auth.decorators import login_required
@@ -21,24 +21,37 @@ def home(request) -> HttpResponse:
                     user=current_user,
                     blog_post=OuterRef('pk')
                 )
+            ),
+            is_commented=Exists(
+                Comment.objects.filter(
+                    user=current_user,
+                    blog_post=OuterRef('pk')
+                )
             )
         )
         .prefetch_related(
             Prefetch(
                 'comment_set',
-                queryset=Comment.objects.annotate(
+                queryset=Comment.objects.select_related('user').annotate(
                     is_commented=Exists(
                         Comment.objects.filter(
                             user=current_user,
                             pk=OuterRef('pk')
                         )
                     )
-                ).select_related('user').order_by('-created_at'),
+                ).only('user__username', 'user__profile_picture_path').prefetch_related(
+                    Prefetch(
+                        'replies',
+                        queryset=Comment.objects.select_related('user').order_by('-created_at'),
+                        to_attr='related_replies'
+                    )
+                ).order_by('-created_at'),
                 to_attr='related_comments'
             )
         )
         .order_by('-id')
     )
+
     friend_info = []
     for friend in request.user.friends.all():
         friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
@@ -170,14 +183,20 @@ def user_profile(request, username: str) -> HttpResponse:
             .prefetch_related(
                 Prefetch(
                     'comment_set',
-                    queryset=Comment.objects.annotate(
+                    queryset=Comment.objects.select_related('user').annotate(
                         is_commented=Exists(
                             Comment.objects.filter(
                                 user=current_user,
                                 pk=OuterRef('pk')
                             )
                         )
-                    ).select_related('user').order_by('-created_at'),
+                    ).only('user__username', 'user__profile_picture_path').prefetch_related(
+                        Prefetch(
+                            'replies',
+                            queryset=Comment.objects.select_related('user').order_by('-created_at'),
+                            to_attr='related_replies'
+                        )
+                    ).order_by('-created_at'),
                     to_attr='related_comments'
                 )
             )
@@ -297,22 +316,52 @@ def remove_blog_like(request) -> JsonResponse:
 
 def add_comment(request) -> JsonResponse:
     if request.method == "POST":
-        comment_content = request.POST.get('comment_content','')
+        comment_content = request.POST.get('comment_content', '').strip()
         if not comment_content:
-            return JsonResponse({"error":"Can't send empty comment"})
-        blog_id = request.POST.get('blog_id',None)
-        blog = BlogPost.objects.get(id=blog_id)
-        if blog:
-            new_comment = Comment(user=request.user, blog_post=blog, content=comment_content)
-            new_comment.save()
-            return JsonResponse({
-                'success': 'New Comment Added', 
-                'comment_content': new_comment.content,
-                'comment_username': new_comment.user.username,
-                'comment_user_picture_path': new_comment.user.profile_picture_path
-                })
-        return JsonResponse({'error': 'Blog does not exist'})
+            return JsonResponse({"error": "Can't send empty comment"})
+        
+        is_reply = comment_content.startswith('@')
+        parent_comment = None
+        
+        if is_reply:
+            try:
+                _, comment_content = comment_content.split(' ', 1)
+            except ValueError:
+                return JsonResponse({"error": "Invalid format for reply"})
+            
+            parent_comment_id = request.POST.get('comment_id', None)
+            parent_comment = get_object_or_404(Comment, id=parent_comment_id)
+        
+        blog_id = request.POST.get('blog_id', None)
+        blog = get_object_or_404(BlogPost, id=blog_id)
+        
+        new_comment = Comment(
+            user=request.user,
+            content=comment_content,
+            blog_post=blog,
+            parent_comment=parent_comment
+        )
+        new_comment.save()
+        
+        response_data = {
+            'success': 'New Comment Added',
+            'comment': {
+                'id': new_comment.id,
+                'content': new_comment.content,
+                'username': new_comment.user.username,
+                'profile_picture_path': new_comment.user.profile_picture_path,
+                'is_reply': is_reply,
+            }
+        }
+        
+        if is_reply:
+            response_data['comment'].update({
+                'parent_username': parent_comment.user.username,
+            })
+        
+        return JsonResponse(response_data)
     return JsonResponse({'error': 'Invalid request method'})
+
     
 
 
