@@ -23,7 +23,10 @@ Here is screenshots of the project:<br>
 
 If you have any questions please do not hesitate to contact me: Rungrukuk@gmail.com
 
-Icons credits that I have downloaded from:
-<a href="https://www.flaticon.com/free-icons/image" title="image icons">Image icons created by Dreamstale - Flaticon</a>
-<a href="https://www.flaticon.com/free-icons/comments" title="comments icons">Comments icons created by PIXARTIST - Flaticon</a>
-<a href="https://www.freepik.com/free-vector/hearts_34294284.htm#query=heart&position=2&from_view=keyword&track=sph">Image by juicy_fish</a> on Freepik
+Icons credits:
+<a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-animated-icons/settings" title="settings animated icons">Settings animated icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/reply" title="reply icons">Reply icons created by Bharat Icons - Flaticon</a>
+<a href="https://www.flaticon.com/free-animated-icons/add-image" title="add image animated icons">Add image animated icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-animated-icons/message" title="message animated icons">Message animated icons created by Freepik - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/heart" title="heart icons">Heart icons created by Muhammad Ali - Flaticon</a>

@@ -44,13 +44,13 @@
                         <div class="texts">
                             Settings
                         </div>
-                        <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                        <img src="/static/BlogApp/images/settings.png" alt="Aubrey's Profile">
                 </a>
                 <a href="{% url 'logout' %}">
                         <div class="texts">
                             Logout
                         </div>
-                        <img src="/static/BlogApp/images/profile.jpg" alt="Aubrey's Profile">
+                        <img src="/static/BlogApp/images/logout.png" alt="Aubrey's Profile">
                 </a>
                 <div id="current_user" class="profile-button">
                     <a href="{% url 'user_profile' Username %}">
@@ -106,32 +106,42 @@
                                 </div>
                                 <div class="comments" {% if not blog.related_comments %}style="display:none;"{% endif %}>
                                     {% for comment in blog.related_comments %}
-                                        <div class="comment" data-comment-id="{{comment.id}}">
+                                        <div class="comment" data-comment-id="{{comment.id}}" data-username="{{comment.user.username}}">
                                             <img src="{{ comment.user.profile_picture_path }}" alt="{{comment.user.username}}">
                                             <div class="comment-content">
                                                 <div class="comment-span">
                                                     <span class="comment-username">{{comment.user.username}}</span>
-                                                    <!--<span class="reply-to"> replies to <span class="replied-username">Another User</span></span>-->
+                                                    {% if comment.parent_comment %}<span class="reply-to"> replies to <span class="replied-username">{{comment.parent_comment.user.username}}</span></span>{% endif %}
                                                 </div>
                                                 
-                                                <div class="comment-text">{{comment.content}}</div>
-                                                <button class="like-button-comment">
-                                                    <div class="like-circle">
-                                                        <div class="like-image"></div>
-                                                    </div>
-                                                    <span class="likes-count">0</span>
-                                                </button>
+                                                <div class="comment-text" data-reply-id="">{{comment.content}}</div>
+                                                <div class="comment-button-container"> 
+                                                    <button class="like-button-comment">
+                                                        <div class="like-circle">
+                                                            <div class="like-image"></div>
+                                                        </div>
+                                                        <span class="likes-count">{{comment.like_count}}</span>
+                                                    </button>
+                                                    <button class="reply-button">
+                                                        <div class="reply-circle">
+                                                            <div class="reply-image"></div>
+                                                        </div>
+                                                        <span class="reply-count">{{comment.reply_count}}</span>
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </div>
+                                       
                                     {% endfor %}
                                 </div>
 
                                 <div class="button-container">
-                                    <button id="commentButton" class="comment-button">
+                                    <button id="commentButton" class="comment-button {% if blog.is_commented %}commented{% endif %}">
                                         <div class="comment-circle">
                                             <div class="comment-image"></div>
                                         </div>
-                                        <span class="comment-count">0</span>
+                                        <span class="comment-count">{{blog.comment_count}}</span>
                                     </button>
 
                                     <button id="likeButton" class="like-button {% if blog.is_liked %}liked{% endif %}" >
