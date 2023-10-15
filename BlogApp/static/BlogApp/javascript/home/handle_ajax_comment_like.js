@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </div>
                     `;
-                    commentsContainer.insertAdjacentHTML('beforeend', newComment);
+                    commentsContainer.insertAdjacentHTML('afterbegin', newComment);
                     //! need to add commented
                 } else if (data.error) {
                     showMessage(data.error, "red");
