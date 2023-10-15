@@ -38,22 +38,15 @@ def home(request) -> HttpResponse:
                             user=current_user,
                             comment=OuterRef('pk')
                         )
-                    )
-                ).only('user__username', 'user__profile_picture_path').prefetch_related(
-                    Prefetch(
-                        'replies',
-                        queryset=Comment.objects.select_related('user').annotate(
-                            is_replied=Exists(
-                                Comment.objects.filter(
-                                    user=current_user,
-                                    pk=OuterRef('pk')
-                                )
-                            )
+                    ),
+                    is_replied=Exists(
+                        Comment.objects.filter(
+                            user=current_user,
+                            parent_comment=OuterRef('pk')
                         )
-                        .order_by('-created_at'),
-                        to_attr='related_replies'
                     )
-                ).order_by('-created_at'),
+                ).only('user__username', 'user__profile_picture_path').
+                order_by('-created_at'),
                 to_attr='related_comments'
             )
         )
@@ -192,19 +185,20 @@ def user_profile(request, username: str) -> HttpResponse:
                 Prefetch(
                     'comment_set',
                     queryset=Comment.objects.select_related('user').annotate(
-                        is_commented=Exists(
+                        is_liked=Exists(
+                            CommentLike.objects.filter(
+                                user=current_user,
+                                comment=OuterRef('pk')
+                            )
+                        ),
+                        is_replied=Exists(
                             Comment.objects.filter(
                                 user=current_user,
-                                pk=OuterRef('pk')
+                                parent_comment=OuterRef('pk')
                             )
                         )
-                    ).only('user__username', 'user__profile_picture_path').prefetch_related(
-                        Prefetch(
-                            'replies',
-                            queryset=Comment.objects.select_related('user').order_by('-created_at'),
-                            to_attr='related_replies'
-                        )
-                    ).order_by('-created_at'),
+                    ).only('user__username', 'user__profile_picture_path').
+                    order_by('-created_at'),
                     to_attr='related_comments'
                 )
             )
