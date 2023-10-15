@@ -20,5 +20,7 @@ urlpatterns = [
     path('add_blog_like', views.add_blog_like, name='add_blog_like'),
     path('remove_blog_like', views.remove_blog_like, name='remove_blog_like'),
     path('add_comment', views.add_comment, name='add_comment'),
+    path('add_comment_like', views.add_comment_like, name='add_comment_like'),
+    path('remove_comment_like', views.remove_comment_like, name='remove_comment_like'),
     path('api/', include(router.urls)),
 ]

@@ -69,6 +69,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
         }
+        if (event.target.closest(".like-button-comment")) {
+            const button = event.target.closest(".like-button-comment");
+            const commentId = button.closest('.comment').dataset.commentId;
+            let liked = button.classList.contains("liked");
+            liked = !liked;
+            button.classList.toggle("liked", liked);
+            const likesCount = button.querySelector(".likes-count");
+            if(liked){
+                likesCount.textContent = parseInt(likesCount.textContent) + 1;
+                fetch('/add_comment_like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: `comment_id=${commentId}`,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showMessage(data.success,"green");
+                    } else if (data.error) {
+                        showMessage(data.error,"red");
+                    }
+                })
+                .catch(error => {
+                    showMessage(`There has been a problem with connection`, "red");
+                    console.log(error);
+                });
+                    
+            }
+            else{
+                likesCount.textContent = parseInt(likesCount.textContent) - 1;
+                
+                fetch('/remove_comment_like', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: `comment_id=${commentId}`,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok: ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        showMessage(data.success,"green");
+                    } else if (data.error) {
+                        showMessage(data.error,"red");
+                    }
+                })
+                .catch(error => {
+                    showMessage(`There has been a problem with connection`, "red");
+                    console.log(error);
+                });
+
+            }
+        }
         if (event.target.closest(".comment-button")) {
             const button = event.target.closest(".comment-button");
             const commentBox = button.closest(".vomit").querySelector(".comment-box");
@@ -109,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.comment.is_reply) {
                         replyToHTML = `<span class="reply-to"> replies to <span class="replied-username">${data.comment.parent_username}</span></span>`;
                     }
-        
                     const newComment = `
                         <div class="comment" data-comment-id="${data.comment.id}" data-username="${data.comment.username}">
                             <img src="${data.comment.profile_picture_path}" alt="${data.comment.username}">
@@ -138,6 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     `;
                     commentsContainer.insertAdjacentHTML('beforeend', newComment);
+                    //! need to add commented
                 } else if (data.error) {
                     showMessage(data.error, "red");
                 }

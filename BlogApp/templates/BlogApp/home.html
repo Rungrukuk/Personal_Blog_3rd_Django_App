@@ -116,13 +116,13 @@
                                                 
                                                 <div class="comment-text" data-reply-id="">{{comment.content}}</div>
                                                 <div class="comment-button-container"> 
-                                                    <button class="like-button-comment">
+                                                    <button class="like-button-comment {% if comment.is_liked %}liked{% endif %}">
                                                         <div class="like-circle">
                                                             <div class="like-image"></div>
                                                         </div>
                                                         <span class="likes-count">{{comment.like_count}}</span>
                                                     </button>
-                                                    <button class="reply-button">
+                                                    <button class="reply-button {% if comment.is_replied %}replied{% endif %}">
                                                         <div class="reply-circle">
                                                             <div class="reply-image"></div>
                                                         </div>

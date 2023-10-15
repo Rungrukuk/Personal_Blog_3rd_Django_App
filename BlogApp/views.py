@@ -4,7 +4,7 @@ from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from PersonalBlog import settings
-from .models import BlogPost, User, FriendRequest, BlogLike, Comment
+from .models import BlogPost, User, FriendRequest, BlogLike, Comment, CommentLike
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -33,16 +33,24 @@ def home(request) -> HttpResponse:
             Prefetch(
                 'comment_set',
                 queryset=Comment.objects.select_related('user').annotate(
-                    is_commented=Exists(
-                        Comment.objects.filter(
+                    is_liked=Exists(
+                        CommentLike.objects.filter(
                             user=current_user,
-                            pk=OuterRef('pk')
+                            comment=OuterRef('pk')
                         )
                     )
                 ).only('user__username', 'user__profile_picture_path').prefetch_related(
                     Prefetch(
                         'replies',
-                        queryset=Comment.objects.select_related('user').order_by('-created_at'),
+                        queryset=Comment.objects.select_related('user').annotate(
+                            is_replied=Exists(
+                                Comment.objects.filter(
+                                    user=current_user,
+                                    pk=OuterRef('pk')
+                                )
+                            )
+                        )
+                        .order_by('-created_at'),
                         to_attr='related_replies'
                     )
                 ).order_by('-created_at'),
@@ -362,8 +370,27 @@ def add_comment(request) -> JsonResponse:
         return JsonResponse(response_data)
     return JsonResponse({'error': 'Invalid request method'})
 
-    
+def add_comment_like(request) -> JsonResponse:
+    if request.method == "POST":
+        comment_id = request.POST.get('comment_id',None)
+        comment=Comment.objects.get(id=comment_id)
+        if comment:
+            new_like = CommentLike(user=request.user, comment=comment)
+            new_like.save()
+            return JsonResponse({'success': 'Liked'})
+        return JsonResponse({'error': 'Comment does not exist'})
+    return JsonResponse({'error': 'Invalid request method'})
 
+def remove_comment_like(request) -> JsonResponse:
+    if request.method == "POST":
+        comment_id = request.POST.get('comment_id',None)
+        comment=Comment.objects.get(id=comment_id)
+        if comment:
+            deleting_like = CommentLike.objects.get(user=request.user, comment=comment)
+            deleting_like.delete()
+            return JsonResponse({'success': 'Unliked'})
+        return JsonResponse({'error': 'Comment does not exist'})
+    return JsonResponse({'error': 'Invalid request method'})
 
 def create_context(request) -> dict[str,any]:
     friend_info = []
