@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             button.classList.toggle("liked", liked);
             const likesCount = button.querySelector(".likes-count");
             if(liked){
-                likesCount.textContent = parseInt(likesCount.textContent) + 1;
+
                 fetch('/add_blog_like', {
                     method: 'POST',
                     headers: {
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(data => {
                     if (data.success) {
+                        likesCount.textContent = parseInt(likesCount.textContent) + 1;
                         showMessage(data.success,"green");
                     } else if (data.error) {
                         showMessage(data.error,"red");
@@ -39,8 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     
             }
             else{
-                likesCount.textContent = parseInt(likesCount.textContent) - 1;
-                
                 fetch('/remove_blog_like', {
                     method: 'POST',
                     headers: {
@@ -57,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(data => {
                     if (data.success) {
+                        likesCount.textContent = parseInt(likesCount.textContent) - 1;
                         showMessage(data.success,"green");
                     } else if (data.error) {
                         showMessage(data.error,"red");
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
             button.classList.toggle("liked", liked);
             const likesCount = button.querySelector(".likes-count");
             if(liked){
-                likesCount.textContent = parseInt(likesCount.textContent) + 1;
+
                 fetch('/add_comment_like', {
                     method: 'POST',
                     headers: {
@@ -94,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(data => {
                     if (data.success) {
+                        likesCount.textContent = parseInt(likesCount.textContent) + 1;
                         showMessage(data.success,"green");
                     } else if (data.error) {
                         showMessage(data.error,"red");
@@ -106,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     
             }
             else{
-                likesCount.textContent = parseInt(likesCount.textContent) - 1;
+
                 
                 fetch('/remove_comment_like', {
                     method: 'POST',
@@ -124,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(data => {
                     if (data.success) {
+                        likesCount.textContent = parseInt(likesCount.textContent) - 1;
                         showMessage(data.success,"green");
                     } else if (data.error) {
                         showMessage(data.error,"red");

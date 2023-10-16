@@ -185,8 +185,8 @@ main {
 }
 
 .profile-button img {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     position: relative; 
     object-fit: cover;
@@ -599,8 +599,8 @@ main {
 }
 
 .comment img {
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     margin-right: 10px;
     object-fit: cover;

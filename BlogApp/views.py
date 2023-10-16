@@ -298,7 +298,10 @@ def add_blog_like(request) -> JsonResponse:
         blog_id = request.POST.get('blog_id',None)
         blog=BlogPost.objects.get(id=blog_id)
         if blog:
-            new_like = BlogLike(user=request.user, blog_post=blog)
+            try:
+                new_like = BlogLike(user=request.user, blog_post=blog)
+            except Exception:
+                return JsonResponse({'error': 'You have already Liked'}, status=404)
             new_like.save()
             return JsonResponse({'success': 'Liked'})
         return JsonResponse({'error': 'Blog does not exist'})
@@ -309,7 +312,10 @@ def remove_blog_like(request) -> JsonResponse:
         blog_id = request.POST.get('blog_id',None)
         blog=BlogPost.objects.get(id=blog_id)
         if blog:
-            deleting_like = BlogLike.objects.get(user=request.user, blog_post=blog)
+            try:
+                deleting_like = BlogLike.objects.get(user=request.user, blog_post=blog)
+            except Exception:
+                return JsonResponse({'error': 'You have already Unliked'}, status=404)
             deleting_like.delete()
             return JsonResponse({'success': 'Unliked'})
         return JsonResponse({'error': 'Blog does not exist'})
@@ -369,7 +375,10 @@ def add_comment_like(request) -> JsonResponse:
         comment_id = request.POST.get('comment_id',None)
         comment=Comment.objects.get(id=comment_id)
         if comment:
-            new_like = CommentLike(user=request.user, comment=comment)
+            try:
+                new_like = CommentLike(user=request.user, comment=comment)
+            except Exception:
+                return JsonResponse({'error': 'You have already Liked'}, status=404)
             new_like.save()
             return JsonResponse({'success': 'Liked'})
         return JsonResponse({'error': 'Comment does not exist'})
@@ -380,7 +389,10 @@ def remove_comment_like(request) -> JsonResponse:
         comment_id = request.POST.get('comment_id',None)
         comment=Comment.objects.get(id=comment_id)
         if comment:
-            deleting_like = CommentLike.objects.get(user=request.user, comment=comment)
+            try:
+                deleting_like = CommentLike.objects.get(user=request.user, comment=comment)
+            except Exception:
+                return JsonResponse({'error': 'You have already Unliked'}, status=404)
             deleting_like.delete()
             return JsonResponse({'success': 'Unliked'})
         return JsonResponse({'error': 'Comment does not exist'})
