@@ -1,4 +1,6 @@
-import os, re, uuid
+import os
+import re
+import uuid
 from rest_framework import viewsets, permissions
 from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
@@ -6,10 +8,11 @@ from django.shortcuts import redirect, render, get_object_or_404
 from PersonalBlog import settings
 from .models import BlogPost, User, FriendRequest, BlogLike, Comment, CommentLike
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login,logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q, Exists, OuterRef, Prefetch
+
 
 @login_required(login_url="login")
 def home(request) -> HttpResponse:
@@ -55,26 +58,30 @@ def home(request) -> HttpResponse:
 
     friend_info = []
     for friend in request.user.friends.all():
-        friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
-    context = {"Blog":blog} | create_context(request)
-    return render(request,"BlogApp/home.html",context)
+        friend_info.append({'username': friend.username,
+                           'picture_path': friend.profile_picture_path})
+    context = {"Blog": blog} | create_context(request)
+    return render(request, "BlogApp/home.html", context)
+
 
 def add_blog(request) -> JsonResponse:
     if request.method == 'POST':
-        user = request.user 
+        user = request.user
         title = request.POST.get('title', '')
         blog_image = request.FILES.get('blog_image', None)
 
         if blog_image:
             unique_filename = f'{uuid.uuid4().hex}_{blog_image.name}'
-            
+
             media_root = settings.MEDIA_ROOT
-            image_path = os.path.join(media_root, 'blog_images', unique_filename)
+            image_path = os.path.join(
+                media_root, 'blog_images', unique_filename)
             with open(image_path, 'wb') as destination:
                 for chunk in blog_image.chunks():
                     destination.write(chunk)
-            
-            blog_post = BlogPost(user=user, title=title, blog_image_url=f'/media/blog_images/{unique_filename}')
+
+            blog_post = BlogPost(
+                user=user, title=title, blog_image_url=f'/media/blog_images/{unique_filename}')
             blog_post.save()
 
             return JsonResponse({
@@ -88,83 +95,95 @@ def add_blog(request) -> JsonResponse:
             return JsonResponse({'error': 'No image file provided'})
 
     return JsonResponse({'error': 'Invalid request method'})
-            
+
 
 def send_friend_request(request) -> JsonResponse:
     if request.method == "POST":
         to_user_username = request.POST.get("username", '')
         to_user = User.objects.get(username=to_user_username)
-        reverse_friend_request = FriendRequest.objects.filter(from_user__exact=to_user, to_user__exact=request.user)
-        friend_request = FriendRequest.objects.filter(from_user__exact=request.user, to_user__exact=to_user)
+        reverse_friend_request = FriendRequest.objects.filter(
+            from_user__exact=to_user, to_user__exact=request.user)
+        friend_request = FriendRequest.objects.filter(
+            from_user__exact=request.user, to_user__exact=to_user)
         #! Need to add groups too
-        if  len(reverse_friend_request)>0:
+        if len(reverse_friend_request) > 0:
             if not reverse_friend_request[0].is_accepted:
                 reverse_friend_request[0].accept()
                 return JsonResponse({'success': 'Friend request sent succesfully.'})
             else:
                 return JsonResponse({'error': 'Friend request already sent.'})
         else:
-            if  len(friend_request)>0:
+            if len(friend_request) > 0:
                 return JsonResponse({'error': 'Friend request already sent.'})
             else:
                 FriendRequest(from_user=request.user, to_user=to_user).save()
                 return JsonResponse({'success': 'Friend request sent succesfully.'})
-        
 
-    return JsonResponse({'error': 'Invalid request.'}) # TODO change this to 404 Not found
+    # TODO change this to 404 Not found
+    return JsonResponse({'error': 'Invalid request.'})
+
 
 def accept_friend_request(request) -> JsonResponse:
     if request.method == "POST":
         #! Need to implement groups
         from_username = request.POST.get("username", '')
         from_user = User.objects.get(username=from_username)
-        friend_request = FriendRequest.objects.get(from_user=from_user, to_user = request.user)
+        friend_request = FriendRequest.objects.get(
+            from_user=from_user, to_user=request.user)
         if friend_request and friend_request.is_accepted == False:
             friend_request.accept()
             return JsonResponse({
                 'success': 'Friend request accepted',
                 'FriendInfo': {'username': from_username, 'picture_path': from_user.profile_picture_path}
-                })
+            })
         else:
             return JsonResponse({'error': 'Friend request expired'})
 
-    return JsonResponse({'error': 'Invalid request.'})# TODO change this to 404 Not found
+    # TODO change this to 404 Not found
+    return JsonResponse({'error': 'Invalid request.'})
 
 
 def search(request) -> HttpResponse:
-    context={}
-    if request.method ==  "GET":  
-        search_keyword = request.GET.get('searchKeyword','')
+    context = {}
+    if request.method == "GET":
+        search_keyword = request.GET.get('searchKeyword', '')
         if search_keyword:
-            users = User.objects.filter(Q(username__contains=search_keyword) & ~Q(username=request.user.username))
+            users = User.objects.filter(
+                Q(username__contains=search_keyword) & ~Q(username=request.user.username))
             if users:
                 users_info = []
                 for user in users:
-                    users_info.append({'username':user.username, 'picture_path':user.profile_picture_path})
-                context = {"Search_Keyword":search_keyword,"Users":users_info,} | create_context(request)
+                    users_info.append(
+                        {'username': user.username, 'picture_path': user.profile_picture_path})
+                context = {"Search_Keyword": search_keyword,
+                           "Users": users_info, } | create_context(request)
                 print(context)
             else:
-                context = {"SearchKeyword":search_keyword} | create_context(request)
+                context = {"SearchKeyword": search_keyword} | create_context(
+                    request)
         else:
             context = create_context(request)
 
-    return render(request,"BlogApp/search.html",context)
+    return render(request, "BlogApp/search.html", context)
 
 
 def notifications(request) -> HttpResponse:
     context = {}
     if request.method == 'GET':
-        friend_requests = FriendRequest.objects.filter(to_user=request.user, is_accepted=False)
+        friend_requests = FriendRequest.objects.filter(
+            to_user=request.user, is_accepted=False)
         friend_requests_info = []
         for friend in friend_requests:
-            friend_requests_info.append({'username':friend.from_user.username, 'picture_path':friend.from_user.profile_picture_path})
+            friend_requests_info.append(
+                {'username': friend.from_user.username, 'picture_path': friend.from_user.profile_picture_path})
 
         if friend_requests_info:
-            context = {"Friend_Requests_Info": friend_requests_info} | create_context(request)
+            context = {"Friend_Requests_Info": friend_requests_info} | create_context(
+                request)
         else:
             context = create_context(request)
 
-    return render(request,"BlogApp/notifications.html",context)
+    return render(request, "BlogApp/notifications.html", context)
 
 
 def user_profile(request, username: str) -> HttpResponse:
@@ -212,13 +231,13 @@ def user_profile(request, username: str) -> HttpResponse:
             "Member_Since": profile.date_joined.strftime('%B %e, %Y'),
             "Profile_Posts": profile_posts
         }
-        
-    return render(request, 'BlogApp/user_profile.html',context)
+
+    return render(request, 'BlogApp/user_profile.html', context)
 
 
 def login_user(request) -> HttpResponse:
     if request.method == "POST":
-        form = AuthenticationForm(request,request.POST)
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
@@ -226,8 +245,9 @@ def login_user(request) -> HttpResponse:
         else:
             errors = form.errors
             context = {"Errors": errors}
-            return render(request,"BlogApp/login.html",context)
-    return render(request,"BlogApp/login.html")
+            return render(request, "BlogApp/login.html", context)
+    return render(request, "BlogApp/login.html")
+
 
 def register(request) -> HttpResponse:
     context = {}
@@ -245,7 +265,7 @@ def register(request) -> HttpResponse:
             errors['email'] = 'Invalid email format'
         elif User.objects.filter(email=email).exists():
             errors['email'] = 'This Email has already been registered'
-        else: 
+        else:
             inputs['email'] = email
 
         if not username:
@@ -269,11 +289,11 @@ def register(request) -> HttpResponse:
         else:
             inputs['re_password'] = re_password
 
-
         if not errors:
-            user = User(email=email, username=username, password=make_password(password))
+            user = User(email=email, username=username,
+                        password=make_password(password))
             user.save()
-            login(request,user)
+            login(request, user)
             return redirect('home')
         else:
             context = {
@@ -288,6 +308,7 @@ def register(request) -> HttpResponse:
         }
     return render(request, 'BlogApp/register.html', context)
 
+
 def logout_user(request) -> HttpResponse:
     logout(request)
     return redirect('login')
@@ -295,8 +316,8 @@ def logout_user(request) -> HttpResponse:
 
 def add_blog_like(request) -> JsonResponse:
     if request.method == "POST":
-        blog_id = request.POST.get('blog_id',None)
-        blog=BlogPost.objects.get(id=blog_id)
+        blog_id = request.POST.get('blog_id', None)
+        blog = BlogPost.objects.get(id=blog_id)
         if blog:
             try:
                 new_like = BlogLike(user=request.user, blog_post=blog)
@@ -307,13 +328,15 @@ def add_blog_like(request) -> JsonResponse:
         return JsonResponse({'error': 'Blog does not exist'})
     return JsonResponse({'error': 'Invalid request method'})
 
+
 def remove_blog_like(request) -> JsonResponse:
     if request.method == "POST":
-        blog_id = request.POST.get('blog_id',None)
-        blog=BlogPost.objects.get(id=blog_id)
+        blog_id = request.POST.get('blog_id', None)
+        blog = BlogPost.objects.get(id=blog_id)
         if blog:
             try:
-                deleting_like = BlogLike.objects.get(user=request.user, blog_post=blog)
+                deleting_like = BlogLike.objects.get(
+                    user=request.user, blog_post=blog)
             except Exception:
                 return JsonResponse({'error': 'You have already Unliked'}, status=404)
             deleting_like.delete()
@@ -327,22 +350,22 @@ def add_comment(request) -> JsonResponse:
         comment_content = request.POST.get('comment_content', '').strip()
         if not comment_content:
             return JsonResponse({"error": "Can't send empty comment"})
-        
+
         is_reply = comment_content.startswith('@')
         parent_comment = None
-        
+
         if is_reply:
             try:
                 _, comment_content = comment_content.split(' ', 1)
             except ValueError:
                 return JsonResponse({"error": "Invalid format for reply"})
-            
+
             parent_comment_id = request.POST.get('comment_id', None)
             parent_comment = get_object_or_404(Comment, id=parent_comment_id)
-        
+
         blog_id = request.POST.get('blog_id', None)
         blog = get_object_or_404(BlogPost, id=blog_id)
-        
+
         new_comment = Comment(
             user=request.user,
             content=comment_content,
@@ -350,7 +373,7 @@ def add_comment(request) -> JsonResponse:
             parent_comment=parent_comment
         )
         new_comment.save()
-        
+
         response_data = {
             'success': 'New Comment Added',
             'comment': {
@@ -361,19 +384,20 @@ def add_comment(request) -> JsonResponse:
                 'is_reply': is_reply,
             }
         }
-        
+
         if is_reply:
             response_data['comment'].update({
                 'parent_username': parent_comment.user.username,
             })
-        
+
         return JsonResponse(response_data)
     return JsonResponse({'error': 'Invalid request method'})
 
+
 def add_comment_like(request) -> JsonResponse:
     if request.method == "POST":
-        comment_id = request.POST.get('comment_id',None)
-        comment=Comment.objects.get(id=comment_id)
+        comment_id = request.POST.get('comment_id', None)
+        comment = Comment.objects.get(id=comment_id)
         if comment:
             try:
                 new_like = CommentLike(user=request.user, comment=comment)
@@ -384,13 +408,15 @@ def add_comment_like(request) -> JsonResponse:
         return JsonResponse({'error': 'Comment does not exist'})
     return JsonResponse({'error': 'Invalid request method'})
 
+
 def remove_comment_like(request) -> JsonResponse:
     if request.method == "POST":
-        comment_id = request.POST.get('comment_id',None)
-        comment=Comment.objects.get(id=comment_id)
+        comment_id = request.POST.get('comment_id', None)
+        comment = Comment.objects.get(id=comment_id)
         if comment:
             try:
-                deleting_like = CommentLike.objects.get(user=request.user, comment=comment)
+                deleting_like = CommentLike.objects.get(
+                    user=request.user, comment=comment)
             except Exception:
                 return JsonResponse({'error': 'You have already Unliked'}, status=404)
             deleting_like.delete()
@@ -398,17 +424,27 @@ def remove_comment_like(request) -> JsonResponse:
         return JsonResponse({'error': 'Comment does not exist'})
     return JsonResponse({'error': 'Invalid request method'})
 
-def create_context(request) -> dict[str,any]:
+
+def chat(request)-> HttpResponse:
+    context = create_context(request)
+    return render(request, "BlogApp/chat.html",context)
+
+
+def create_context(request) -> dict[str, any]:
     friend_info = []
     for friend in request.user.friends.all():
-        friend_info.append({'username':friend.username, 'picture_path':friend.profile_picture_path})
+        friend_info.append({'username': friend.username,
+                           'picture_path': friend.profile_picture_path})
     context = {
-            "User_Id": request.user.id,
-            "Username":request.user.username,
-            "User_Picture_Path": request.user.profile_picture_path,
-            "Friends_Info": friend_info,
-        }
+        "User_Id": request.user.id,
+        "Username": request.user.username,
+        "User_Picture_Path": request.user.profile_picture_path,
+        "Friends_Info": friend_info,
+    }
     return context
+
+
+
 
 #! -------------------------------------------------------------REST API Serializers---------------------------------------------------------
 
@@ -417,9 +453,8 @@ class BlogPostViewSet(viewsets.ModelViewSet):
     serializer_class = BlogPostSerializer
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve']: 
-            permission_classes = [permissions.AllowAny] 
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [permissions.AllowAny]
         else:
-            permission_classes = [permissions.IsAdminUser] 
+            permission_classes = [permissions.IsAdminUser]
         return [permission() for permission in permission_classes]
-

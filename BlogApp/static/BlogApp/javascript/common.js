@@ -2,22 +2,21 @@
 let hideMessageTimeout;
 
 function showMessage(message, color) {
-    console.log("showMessage called with:", message, color);
     clearTimeout(hideMessageTimeout);
-    const messageBox = document.getElementById("message-box");
-    const messageContent = document.getElementById("message-content");
+    const messageBox = document.getElementById("alert-box");
+    const messageContent = document.getElementById("alert-content");
     messageBox.style.backgroundColor = color;
     messageContent.innerText = message;
-    messageBox.classList.add("show-message");
-    messageBox.classList.remove("hidden-message");
+    messageBox.classList.add("show-alert");
+    messageBox.classList.remove("hidden-alert");
 
     hideMessageTimeout = setTimeout(function () {
         messageBox.style.opacity = 0;
         setTimeout(function () {
             messageContent.innerText = "";
             messageBox.style.opacity = 1;
-            messageBox.classList.add("hidden-message");
-            messageBox.classList.remove("show-message");
+            messageBox.classList.add("hidden-alert");
+            messageBox.classList.remove("show-alert");
         }, 300);
     }, 3000);
 

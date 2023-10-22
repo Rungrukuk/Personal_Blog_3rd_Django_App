@@ -1,0 +1,44 @@
+{% extends "BlogApp/home.html" %}
+{% load static %}
+{% block javascripts %}
+    <script src="{% static 'BlogApp/javascript/common.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/notifications/handle_ajax_accept_requests.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/handle_websockets.js' %}"></script>
+    <script src="{% static 'BlogApp/javascript/general_functions.js' %}"></script>
+{% endblock javascripts %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'BlogApp/home-style.css' %}">
+{% endblock styles %}
+{% block MiddleSection %}
+<div class="chat-container">
+    <div class="chat-header">
+        <img src="{{ User_Picture_Path }}" alt="User Avatar" class="chat-avatar">
+        <h3 class="chat-title">Chat Name</h3>
+    </div>
+
+    <div class="chat-messages">
+        <div class="chat-container">
+            <div class="received-message-container" >            
+                <img src="/media/profile_images/default.png" alt="Profile Picture" class="profile-pic">
+                <div class="message received">
+                    Hello!
+                </div> 
+            </div>
+            <div class="message sent">Hi there!</div>
+            <div class="received-message-container" >    
+                <img src="/media/profile_images/default.png" alt="Profile Picture" class="profile-pic">
+                <div class="message received">
+                    How are you?
+                </div> 
+            </div>
+
+            <div class="message sent">I'm good, thanks for asking.</div>
+        </div>        
+    </div>
+    <div class="chat-input-area">
+        <input type="text" placeholder="Type a message...">
+        <button>Send</button>
+    </div>
+</div>
+{% endblock MiddleSection %}
