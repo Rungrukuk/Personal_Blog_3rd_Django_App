@@ -13,14 +13,14 @@
 {% block MiddleSection %}
 <div class="chat-container">
     <div class="chat-header">
-        <img src="{{ User_Picture_Path }}" alt="User Avatar" class="chat-avatar">
-        <h3 class="chat-title">Chat Name</h3>
+        <img src="{{ Receiver_Picture_Path }}" alt="User Avatar" class="chat-avatar">
+        <h3 class="chat-title">{{Receiver_Username}}</h3>
     </div>
 
     <div class="chat-messages">
         <div class="chat-container">
             <div class="received-message-container" >            
-                <img src="/media/profile_images/default.png" alt="Profile Picture" class="profile-pic">
+                <img src="{{Receiver_Picture_Path}}" alt="Profile Picture" class="profile-pic">
                 <div class="message received">
                     Hello!
                 </div> 

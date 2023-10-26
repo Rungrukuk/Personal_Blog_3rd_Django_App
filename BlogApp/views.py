@@ -425,8 +425,11 @@ def remove_comment_like(request) -> JsonResponse:
     return JsonResponse({'error': 'Invalid request method'})
 
 
-def chat(request)-> HttpResponse:
-    context = create_context(request)
+def chat(request, username: str)-> HttpResponse:
+    if request.method == "GET":
+        receiver = User.objects.filter(username__exact=username).first()
+        context = create_context(request) | {"Receiver_Username":receiver,
+                                             "Receiver_Picture_Path":receiver.profile_picture_path}
     return render(request, "BlogApp/chat.html",context)
 
 
@@ -436,7 +439,6 @@ def create_context(request) -> dict[str, any]:
         friend_info.append({'username': friend.username,
                            'picture_path': friend.profile_picture_path})
     context = {
-        "User_Id": request.user.id,
         "Username": request.user.username,
         "User_Picture_Path": request.user.profile_picture_path,
         "Friends_Info": friend_info,

@@ -25,6 +25,6 @@ urlpatterns = [
     path('add_comment_like', views.add_comment_like, name='add_comment_like'),
     path('remove_comment_like', views.remove_comment_like,
          name='remove_comment_like'),
-    path('chat', views.chat, name='chat'),
+    path('chat/<str:username>', views.chat, name='chat'),
     path('api/', include(router.urls)),
 ]
