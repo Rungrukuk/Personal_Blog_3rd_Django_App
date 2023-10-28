@@ -12,30 +12,30 @@
 {% endblock styles %}
 {% block MiddleSection %}
 <div class="chat-container">
-    <div class="chat-header">
-        <img src="{{ User_Picture_Path }}" alt="User Avatar" class="chat-avatar">
-        <h3 class="chat-title">Chat Name</h3>
+    <div class="chat-header" id="receiver_infos" data-receiver-username="{{Receiver_Username}}" data-receiver-picture="{{Receiver_Picture}}">
+        <img src="{{ Receiver_Picture }}" alt="User Avatar" class="chat-avatar">
+        <h3 class="chat-title">{{Receiver_Username}}</h3>
     </div>
 
     <div class="chat-messages">
         <div class="chat-container">
-            <div class="received-message-container" >            
-                <img src="/media/profile_images/default.png" alt="Profile Picture" class="profile-pic">
-                <div class="message received">
-                    Hello!
-                </div> 
-            </div>
-            <div class="message sent">Hi there!</div>
-            <div class="received-message-container" >    
-                <img src="/media/profile_images/default.png" alt="Profile Picture" class="profile-pic">
-                <div class="message received">
-                    How are you?
-                </div> 
-            </div>
-
-            <div class="message sent">I'm good, thanks for asking.</div>
-        </div>        
+            {% for chat in Chat_Messages %}
+                {% if chat.sender == request.user %}
+                    <div class="message sent">{{ chat.content }}
+                        <span class="message-status">Sent</span>
+                    </div>
+                {% else %}
+                    <div class="received-message-container">
+                        <img src="{{ chat.sender.profile_picture_path }}" alt="Profile Picture" class="profile-pic">
+                        <div class="message received">
+                            {{ chat.content }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
+    
     <div class="chat-input-area">
         <input type="text" placeholder="Type a message...">
         <button>Send</button>

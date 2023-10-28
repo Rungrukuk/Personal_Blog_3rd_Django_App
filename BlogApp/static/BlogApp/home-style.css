@@ -1013,7 +1013,6 @@ main {
 
 /**+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  Chat  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-/* Chat Container */
 .chat-container {
     background-color: #2c2f33;
     border-radius: 10px;
@@ -1023,7 +1022,6 @@ main {
     flex-direction: column;
 }
 
-/* Chat Header */
 .chat-header {
     display: flex;
     align-items: center;
@@ -1060,6 +1058,23 @@ main {
     margin-bottom: 10px;
 }
 
+.message-status {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 0.8em;
+    color: #aaa; /* Light gray color for the status text */
+    vertical-align: middle;
+}
+
+.message.sent .message-status {
+    background-color: transparent;
+}
+
+.message.pending .message-status {
+    color: #ffcc00; /* Yellow color for pending status */
+}
+
+
 .received-message-container{
     display: flex;
     align-items: center;
@@ -1085,7 +1100,6 @@ main {
     color: #ffffff;
 }
 
-/* Chat Input Area */
 .chat-input-area {
     display: flex;
     align-items: center;

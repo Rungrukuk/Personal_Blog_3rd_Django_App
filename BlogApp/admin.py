@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
-from .models import User, Comment, BlogLike, BlogPost, FriendRequest, CommentLike
+from .models import User, Comment, BlogLike, BlogPost, FriendRequest, CommentLike, ChatMessage
 
 admin.site.register(Comment)
 admin.site.register(BlogLike)
 admin.site.register(BlogPost)
 admin.site.register(FriendRequest)
 admin.site.register(CommentLike)
+admin.site.register(ChatMessage)
 
 class FriendsInline(admin.TabularInline):  
     model = User.friends.through  

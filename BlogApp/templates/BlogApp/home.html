@@ -30,7 +30,7 @@
                         </div>
                         <div class="friend-actions">
                             <a href="{% url 'user_profile' friend.username %}" class="friend-buttons" >Profile</a>
-                            <button class="friend-buttons" >Chat</button>
+                            <a href="{% url 'chat' friend.username %}" class="friend-buttons" >Chat</a>
                         </div>
                     </div>
                 {% endfor %}
@@ -52,10 +52,10 @@
                         </div>
                         <img src="/static/BlogApp/images/logout.png" alt="Aubrey's Profile">
                 </a>
-                <div id="current_user" class="profile-button">
+                <div class="profile-button">
                     <a href="{% url 'user_profile' Username %}">
-                        <span id="current_user_username" class="username" data-user-id="{{User_Id}}" >{{Username}}</span>
-                        <img id="current_user_picture" src="{{ User_Picture_Path }}" alt="Friend's Profile">
+                        <span id="current_username" class="username" >{{Username}}</span>
+                        <img src="{{ User_Picture_Path }}" alt="Friend's Profile">
                     </a>
                 </div>
             </div>

@@ -1,39 +1,69 @@
 import django
 django.setup()
-from channels.generic.websocket import AsyncWebsocketConsumer
-from channels.layers import get_channel_layer
-from BlogApp.models import BlogLike
 import json
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
+from .models import ChatMessage, User
 
-class DataRefresh(AsyncWebsocketConsumer):
+class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        self.sender_username = self.scope['url_route']['kwargs']['sender_username']
+        self.receiver_username = self.scope['url_route']['kwargs']['receiver_username']
+        sorted_usernames = sorted([self.sender_username, self.receiver_username])
+        self.room_name = f"private_chat_{sorted_usernames[0]}_{sorted_usernames[1]}"
+
+        await self.channel_layer.group_add(
+            self.room_name,
+            self.channel_name
+        )
+
         await self.accept()
 
     async def disconnect(self, close_code):
-        pass
+        await self.channel_layer.group_discard(
+            self.room_name,
+            self.channel_name
+        )
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        action_type = text_data_json.get('action_type')
-        print(text_data_json)
-        if action_type == 'like':
-            response_data = await self.handle_like(text_data_json)
-        # elif action_type == 'comment':
-        #     response_data = await self.handle_comment(text_data_json) #! Need to Implement handle_comment
-        else:
-            response_data = {'error': 'Invalid action type'}
-            
-        await self.send(json.dumps(response_data))
+        message = text_data_json['message']
+        messageId = text_data_json.get('messageId')
 
-    async def handle_like(self, data):
-        post_id = data.get('post_id')
-        new_like_count = BlogLike.objects.filter(blog_post_id=post_id).count()
-        channel_layer = get_channel_layer()
-        await channel_layer.group_send(
-            "blog",
+        await self.save_message(self.sender_username, self.receiver_username, message)
+
+        await self.channel_layer.group_send(
+            self.room_name,
             {
-                'type': 'blog_like',
-                'like_data': {'post_id': post_id, 'new_like_count': new_like_count}
+                'type': 'chat_message',
+                'message': message,
+                'messageId': messageId,
+                'channel_name': self.channel_name  
             }
         )
-        return {'status': 'like_success', 'message': 'Like has been saved.'}
+
+
+
+    async def chat_message(self, event):
+        message = event['message']
+        messageId = event.get('messageId')
+
+        if self.channel_name != event['channel_name']:
+            await self.send(text_data=json.dumps({
+                'type': 'received',
+                'message': message,
+                'messageId': messageId
+            }))
+        
+        else:
+            await self.send(text_data=json.dumps({
+                'type': 'confirmation',
+                'messageId': messageId
+            }))
+
+
+    @database_sync_to_async
+    def save_message(self, sender_username, receiver_username, content):
+        sender = User.objects.get(username=sender_username)
+        receiver = User.objects.get(username=receiver_username)
+        ChatMessage.objects.create(sender=sender, receiver=receiver, content=content)

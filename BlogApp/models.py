@@ -27,6 +27,13 @@ class FriendRequest(models.Model):
             self.to_user.friends.add(self.from_user)
 
 
+class ChatMessage(models.Model):
+    sender = models.ForeignKey(User, related_name="sent_messages", on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name="received_messages", on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+
 class BlogPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20, blank=True, null=True)
