@@ -6,7 +6,7 @@ from BlogApp.serializers import BlogPostSerializer
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from PersonalBlog import settings
-from .models import BlogPost, User, FriendRequest, BlogLike, Comment, CommentLike
+from .models import BlogPost, User, FriendRequest, BlogLike, Comment, CommentLike, ChatMessage
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -428,8 +428,15 @@ def remove_comment_like(request) -> JsonResponse:
 def chat(request, username: str)-> HttpResponse:
     if request.method == "GET":
         receiver = User.objects.filter(username__exact=username).first()
-        context = create_context(request) | {"Receiver_Username":receiver,
-                                             "Receiver_Picture_Path":receiver.profile_picture_path}
+        chat_messages = ChatMessage.objects.filter(
+            Q(sender=request.user, receiver=receiver) | 
+            Q(sender=receiver, receiver=request.user)
+        ).order_by('timestamp')
+        context = create_context(request) | {
+            "Chat_Messages":chat_messages,
+            "Receiver_Username":receiver.username,
+            "Receiver_Picture": receiver.profile_picture_path,
+        }
     return render(request, "BlogApp/chat.html",context)
 
 
