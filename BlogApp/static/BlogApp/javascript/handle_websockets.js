@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const receiverUsername = document.getElementById("receiver_infos").dataset.receiverUsername;
     const receiverPic = document.getElementById("receiver_infos").dataset.receiverPicture;
     const wsStart = (window.location.protocol === "https:") ? 'wss://' : 'ws://';
+    const messageInputDom = document.querySelector('.chat-input-area input');
     const chatSocket = new WebSocket(
         wsStart + window.location.host +
         '/ws/chat/' + senderUsername + '/' + receiverUsername + '/'
@@ -38,15 +39,22 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
     
-    
-    
-
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
 
     document.querySelector('.chat-input-area button').addEventListener('click', function() {
-        const messageInputDom = document.querySelector('.chat-input-area input');
+        sendMessage();
+    });
+
+    messageInputDom.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && e.target.value.trim() !== '') {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    function sendMessage() {
         const message = messageInputDom.value;
         const messageId = Date.now();
         chatSocket.send(JSON.stringify({
@@ -56,9 +64,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }));
         appendSentMessage(message, messageId);
         messageInputDom.value = '';
-    });
+    }
     
-
     function appendSentMessage(message, messageId) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', 'sent', 'pending');
