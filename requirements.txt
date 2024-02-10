@@ -30,6 +30,7 @@ djangorestframework==3.12.4
 ecdsa==0.18.0b1
 httplib2==0.20.2
 hyperlink==21.0.0
+idna==2.10
 importlib-metadata==4.6.4
 incremental==21.3.0
 itypes==1.2.0
@@ -73,6 +74,7 @@ sortedcontainers==2.1.0
 sqlparse==0.4.2
 Twisted==22.1.0
 txaio==21.2.1
+typing_extensions==4.8.0
 u-msgpack-python==2.3.0
 ujson==5.1.0
 uritemplate==3.0.1
